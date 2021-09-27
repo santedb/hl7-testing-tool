@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7TestingTool", "HL7TestingTool\HL7TestingTool.csproj", "{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A46C4D2-CC17-424C-AD9C-EDB011357C75}
+	EndGlobalSection
+EndGlobal
