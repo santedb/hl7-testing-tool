@@ -1,0 +1,77 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "HL7TestingTool/1.0.0": {
+        "dependencies": {
+          "NHapi.Parser.Agfa": "1.0.1"
+        },
+        "runtime": {
+          "HL7TestingTool.dll": {}
+        }
+      },
+      "NHapi.Parser.Agfa/1.0.1": {
+        "runtime": {
+          "lib/net35/NHapi.Base.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V21.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V22.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V22_ZSegments.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          },
+          "lib/net35/NHapi.Model.V23.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V231.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V24.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V25.dll": {
+            "assemblyVersion": "2.4.0.3",
+            "fileVersion": "2.4.0.3"
+          },
+          "lib/net35/NHapi.Model.V251.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          },
+          "lib/net35/NHapi.Parser.Agfa.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HL7TestingTool/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NHapi.Parser.Agfa/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pDtnFwKcuBQIeOFTX+1SOtbENC2YKq1WEdKm7uLqrJUk4bFlNLo2RSSvUwDYK+/uwnnGhF2FwKbQ9kKXhoA1lQ==",
+      "path": "nhapi.parser.agfa/1.0.1",
+      "hashPath": "nhapi.parser.agfa.1.0.1.nupkg.sha512"
+    }
+  }
+}

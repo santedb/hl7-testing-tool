@@ -23,20 +23,20 @@ namespace HL7TestingTool
     /// This method adds a test case to the test suite.
     /// </summary>
     /// <param name="caseNumber"></param>
-    public TestStep AddTestCase(int caseNumber);
+    public void AddTestCase(int caseNumber);
 
     /// <summary>
     /// Test steps are built into a specific test case based on a test case number.
     /// </summary>
     /// <param name="caseNumber"></param>
-    public TestStep AddTestStep(TestStep testStep, int stepNumber, string message);
+    public void AddTestStep(int caseNumber, int stepNumber, string message);
 
     /// <summary>
     /// Expected results are built into a specific test step.
     /// This method adds an expected result to a test step.
     /// </summary>
     /// <param name="testStep"></param>
-    public List<ExpectedResult> AddExpectedResults(TestStep testStep, List<ExpectedResult> expectedResults);
+    public void AddExpectedResults(TestStep testStep, List<ExpectedResult> expectedResults);
 
     /// <summary>
     /// Specific test steps can have only the message updated.

@@ -100,13 +100,14 @@ PV1||I";
 
       // ----------------------------------------------------------------------- TESTING NEW DESIGN
       TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), @"D:\MEDIC\HL7TestingTool\HL7TestingTool\data\");
+      director.BuildTestSuite();
       List<TestStep> allSteps = director.GetResult();
       foreach (TestStep t in testSteps)
       {
         try
         {
           PipeParser Parser = new PipeParser();
-          var adta01 = Parser.Parse(t.Message);
+          var encodedMessage = Parser.Parse($@"{t.Message}");
           MllpMessageSender sender = new MllpMessageSender(new Uri("llp://127.0.0.1:2100"));
           Console.WriteLine("Sending and receiving MLLP message at llp:127.0.0.1:2100 ...");
 
@@ -114,7 +115,7 @@ PV1||I";
           Console.WriteLine(t.Message);
           Console.WriteLine();
           Console.WriteLine($"Response for message: TEST-CR-{t.CaseNumber}-{t.StepNumber}");
-          Console.WriteLine(Parser.Encode(sender.SendAndReceive(adta01)));
+          Console.WriteLine(Parser.Encode(sender.SendAndReceive(encodedMessage)));
           Console.WriteLine("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
         catch (Exception e)

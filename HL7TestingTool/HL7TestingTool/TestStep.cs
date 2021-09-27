@@ -13,26 +13,20 @@ namespace HL7TestingTool
     /// <summary>
     /// Default constructor.
     /// </summary>
-    public TestStep() : base() { }
-    
+    public TestStep() { }
+
+    /// <summary>
+    /// Constructor for a test step with only case number (corresponding to the base class).
+    /// </summary>
+    /// <param name="caseNumber"></param>
+    public TestStep(int caseNumber) : base(caseNumber) { }
+
     /// <summary>
     /// Test step that only has a step number.
     /// </summary>
     /// <param name="stepNumber"></param>
-    public TestStep(int stepNumber) : base() { StepNumber = stepNumber; }
-
-    /// <summary>
-    /// Test step with step number, message, and expected results, but no test case number.
-    /// </summary>
-    /// <param name="stepNumber"></param>
-    /// <param name="message"></param>
-    /// <param name="expectedResults"></param>
-    public TestStep(int stepNumber, string message, List<ExpectedResult> expectedResults) : base()
-    {
-      Message = message;
-      StepNumber = stepNumber;
-      ExpectedResults = expectedResults;
-    }
+    /// <param name="caseNumber"></param>
+    public TestStep(int caseNumber, int stepNumber) : base(caseNumber) { StepNumber = stepNumber; }
 
     /// <summary>
     /// Test step with only a message and specific test case number.
