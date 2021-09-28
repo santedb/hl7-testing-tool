@@ -13,6 +13,7 @@ using System.Collections;
 using NHapi.Base;
 using System.Configuration;
 using NHapi.Base.Model.Configuration;
+using System.IO;
 
 namespace HL7TestingTool
 {
@@ -52,7 +53,9 @@ namespace HL7TestingTool
       //IMessage m = Parser.Parse(msg);
 
       // ----------------------------------------------------------------------- TESTING NEW DESIGN
-      TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), @"D:\MEDIC\HL7TestingTool\HL7TestingTool\data\");
+      const string DATA = "data";
+      string dataPath = Path.GetFullPath($"{DATA}");
+      TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
       director.BuildTestSuite();
       List<TestStep> allSteps = director.GetResult();
       foreach (TestStep t in allSteps)
