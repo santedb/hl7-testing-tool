@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tzieb\\Documents\\GitHub\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {}
+    "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tzieb\\Documents\\GitHub\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {
+    "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tzieb\\Documents\\GitHub\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+        "projectUniqueName": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
         "projectName": "HL7TestingTool",
-        "projectPath": "C:\\Users\\tzieb\\Documents\\GitHub\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
-        "packagesPath": "C:\\Users\\tzieb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tzieb\\Documents\\GitHub\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
+        "projectPath": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+        "packagesPath": "C:\\Users\\Azabelle\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\tzieb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Azabelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net48"
@@ -51,7 +45,7 @@
               "version": "[1.0.1, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
