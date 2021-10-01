@@ -32,23 +32,23 @@ namespace HL7TestingTool
     /// <summary>
     /// Director builds the test suite by calling the implemented ImportTestData() method.
     /// </summary>
-    public void BuildTestSuite()
+    public void BuildFromXml()
     {
-      _testSuiteBuilder.ImportTestData(FilePath);
+      _testSuiteBuilder.Build(_testSuiteBuilder.Import(FilePath));
     }
 
     /// <summary>
     /// Access to abstract base method for retrieving all test steps.
     /// </summary>
     /// <returns></returns>
-    public List<TestStep> GetResult() => _testSuiteBuilder.TestSteps;
+    public List<TestStep> GetTestSuite() => _testSuiteBuilder.GetTestSuite();
 
     /// <summary>
     /// Access to abstract base method for retrieving a list of test steps for a specific test case.
     /// </summary>
     /// <param name="caseNumber"></param>
     /// <returns></returns>
-    public List<TestStep> GetTestCases(int caseNumber) => _testSuiteBuilder.GetTestCases(caseNumber);
+    public List<TestStep> GetTestCase(int caseNumber) => _testSuiteBuilder.GetTestCase(caseNumber);
 
     /// <summary>
     /// Access to abstract base method for retrieving a specific test step that belongs to a specific test case.

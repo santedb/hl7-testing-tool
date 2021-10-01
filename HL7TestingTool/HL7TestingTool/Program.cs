@@ -86,8 +86,8 @@ namespace HL7TestingTool
             const string DATA = "data";
             string dataPath = Path.GetFullPath($"{DATA}");
             TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-            director.BuildTestSuite();
-            List<TestStep> allSteps = director.GetResult();
+            director.BuildFromXml();
+            List<TestStep> allSteps = director.GetTestSuite();
             foreach (TestStep t in allSteps)
             {
                 try
@@ -119,21 +119,11 @@ namespace HL7TestingTool
                             ASCIIHexString.Append(hex[i]);
                     }
                     string crlfString = ConvertHex(ASCIIHexString.ToString());
-                    //Console.WriteLine(crlfString);
-
-                    //Console.WriteLine($"Message for TEST-CR-{t.CaseNumber}-{t.StepNumber}");
-                    //Console.WriteLine(ASCIIHexString.ToString());
-                    //Console.WriteLine("---------------------------------------------" +
-                    //    "-------------------------------------------------------------" +
-                    //    "--------------------------------------------------------------" +
-                    //    "-----------------------------------------------------");
                     IMessage encodedMessage = parser.Parse(crlfString);
                     MllpMessageSender sender = new MllpMessageSender(new Uri("llp://127.0.0.1:2100"));
                     Console.WriteLine("Sending and receiving MLLP message at llp:127.0.0.1:2100 ...");
-                    Console.WriteLine();
                     Console.WriteLine($"Message for TEST-CR-{t.CaseNumber}-{t.StepNumber}");
                     Console.WriteLine(crlfString);
-                    Console.WriteLine();
                     Console.WriteLine($"Response for message: TEST-CR-{t.CaseNumber}-{t.StepNumber}");
                     Console.WriteLine(parser.Encode(sender.SendAndReceive(encodedMessage)));
                     Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");

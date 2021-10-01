@@ -12,6 +12,6 @@ namespace HL7TestingTool
     {
       CaseNumber = caseNumber;
     }
-    public int CaseNumber { get; /*private*/ set; }
+    public int CaseNumber { get; private set; }
   }
 }
