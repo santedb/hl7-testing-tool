@@ -1,0 +1,13 @@
+<testStep>
+	<message>MSH|^~\&amp;|TEST_HARNESS_B^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A40^ADT_A40|TEST-CR-17-40|P|2.3.1
+EVN||20101020
+PID|||SJ-204^^^TEST_B||SMITH^SAM^^^^^L||198902|F|||||||||||
+MRG|RJ-292^^^TEST_A</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AE" />
+		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
+		<assert terserString="MSH-6" value="TEST" />
+		
+        	
+	</assertions>
+</testStep>

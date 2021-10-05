@@ -1,0 +1,17 @@
+<testStep>
+	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090223144546|TEST_HARNESS+TEST_HARNESS|QBP^Q23^QBP_Q21|TEST-CR-10-20|P|2.5
+QPD|IHE PIX Query|Q1020|RJ-444^^^TEST^PI|^^^TEST
+RCP|I</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="PID-1" value="1" />
+		<assert terserString="QAK-2" value="OK" />
+		<assert terserString="PID-3-1-1" value="RJ-444" />
+		<assert terserString="PID-3-4-1" value="TEST" />
+		<assert terserString="PID-3-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
+		
+		
+		
+        	
+	</assertions>
+</testStep>

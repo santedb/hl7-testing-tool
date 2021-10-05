@@ -97,11 +97,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tzieb\\Documents\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+      "projectUniqueName": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
       "projectName": "HL7TestingTool",
-      "projectPath": "C:\\Users\\tzieb\\Documents\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+      "projectPath": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
       "packagesPath": "C:\\Users\\tzieb\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tzieb\\Documents\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
+      "outputPath": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
