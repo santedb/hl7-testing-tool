@@ -14,6 +14,7 @@ using NHapi.Base;
 using System.Configuration;
 using NHapi.Base.Model.Configuration;
 using System.IO;
+using System.Diagnostics;
 
 namespace HL7TestingTool
 {
@@ -66,7 +67,7 @@ namespace HL7TestingTool
           if (hex[i - 1] == '0' && hex[i] == 'A')
           {
             //Check for a CR (carriage return)
-            //TODO: handle the case with LF on a line by itself (blank line)
+            //handle the case with LF on a line by itself (blank line)
             if (hex[i - 3] != '0' && hex[i - 2] != 'D')
             {
               ASCIIHexString.Append("D0");
@@ -86,17 +87,15 @@ namespace HL7TestingTool
     {
       PipeParser parser = new PipeParser();
       string crlfString = ConvertLineEndings(t.Message);  // Converting LF line endings to CRLF line endings
-      IMessage encodedMessage = parser.Parse(crlfString); // Encoded as an HL7 message from a string
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
-      IMessage response = sender.SendAndReceive(encodedMessage);
-      Console.WriteLine($"Sending and receiving MLLP message at {URI} ...");
-      Console.WriteLine($"Message for TEST-CR-{t.CaseNumber}-{t.StepNumber}");
+      IMessage response = sender.SendAndReceive(crlfString);
+      Console.WriteLine($"Sending and receiving {t} MLLP message at {URI} ...\n");
       Console.WriteLine(crlfString);
-      Console.WriteLine($"\nResponse for message: TEST-CR-{t.CaseNumber}-{t.StepNumber}");
+      Console.WriteLine("\nResponse:");
       Console.WriteLine(parser.Encode(response));
-      Console.WriteLine("==============================================================\n\n");
+      Console.WriteLine("==============================================================\n");
       return response;
     }
 
@@ -107,15 +106,16 @@ namespace HL7TestingTool
       {
         try
         {
-          IMessage response = SendHL7Message(t);
-          responses.Add(response); // Send encoded message with MLLP
-          //TOOD: Add a method here that processes assertions for each step.
-          Assert(t, response);
+          IMessage response = SendHL7Message(t);  // Send encoded message with MllpMessageSender
+          responses.Add(response);                // Add response to list to be returned
+          Assert(t, response);                    // Process assertions for a step 
 
         }
         catch (Exception e)
         {
           Console.WriteLine(e.Message);
+          Debug.WriteLine(e.ToString());
+          throw new HL7Exception(e.Message);
         }
       }
       return responses;
@@ -124,15 +124,32 @@ namespace HL7TestingTool
     static void Assert(TestStep testStep, IMessage response)
     {
       Terser terser = new Terser(response);
-      foreach(Assertion a in testStep.Assertions)
+      bool testFail = false;
+      foreach (Assertion a in testStep.Assertions)
       {
-        if (terser.Get(a.TerserString) == a.Value)
-          Console.WriteLine($"------------\nCheck for '{a.Value}' at '{a.TerserString}': PASSED");
-        else
-          Console.WriteLine($"------------\nCheck for '{a.Value}' at '{a.TerserString}': FAILED");
+        string found = terser.Get(a.TerserString);
+        a.Outcome = found == a.Value;
+        string status = (bool)a.Outcome ? "PASSED" : "FAILED";
 
-        Console.WriteLine($"FOUND: {terser.Get(a.TerserString)}\n------------");
+        // Check if current assertion is an alternate for some terser string
+        if (a.Alternate)
+        {
+          if (!(bool)a.Outcome) // Assertion outcome is false (failed)
+          {
+            // Check if any other alternates for the same terser string did not pass or have null outcome (not tested yet)
+            if (!testStep.Assertions.Exists(o => o.TerserString == a.TerserString && (o.Outcome == true || o.Outcome == null)))
+              testFail = true;
+            else
+              testFail = false;
+          }
+        }
+        Console.WriteLine($"------------\n{a}: {status}");
+        Console.WriteLine($"FOUND: '{terser.Get(a.TerserString)}'\n");
       }
+      Console.WriteLine("____________________________________");
+      if (testFail) Console.WriteLine($"\n\tFAILED {testStep}");
+      else Console.WriteLine($"\n\tPASSED {testStep}");
+      Console.WriteLine("____________________________________\n");
     }
 
 
@@ -149,7 +166,7 @@ namespace HL7TestingTool
       //ExecuteTestSteps(director.GetTestCase(2));
 
       // Call on helper to execute for test case 3, test step 20 (note that this must be a list, but the director's method only returns a TestStep)
-      List<IMessage> responses = ExecuteTestSteps(new List<TestStep> { director.GetTestStep(3, 10) });
+      ExecuteTestSteps(new List<TestStep> { director.GetTestStep(3, 10) });
 
       Console.ReadKey();
     }

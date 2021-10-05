@@ -31,5 +31,7 @@ namespace HL7TestingTool
     public int StepNumber { get; private set; }
     public string Message { get; set; }
     public List<Assertion> Assertions { get; set; }
+
+    public override string ToString() => $"TEST-CR-{CaseNumber}-{StepNumber}";
   }
 }

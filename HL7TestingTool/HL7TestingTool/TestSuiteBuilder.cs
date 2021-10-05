@@ -40,7 +40,18 @@ namespace HL7TestingTool
                                            select elements;
 
         // Create an assertions list to add to this step.
-        foreach (XElement a in assertions) stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
+        foreach (XElement a in assertions)
+        {
+          if (a.Attribute("alternate") == null)
+            stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
+          else
+          {
+            if (a.Attribute("alternate").Value.ToLower() == "true")
+              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value, true));
+            else
+              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
+          }
+        }
 
         //string message = File.ReadAllText($@"{testStepPath}");  //getting the message of the file
         AddTestStep(testCaseNumber, testStepNumber, message.First().Value, stepAssertions);   //Create a test step from the data and add it to the list of test steps for a test suite
