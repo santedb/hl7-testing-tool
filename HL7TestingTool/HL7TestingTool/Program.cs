@@ -21,194 +21,94 @@ namespace HL7TestingTool
 {
   class Program
   {
-    const string URI = "llp://127.0.0.1:2100";
-    const string DATA = "data";
+    /// <summary>
+    /// 
+    /// </summary>
+    private const string DATA = "data";
 
     /// <summary>
-    /// Method used to convert a string of hexadecimal values (2 characters each).
-    /// This is used in this program to ensure that CRLF line endings appear in all messages being parsed.
-    /// HL7 messages always expect CR to separate segments and having LF line endings will throw an HL7Exception.
+    /// 
     /// </summary>
-    /// <param name="hexString"></param>
-    /// <returns></returns>
-    public static string ConvertHex(String hexString)
+    /// <returns>Option selected by user in main menu</returns>
+    static int MainMenu(TestSuiteBuilderDirector director)
     {
+      int option = 0;
+      Console.ForegroundColor = ConsoleColor.Cyan;
+      Console.WriteLine("======================================");
+      Console.WriteLine("| Welcome to the HL7v2 Testing Tool! |");
+      Console.WriteLine("======================================\n");
+
+      Console.ForegroundColor = ConsoleColor.White;
+      Console.WriteLine("Please enter an integer option: ");
+      Console.ForegroundColor = ConsoleColor.Blue;
+      Console.WriteLine("\t(1) Execute all test steps in the test suite");
+      Console.WriteLine("\t(2) Execute all test steps of a specific test case");
+      Console.WriteLine("\t(3) Execute a specific test step");
+      Console.WriteLine("\t(4) Exit");
       try
       {
-        string ascii = string.Empty;
-
-        for (int i = 0; i < hexString.Length; i += 2)
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        option = int.Parse(Console.ReadLine());
+        Console.Clear();
+        switch (option)
         {
-          String hs = string.Empty;
-
-          hs = hexString.Substring(i, 2);
-          uint decval = System.Convert.ToUInt32(hs, 16);
-          char character = System.Convert.ToChar(decval);
-          ascii += character;
-
+          case 1:
+            //Call on helper to execute all test steps in test suite
+            director.ExecuteTestSteps(director.GetTestSuite());
+            break;
+          case 2:
+            Console.Write("Enter Case #:\t\n");
+            int.TryParse(Console.ReadLine(), out int caseNumber);
+            //Call on helper to execute all test steps only from a specific case 
+            director.ExecuteTestSteps(director.GetTestCase(option));
+            break;
+          case 3:
+            Console.Write("Enter Case #:\t");
+            int.TryParse(Console.ReadLine(), out caseNumber);
+            Console.Write("Enter Step #:\t");
+            int.TryParse(Console.ReadLine(), out int stepNumber);
+            Console.WriteLine();
+            //Call on helper to execute a specific test step(note that this must be a list, but the director's method only returns a TestStep)
+            List<TestStep> testSteps = new List<TestStep> { director.GetTestStep(caseNumber, stepNumber) };
+            director.ExecuteTestSteps(testSteps);
+            break;
+          case 4:
+            break;
+          default:
+            break;
         }
-
-        return ascii;
       }
-      catch (Exception ex) { Console.WriteLine(ex.Message); }
-
-      return string.Empty;
-    }
-
-    static string ConvertLineEndings(string message)
-    {
-      byte[] bytes = Encoding.ASCII.GetBytes(message);
-      string hex = BitConverter.ToString(bytes).Replace("-", "");
-      StringBuilder ASCIIHexString = new StringBuilder();
-      for (int i = 0; i < hex.Length; i++)
+      catch (Exception ex)
       {
-        if (i > 0)
-        {
-          //Check for a LF (line feed)
-          if (hex[i - 1] == '0' && hex[i] == 'A')
-          {
-            //Check for a CR (carriage return)
-            //handle the case with LF on a line by itself (blank line)
-            if (hex[i - 3] != '0' && hex[i - 2] != 'D')
-            {
-              ASCIIHexString.Append("D0");
-              ASCIIHexString.Append(hex[i]);
-            }
-          }
-          else
-            ASCIIHexString.Append(hex[i]);
-        }
-        else
-          ASCIIHexString.Append(hex[i]);
+        Console.WriteLine(ex.Message);
       }
-      return ConvertHex(ASCIIHexString.ToString());
+      Console.ForegroundColor = ConsoleColor.White;
+      return option;
     }
 
-    static IMessage SendHL7Message(TestStep t)
-    {
-      PipeParser parser = new PipeParser();
-      string crlfString = ConvertLineEndings(t.Message);  // Converting LF line endings to CRLF line endings
-
-      // Use MllPMessageSender class to get back the response after sending a message
-      MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
-      IMessage response = sender.SendAndReceive(crlfString);
-      Console.WriteLine($"Sending and receiving {t} MLLP message at {URI} ...\n");
-      Console.WriteLine(t.Description);
-       Console.WriteLine();
-      Console.WriteLine(crlfString);
-      Console.WriteLine("\nResponse:");
-      Console.WriteLine(parser.Encode(response));
-      Console.WriteLine("==============================================================\n");
-      return response;
-    }
-
-    static List<IMessage> ExecuteTestSteps(List<TestStep> testSteps)
-    {
-      List<IMessage> responses = new List<IMessage>();
-      foreach (TestStep t in testSteps)
-      {
-        try
-        {
-          IMessage response = SendHL7Message(t);  // Send encoded message with MllpMessageSender
-          responses.Add(response);                // Add response to list to be returned
-          Assert(t, response);                    // Process assertions for a step 
-
-        }
-        catch (Exception e)
-        {
-          Console.WriteLine(e.Message);
-          Debug.WriteLine(e.ToString());
-          throw new HL7Exception(e.Message);
-        }
-      }
-      return responses;
-    }
-
-    static void Assert(TestStep testStep, IMessage response)
-    {
-      Terser terser = new Terser(response);
-      bool testFail = false;
-      foreach (Assertion a in testStep.Assertions)
-      {
-        string found = terser.Get(a.TerserString);
-        a.Outcome = found == a.Value;
-        string status = (bool)a.Outcome ? "PASSED" : "FAILED";
-
-        // Check if current assertion is an alternate for some terser string
-        if (a.Alternate)
-        {
-          if (!(bool)a.Outcome) // Assertion outcome is false (failed)
-          {
-            // Check if any other alternates for the same terser string did not pass or have null outcome (not tested yet)
-            if (!testStep.Assertions.Exists(o => o.TerserString == a.TerserString && (o.Outcome == true || o.Outcome == null)))
-              testFail = true;
-            else
-              testFail = false;
-          }
-        }
-        Console.WriteLine($"------------\n{a}: {status}");
-        Console.WriteLine($"FOUND: '{terser.Get(a.TerserString)}'\n");
-      }
-      Console.WriteLine("____________________________________");
-      if (testFail) Console.WriteLine($"\n\tFAILED {testStep}");
-      else Console.WriteLine($"\n\tPASSED {testStep}");
-      Console.WriteLine("____________________________________\n");
-    }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="args"></param>
     static void Main(string[] args)
     {
+      string dataPath = Path.GetFullPath($"{DATA}");
+      TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
+      director.BuildFromXml();
 
-            MainMenu();
-            Console.ReadKey();
+      int option = 0;
+      while (option != 4) // Show main menu and exit if option 4 is entered
+      {
+        option = MainMenu(director);
+        if (option < 0 || option > 4)
+          Console.WriteLine($"\n {option} is not an option! Try again...");
+        else if (option != 4) 
+        {
+          Console.WriteLine("Press any key to return to main menu...");
+          Console.ReadKey();
+          Console.Clear();
+        }
+      }
     }
-    static void MainMenu()
-    {
-        string dataPath = Path.GetFullPath($"{DATA}");
-        TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-        director.BuildFromXml();
-        
-        Console.WriteLine("Welcome to HL7Testing Tool!");
-        Console.WriteLine("Please enter \n" + "1 (to execute all test steps in the test suite)\n" + "2 (to execute all test steps of a specific test case)\n" + "3 (to execute a specific test step)\n" + "4 (to exit)"
-            );
-
-
-    string option = Console.ReadLine();
-    switch (option)
-    {
-        case "1":
-            //Call on helper to execute all test steps in test suite
-            ExecuteTestSteps(director.GetTestSuite());
-            break;
-        case "2":
-            {
-                Console.WriteLine("Please enter the Test Case Number: ");
-                int caseNumber = int.Parse(Console.ReadLine());
-                //Call on helper to execute all test steps only from a specific case 
-                ExecuteTestSteps(director.GetTestCase(caseNumber));
-
-                break;
-            }
-        case "3":
-            {
-                Console.WriteLine("Please enter the Test Case Number: ");
-                int caseNumber = int.Parse(Console.ReadLine());
-                Console.WriteLine("Please enter the Test Step Number: ");
-                int stepNumber = int.Parse(Console.ReadLine());
-                //Call on helper to execute a specific test step(note that this must be a list, but the director's method only returns a TestStep)
-                ExecuteTestSteps(new List<TestStep> { director.GetTestStep(caseNumber, stepNumber) });
-                break;
-            }
-        case "4":
-            {
-                        return;
-
-            }
-
-    }
-
-    MainMenu();
-}
-      
   }
 }

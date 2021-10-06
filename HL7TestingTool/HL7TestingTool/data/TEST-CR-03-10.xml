@@ -13,6 +13,6 @@ PV1||I</message>
 		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" alternate="true" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
-        <assert terserString="MSH-12" value="2.3.1" />
+		<assert terserString="MSH-12" value="2.3.1" />
 	</assertions>
 </testStep>
