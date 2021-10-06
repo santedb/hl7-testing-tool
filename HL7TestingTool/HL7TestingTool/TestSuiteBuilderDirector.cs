@@ -215,10 +215,7 @@ namespace HL7TestingTool
           }
         }
         else
-        {
-          if (a.Outcome != null)
-            testFail = (bool)a.Outcome ? testFail : false;
-        }
+          testFail = (bool)a.Outcome ? testFail : true;
 
         // Output a positive outcome as green and negative as red
         if ((bool)a.Outcome)
