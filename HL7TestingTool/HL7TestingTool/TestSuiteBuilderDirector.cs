@@ -205,7 +205,7 @@ namespace HL7TestingTool
         // Check if current assertion is an alternate for some terser string
         if (a.Alternate)
         {
-          if (!(bool)a.Outcome) // Assertion outcome is false (failed)
+          if (!(bool)a.Outcome) // Assertion outcome is false (failed) or null
           {
             // Check if any other alternates for the same terser string did not pass or have null outcome (not tested yet)
             if (!testStep.Assertions.Exists(o => o.TerserString == a.TerserString && (o.Outcome == true || o.Outcome == null)))
@@ -213,6 +213,11 @@ namespace HL7TestingTool
             else
               testFail = false;
           }
+        }
+        else
+        {
+          if (a.Outcome != null)
+            testFail = (bool)a.Outcome ? testFail : false;
         }
 
         // Output a positive outcome as green and negative as red
