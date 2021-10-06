@@ -1,4 +1,5 @@
 <testStep>
+	<description>Test harness sends a merge message and instructs the recipient to merge identifier RJ-999 into record RJ-439.</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A40^ADT_A40|TEST-CR-16-30|P|2.3.1
 EVN||20101020
 PID|||RJ-439^^^TEST||JONES^JENN^^^^^L||198401|F|||||||||||

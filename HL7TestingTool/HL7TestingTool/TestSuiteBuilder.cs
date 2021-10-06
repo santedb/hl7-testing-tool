@@ -14,7 +14,7 @@ namespace HL7TestingTool
     /// </summary>
     private List<TestStep> _testSteps = new List<TestStep>();
     private List<TestStep> TestSteps { get => _testSteps; set => _testSteps = value; }
-    private void AddTestStep(int caseNumber, int stepNumber, string message, List<Assertion> assertions) => TestSteps.Add(new TestStep(caseNumber, stepNumber, message, assertions));
+    private void AddTestStep(int caseNumber, int stepNumber, string message, string description, List<Assertion> assertions) => TestSteps.Add(new TestStep(caseNumber, stepNumber, message, description, assertions));
     public void Build(string[] testStepPaths)
     {
       foreach (string path in testStepPaths)//Iterating through all the files in the array
@@ -30,9 +30,13 @@ namespace HL7TestingTool
 
         // Parse this step's message from XML with LINQ
         XDocument xml = XDocument.Load(path);
-        IEnumerable<XElement> message = from elements in xml.Root.Descendants()
-                                        where elements.Name == "message"
+        IEnumerable<XElement> description = from elements in xml.Root.Descendants()
+                                        where elements.Name == "description"
                                         select elements;
+
+        IEnumerable<XElement> message = from elements in xml.Root.Descendants()
+                                where elements.Name == "message"
+                                select elements;
 
         // Parse this step's  assertions from XML with LINQ
         IEnumerable<XElement> assertions = from elements in xml.Root.Descendants()
@@ -54,7 +58,7 @@ namespace HL7TestingTool
         }
 
         //string message = File.ReadAllText($@"{testStepPath}");  //getting the message of the file
-        AddTestStep(testCaseNumber, testStepNumber, message.First().Value, stepAssertions);   //Create a test step from the data and add it to the list of test steps for a test suite
+        AddTestStep(testCaseNumber, testStepNumber, message.First().Value, description.First().Value, stepAssertions);   //Create a test step from the data and add it to the list of test steps for a test suite
       }
     }
     public string[] Import(string filePath) { return Directory.GetFiles(filePath); }

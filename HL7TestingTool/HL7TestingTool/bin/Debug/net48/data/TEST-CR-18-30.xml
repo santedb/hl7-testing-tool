@@ -1,4 +1,5 @@
 <testStep>
+	<description>Test harness (as TEST_HARNESS_B) sends a registration message for patient Yan Jones having a more specific date of birth, with NID of NID-000345439 and local identifier of TEST_B of RB-469.</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS_B^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-18-30|P|2.3.1
 EVN||20141001
 PID|||RB-469^^^TEST_B||JONES^YAN^^^^^L||19900404|M|||||||||||NID-000345439^^^NID

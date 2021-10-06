@@ -1,4 +1,5 @@
 <testStep>
+	<description>Test harness sends a PDQ message and specifies what domains should be returned in the QPD-8 containing a valid domain of TEST</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090226131520-0600|TEST_HARNESS+TEST_HARNESS|QBP^Q22^QBP_Q21|TEST-CR-11-50|P|2.5
 QPD|Q22^Find Candidates^HL7|Q1150|@PID.3.1^RJ-439~@PID.3.4.1^TEST|||||^^^TEST
 RCP|I|10^RD</message>

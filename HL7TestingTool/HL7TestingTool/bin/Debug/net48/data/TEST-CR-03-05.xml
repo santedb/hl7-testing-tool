@@ -1,0 +1,4 @@
+<testStep>
+    <description>Remove any configuration in the recipient which references OID 2.16.840.1.113883.3.72.5.9.4 or TEST_BLOCK</description>
+
+</testStep>

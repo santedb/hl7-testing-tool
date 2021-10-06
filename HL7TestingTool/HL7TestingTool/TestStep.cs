@@ -22,14 +22,16 @@ namespace HL7TestingTool
     /// <param name="stepNumber"></param>
     /// <param name="message"></param>
     /// <param name="expectedResults"></param>
-    public TestStep(int caseNumber, int stepNumber, string message, List<Assertion> assertions) : base(caseNumber)
+    public TestStep(int caseNumber, int stepNumber, string message, string description, List<Assertion> assertions) : base(caseNumber)
     {
       StepNumber = stepNumber;
       Assertions = assertions;
       Message = message;
+      Description = description;
     }
     public int StepNumber { get; private set; }
     public string Message { get; set; }
+    public string Description { get; set; }
     public List<Assertion> Assertions { get; set; }
 
     public override string ToString() => $"TEST-CR-{CaseNumber}-{StepNumber}";

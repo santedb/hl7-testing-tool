@@ -1,4 +1,5 @@
 <testStep>
+	<description>Test harness sends a PDQ message and specifies what domains should be returned in QPD-8 with a valid domain of NID which has no matching identifiers.</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090226131520-0600|TEST_HARNESS+TEST_HARNESS|QBP^Q22^QBP_Q21|TEST-CR-11-60|P|2.5
 QPD|Q22^Find Candidates^HL7|Q1160|@PID.3.1^RJ-439~@PID.3.4.1^TEST|||||^^^NID
 RCP|I|10^RD</message>

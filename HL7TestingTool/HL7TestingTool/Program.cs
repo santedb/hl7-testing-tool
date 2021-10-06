@@ -15,6 +15,7 @@ using System.Configuration;
 using NHapi.Base.Model.Configuration;
 using System.IO;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HL7TestingTool
 {
@@ -92,6 +93,8 @@ namespace HL7TestingTool
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
       IMessage response = sender.SendAndReceive(crlfString);
       Console.WriteLine($"Sending and receiving {t} MLLP message at {URI} ...\n");
+      Console.WriteLine(t.Description);
+       Console.WriteLine();
       Console.WriteLine(crlfString);
       Console.WriteLine("\nResponse:");
       Console.WriteLine(parser.Encode(response));
@@ -155,20 +158,57 @@ namespace HL7TestingTool
 
     static void Main(string[] args)
     {
-      string dataPath = Path.GetFullPath($"{DATA}");
-      TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-      director.BuildFromXml();
 
-      // Call on helper to execute all test steps in test suite
-      //ExecuteTestSteps(director.GetTestSuite());
-      
-      // Call on helper to execute all test steps only from case 2
-      //ExecuteTestSteps(director.GetTestCase(2));
-
-      // Call on helper to execute for test case 3, test step 20 (note that this must be a list, but the director's method only returns a TestStep)
-      ExecuteTestSteps(new List<TestStep> { director.GetTestStep(3, 10) });
-
-      Console.ReadKey();
+            MainMenu();
+            Console.ReadKey();
     }
+    static void MainMenu()
+    {
+        string dataPath = Path.GetFullPath($"{DATA}");
+        TestSuiteBuilderDirector director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
+        director.BuildFromXml();
+        
+        Console.WriteLine("Welcome to HL7Testing Tool!");
+        Console.WriteLine("Please enter \n" + "1 (to execute all test steps in the test suite)\n" + "2 (to execute all test steps of a specific test case)\n" + "3 (to execute a specific test step)\n" + "4 (to exit)"
+            );
+
+
+    string option = Console.ReadLine();
+    switch (option)
+    {
+        case "1":
+            //Call on helper to execute all test steps in test suite
+            ExecuteTestSteps(director.GetTestSuite());
+            break;
+        case "2":
+            {
+                Console.WriteLine("Please enter the Test Case Number: ");
+                int caseNumber = int.Parse(Console.ReadLine());
+                //Call on helper to execute all test steps only from a specific case 
+                ExecuteTestSteps(director.GetTestCase(caseNumber));
+
+                break;
+            }
+        case "3":
+            {
+                Console.WriteLine("Please enter the Test Case Number: ");
+                int caseNumber = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter the Test Step Number: ");
+                int stepNumber = int.Parse(Console.ReadLine());
+                //Call on helper to execute a specific test step(note that this must be a list, but the director's method only returns a TestStep)
+                ExecuteTestSteps(new List<TestStep> { director.GetTestStep(caseNumber, stepNumber) });
+                break;
+            }
+        case "4":
+            {
+                        return;
+
+            }
+
+    }
+
+    MainMenu();
+}
+      
   }
 }

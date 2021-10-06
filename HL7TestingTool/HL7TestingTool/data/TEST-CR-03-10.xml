@@ -1,7 +1,8 @@
 <testStep>
+	<description>Test harness sends ADT^A01 message having the invalid OID in CX.4.2.</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-03-10|P|2.3.1
 EVN||20101020
-PID|||RJ-999-2^^^&amp;NO_AUTHORITY_TEST&amp;ISO||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||
+PID|||RJ-999-2^^^&amp;&amp;ISO||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||
 PV1||I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AE" alternate="true" />
@@ -10,7 +11,6 @@ PV1||I</message>
 		<assert terserString="MSH-6" value="TEST" />
 		<assert terserString="ERR-1-4-2" value="No authority configured for " alternate="true" />
 		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" alternate="true" />
-    <assert terserString="ERR-1-4-2" value="Error processig assigning authority" alternate="true" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
         <assert terserString="MSH-12" value="2.3.1" />

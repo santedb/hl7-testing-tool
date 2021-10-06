@@ -1,4 +1,5 @@
 <testStep>
+	<description>Test harness sends a query with date of birth precise to the month in which the patient’s date of birth falls.</description>
 	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090226131520-0600|TEST_HARNESS+TEST_HARNESS|QBP^Q22^QBP_Q21|TEST-CR-14-30|P|2.5
 QPD|Q22^Find Candidates^HL7|Q1430|@PID.7^198401
 RCP|I|10^RD</message>
