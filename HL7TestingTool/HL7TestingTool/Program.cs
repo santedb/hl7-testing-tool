@@ -60,14 +60,16 @@ namespace HL7TestingTool
             Console.Write("Enter Case #:\t");
             int.TryParse(Console.ReadLine(), out int caseNumber);
             //Call on helper to execute all test steps only from a specific case 
+            try { ValidateCaseNumber(director, caseNumber); } catch (Exception ex) { Console.WriteLine(ex.Message); break; }
             director.ExecuteTestSteps(director.GetTestCase(caseNumber));
             break;
           case 3:
             Console.Write("Enter Case #:\t");
             int.TryParse(Console.ReadLine(), out caseNumber);
+            try { ValidateCaseNumber(director, caseNumber); } catch (Exception ex) { Console.WriteLine(ex.Message); break; }
             Console.Write("Enter Step #:\t");
             int.TryParse(Console.ReadLine(), out int stepNumber);
-            Console.WriteLine();
+            try { ValidateStepNumber(director, caseNumber, stepNumber); } catch (Exception ex) { Console.WriteLine(ex.Message); break; }
             //Call on helper to execute a specific test step(note that this must be a list, but the director's method only returns a TestStep)
             List<TestStep> testSteps = new List<TestStep> { director.GetTestStep(caseNumber, stepNumber) };
             director.ExecuteTestSteps(testSteps);
@@ -84,6 +86,18 @@ namespace HL7TestingTool
       }
       Console.ForegroundColor = ConsoleColor.White;
       return option;
+    }
+
+    static void ValidateCaseNumber(TestSuiteBuilderDirector director, int caseNumber)
+    {
+      if (director.GetTestCase(caseNumber).Count == 0)
+        throw new Exception("No test case with that number found.");
+    }
+
+    static void ValidateStepNumber(TestSuiteBuilderDirector director, int caseNumber, int stepNumber)
+    {
+      if (director.GetTestStep(caseNumber, stepNumber) == null)
+        throw new Exception("No test steps with that number found.");
     }
 
     /// <summary>

@@ -25,6 +25,13 @@ namespace HL7TestingTool
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    public string[] Import(string filePath) { return Directory.GetFiles(filePath); }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="caseNumber"></param>
     /// <param name="stepNumber"></param>
     /// <param name="description"></param>
@@ -66,6 +73,47 @@ namespace HL7TestingTool
     /// <param name="description"></param>
     /// <param name="assertions"></param>
     private void AddTestStep(string description, int caseNumber, int stepNumber, string message, List<Assertion> assertions) => TestSteps.Add(new TestStep(description, caseNumber, stepNumber, message, assertions));
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public List<TestStep> GetTestSuite() => TestSteps;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="caseNumber"></param>
+    /// <returns></returns>
+    public List<TestStep> GetTestCase(int caseNumber)
+    {
+      try
+      {
+        return TestSteps.Where(ts => ts.CaseNumber == caseNumber).ToList();
+      } 
+      catch (Exception ex)
+      {
+        return new List<TestStep>();
+      } 
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="caseNumber"></param>
+    /// <param name="stepNumber"></param>
+    /// <returns></returns>
+    public TestStep GetTestStep(int caseNumber, int stepNumber)
+    {
+      try
+      {
+        return TestSteps.Find(ts => ts.CaseNumber == caseNumber && ts.StepNumber == stepNumber);
+      }
+      catch (Exception ex)
+      {
+        return new TestStep();
+      }
+    }
 
     /// <summary>
     /// 
@@ -144,34 +192,6 @@ namespace HL7TestingTool
         else
           throw new Exception($"ERROR: Test Case #{testCaseNumber} Step #{stepNumber} could not be read from test suite XML configuration data. Either no description");
       }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
-    public string[] Import(string filePath) { return Directory.GetFiles(filePath); }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public List<TestStep> GetTestSuite() => TestSteps;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <returns></returns>
-    public List<TestStep> GetTestCase(int caseNumber) => TestSteps.Where(ts => ts.CaseNumber == caseNumber).ToList();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <returns></returns>
-    public TestStep GetTestStep(int caseNumber, int stepNumber) => TestSteps.Find(ts => ts.CaseNumber == caseNumber && ts.StepNumber == stepNumber);
+    }   
   }
 }

@@ -98,10 +98,10 @@ namespace HL7TestingTool
             Console.WriteLine($"{t}: {t.Description}");
           }
         }
-        catch (HL7Exception e)
+        catch (Exception e)
         {
           Console.ForegroundColor = ConsoleColor.Red;
-          Console.WriteLine($"HL7 Exception thrown: {e.Message}\n");
+          Console.WriteLine($"Exception thrown: {e.Message}\n");
           Console.WriteLine("____________________________________");
           Console.WriteLine($"\n\t FAILED: {t}");
           Console.WriteLine("____________________________________\n");
@@ -194,17 +194,25 @@ namespace HL7TestingTool
     /// <returns></returns>
     private IMessage SendHL7Message(TestStep t)
     {
-      PipeParser parser = new PipeParser();
       string crlfString = ConvertLineEndings(t.Message);  // Converting LF line endings to CRLF line endings
+
+      Console.WriteLine($"{t}: {t.Description}\n");
+      Console.WriteLine(crlfString);
+      Console.WriteLine($"\nSending and receiving {t} as MLLP message at {URI} ...");
+      Console.WriteLine("\nResponse:");
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
-      IMessage response = sender.SendAndReceive(crlfString);
-      Console.WriteLine($"{t} description: {t.Description}\n");
-      Console.WriteLine(crlfString);
-      Console.WriteLine($"\nSending and receiving {t} MLLP message at {URI} ...");
-      Console.WriteLine("\nResponse:");
-      Console.WriteLine(parser.Encode(response));
+      string responseString = sender.SendAndReceive(crlfString);
+      IMessage response;
+      try 
+      {
+        PipeParser parser = new PipeParser();
+        response = parser.Parse(responseString); 
+      }
+      catch (Exception e) { throw new Exception(e.Message); }
+
+      Console.WriteLine(responseString);
       return response;
     }
 
@@ -242,7 +250,7 @@ namespace HL7TestingTool
         Console.WriteLine($"------------\n{a}: {status}");
         Console.WriteLine($"FOUND: '{terser.Get(a.TerserString)}'\n");
       }
-      outputTestResult(testStep, testFail);
+      OutputTestResult(testStep, testFail);
       Console.ForegroundColor = ConsoleColor.Yellow;
     }
 
@@ -251,7 +259,7 @@ namespace HL7TestingTool
     /// </summary>
     /// <param name="testStep"></param>
     /// <param name="testFail"></param>
-    void outputTestResult(TestStep testStep, bool testFail)
+    void OutputTestResult(TestStep testStep, bool testFail)
     {
       string resultString = testFail ? "FAILED" : "PASSED";
       if (testFail)

@@ -86,7 +86,7 @@ namespace HL7TestingTool
     /// <summary>
     /// 
     /// </summary>
-    public int StepNumber { get; private set; }
+    public int? StepNumber { get; private set; }
 
     /// <summary>
     /// 

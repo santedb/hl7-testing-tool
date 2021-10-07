@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHapi.Base.Model;
-using NHapi.Base.Parser;
 using System.Net.Sockets;
-using System.Diagnostics;
-using NHapi.Base;
 
 namespace HL7TestingTool
 {
@@ -15,9 +10,8 @@ namespace HL7TestingTool
   /// </summary>
   public class MllpMessageSender
   {
-
-    // Endpoint
-    private Uri m_endpoint = null;
+    const int BUFFER_SIZE = 1024;
+    private Uri m_endpoint = null; // Message endpoint for constructor
 
     /// <summary>
     /// Creates a new message sender
@@ -36,10 +30,10 @@ namespace HL7TestingTool
     private string ReadResponse(NetworkStream stream)
     {
       StringBuilder response = new StringBuilder();
-      byte[] buffer = new byte[2048];
-      while (!buffer.Contains((byte)0x1c)) // Keep reading until the buffer has FS character
+      byte[] buffer = new byte[BUFFER_SIZE];
+      while (!buffer.Contains((byte)0x1c)) // Read into 1024 byte buffer until buffer contains FS character
       {
-        int br = stream.Read(buffer, 0, 2048);
+        int br = stream.Read(buffer, 0, BUFFER_SIZE);
 
         int ofs = 0;
         if (buffer[ofs] == '\v')
@@ -49,7 +43,11 @@ namespace HL7TestingTool
         }
         response.Append(Encoding.ASCII.GetString(buffer, ofs, br));
       }
-      Console.WriteLine($"'{response}'");
+      
+      // No response when missing message header
+      if(response.ToString().Split('|')[0] != "MSH")
+        throw new Exception($"No message header returned from {m_endpoint} ... (MLLP response body could be missing)");
+
       return response.ToString();
     }
 
@@ -74,67 +72,35 @@ namespace HL7TestingTool
       stream.Flush(); // Ensure all bytes get sent down the wire
       return stream;
     }
-    
+
     /// <summary>
-    /// Use a TcpClient to write to a stream, read the response, and parse the response as an IMessage.
+    /// Use a TcpClient to write to a stream, then read the response as a string.
     /// </summary>
     /// <param name="parser"></param>
     /// <param name="message"></param>
-    /// <returns></returns>
-    private IMessage UseTcpClient(PipeParser parser, string message)
+    /// <returns>Response string</returns>
+    public string SendAndReceive(string message)
     {
-      // Open a TCP port
-      using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))
+      string response;                                                      // Response to be returned
+      using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))  // Open a TCP port
       {
         try
         {
-          client.Connect(this.m_endpoint.Host, this.m_endpoint.Port); // Connect on the socket
-          using (NetworkStream stream = client.GetStream())           // Get the stream
+          client.Connect(this.m_endpoint.Host, this.m_endpoint.Port);       // Connect on the socket
+          using (NetworkStream stream = client.GetStream())                 // Get the stream
           {
-            WriteToStream(stream, message);                           // Write to stream
-            string resp = ReadResponse(stream);
-            Console.WriteLine(resp);
-            return parser.Parse(resp);                // Parse response
+            WriteToStream(stream, message);                                 // Write to stream
+            response = ReadResponse(stream);                                // Read response
           }
         }
         catch (Exception e)
         {
-          Debug.WriteLine(e.ToString());
-          throw;
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine(e.Message);
+          response = e.Message;
         }
       }
-    }
-
-    /// <summary>
-    /// Send a message as a string and recieve an IMessage
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    public IMessage SendAndReceive(string message)
-    {
-      return UseTcpClient(new PipeParser(), message);
-    }
-
-    /// <summary>
-    /// Send and receive an IMessage
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    public IMessage SendAndReceive(IMessage message)
-    {
-      var parser = new PipeParser();  // Encode the message
-      string strMessage;
-      try
-      {
-        strMessage = parser.Encode(message);
-      }
-      catch (Exception e)
-      {
-        throw new HL7Exception(e.Message);
-      }
-
-      // Helper method writes to stream and parses response
-      return UseTcpClient(parser, strMessage);
+      return response;
     }
   }
 }
