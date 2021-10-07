@@ -36,10 +36,10 @@ namespace HL7TestingTool
     private string ReadResponse(NetworkStream stream)
     {
       StringBuilder response = new StringBuilder();
-      byte[] buffer = new byte[1024];
+      byte[] buffer = new byte[2048];
       while (!buffer.Contains((byte)0x1c)) // Keep reading until the buffer has FS character
       {
-        int br = stream.Read(buffer, 0, 1024);
+        int br = stream.Read(buffer, 0, 2048);
 
         int ofs = 0;
         if (buffer[ofs] == '\v')
@@ -49,6 +49,7 @@ namespace HL7TestingTool
         }
         response.Append(Encoding.ASCII.GetString(buffer, ofs, br));
       }
+      Console.WriteLine($"'{response}'");
       return response.ToString();
     }
 
@@ -91,7 +92,9 @@ namespace HL7TestingTool
           using (NetworkStream stream = client.GetStream())           // Get the stream
           {
             WriteToStream(stream, message);                           // Write to stream
-            return parser.Parse(ReadResponse(stream));                // Parse response
+            string resp = ReadResponse(stream);
+            Console.WriteLine(resp);
+            return parser.Parse(resp);                // Parse response
           }
         }
         catch (Exception e)
@@ -127,7 +130,6 @@ namespace HL7TestingTool
       }
       catch (Exception e)
       {
-        Debug.WriteLine(e.ToString());
         throw new HL7Exception(e.Message);
       }
 

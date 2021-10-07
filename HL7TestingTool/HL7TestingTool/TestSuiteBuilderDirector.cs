@@ -78,6 +78,7 @@ namespace HL7TestingTool
       List<IMessage> responses = new List<IMessage>();
       foreach (TestStep t in testSteps)
       {
+        Console.ForegroundColor = ConsoleColor.Yellow;
         try
         {
           IMessage response = null;
@@ -97,11 +98,13 @@ namespace HL7TestingTool
             Console.WriteLine($"{t}: {t.Description}");
           }
         }
-        catch (Exception e)
+        catch (HL7Exception e)
         {
-          Console.WriteLine(e.Message);
-          Debug.WriteLine(e.ToString());
-          throw new HL7Exception(e.Message);
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine($"HL7 Exception thrown: {e.Message}\n");
+          Console.WriteLine("____________________________________");
+          Console.WriteLine($"\n\t FAILED: {t}");
+          Console.WriteLine("____________________________________\n");
         }
       }
       return responses;
@@ -114,49 +117,44 @@ namespace HL7TestingTool
     /// <returns></returns>
     private string ConvertLineEndings(string message)
     {
-
-      Console.WriteLine(message);
       byte[] bytes = Encoding.ASCII.GetBytes(message);
-      foreach (byte b in bytes)
-        Console.Write($"{b}-");
       string hex = BitConverter.ToString(bytes).Replace("-", "");
 
-      Console.WriteLine($"hex: {hex}");
-      for (int i = 0; i < hex.Length; i++)
-        Console.Write($"{hex[i]}-");
-      Console.WriteLine();
 
       StringBuilder ASCIIHexString = new StringBuilder();
-      for (int i = 0; i < hex.Length; i++)
+      for (int i = 1; i < hex.Length; i += 2)
       {
-        if (i > 0)
+        //Check for a LF (line feed)
+        if (hex[i - 1] == '0' && hex[i] == 'A') // Check for 0A at current index while incrementing by 2
         {
-          //Check for a LF (line feed)
-          if (hex[i - 1] == '0' && hex[i] == 'A')
+          //Check for a CR (carriage return)
+          //handle the case with LF on a line by itself (blank line)
+          if (hex[i - 2] == 'D')    // Checking: _0A   Current ASCIIHexString = ...0 
           {
-            //Check for a CR (carriage return)
-            //handle the case with LF on a line by itself (blank line)
-            if (hex[i-2] == 'D')    // Checking: _0A   Current ASCIIHexString = ...0 
+            if (hex[i - 3] != '0')   // Checking: _D0A   Current ASCIIHexString = ...0
             {
-              if(hex[i-3] != '0')   // Checking: _D0A   Current ASCIIHexString = ...0
-              {
-                ASCIIHexString.Append("D0");
-                ASCIIHexString.Append(hex[i]);  // Needed to append D0A to ASCIIHexString = ...0 to make it as ...0D0A
-              }
-              else  // Current ASCIIHexString = ...0D0 (no action needed - just append A)
-                ASCIIHexString.Append(hex[i]);
-            }
-            else    // Current ASCIIHexString = ...**0
-            {
-              ASCIIHexString.Append("D0");
+              ASCIIHexString.Append("0D");
+              ASCIIHexString.Append(hex[i - 1]);
               ASCIIHexString.Append(hex[i]);  // Needed to append D0A to ASCIIHexString = ...0 to make it as ...0D0A
             }
+            else  // Current ASCIIHexString = ...0D0 (no action needed - just append A)
+            {
+              ASCIIHexString.Append(hex[i - 1]);
+              ASCIIHexString.Append(hex[i]);
+            }
           }
-          else
-            ASCIIHexString.Append(hex[i]);
+          else    // Current ASCIIHexString = ...**0
+          {
+            ASCIIHexString.Append("0D");
+            ASCIIHexString.Append(hex[i - 1]);
+            ASCIIHexString.Append(hex[i]);  // Needed to append D0A to ASCIIHexString = ...0 to make it as ...0D0A
+          }
         }
         else
+        {
+          ASCIIHexString.Append(hex[i - 1]);
           ASCIIHexString.Append(hex[i]);
+        }
       }
 
       return ConvertHex(ASCIIHexString.ToString());
@@ -197,7 +195,7 @@ namespace HL7TestingTool
     private IMessage SendHL7Message(TestStep t)
     {
       PipeParser parser = new PipeParser();
-      string crlfString = ConvertLineEndings(t.Message.Trim());  // Converting LF line endings to CRLF line endings
+      string crlfString = ConvertLineEndings(t.Message);  // Converting LF line endings to CRLF line endings
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));

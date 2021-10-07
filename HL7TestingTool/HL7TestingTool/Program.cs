@@ -57,10 +57,10 @@ namespace HL7TestingTool
             director.ExecuteTestSteps(director.GetTestSuite());
             break;
           case 2:
-            Console.Write("Enter Case #:\t\n");
+            Console.Write("Enter Case #:\t");
             int.TryParse(Console.ReadLine(), out int caseNumber);
             //Call on helper to execute all test steps only from a specific case 
-            director.ExecuteTestSteps(director.GetTestCase(option));
+            director.ExecuteTestSteps(director.GetTestCase(caseNumber));
             break;
           case 3:
             Console.Write("Enter Case #:\t");
