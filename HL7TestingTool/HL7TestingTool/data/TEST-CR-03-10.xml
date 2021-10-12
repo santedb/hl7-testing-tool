@@ -7,12 +7,14 @@ PV1||I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AE" alternate="true" />
 		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="MSA-1" value="AR" alternate="true" />
+		<assert terserString="MSA-1" value="CR" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1-4-2" value="No authority configured for " alternate="true" />
+		<assert terserString="ERR-1-4-2" value="No authority configured for" alternate="true" />
 		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" alternate="true" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
-		<assert terserString="MSH-12" value="2.3.1" />
+        <assert terserString="MSH-12" value="2.3.1" />
 	</assertions>
 </testStep>

@@ -4,7 +4,11 @@
 QPD|IHE PIX Query|Q1640|RJ-439^^^TEST^PI|^^^TEST
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="/.PID(0)-3-1" value="RJ-439" />
+		<assert terserString="/.PID(1)-3-1" value="RJ-999" />
+		<assert terserString="QAK-2" value="OK" />
 		
         	
 	</assertions>

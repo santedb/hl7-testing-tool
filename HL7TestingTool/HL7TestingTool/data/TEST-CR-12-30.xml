@@ -4,7 +4,12 @@
 QPD|Q22^Find Candidates^HL7|Q1230|@PID.5.1^HOOD~@PID.5.2^ROBIN
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="ERR-2-1" value="QPD" />
+		<assert terserString="ERR-2-2" value="1" />
+		<assert terserString="ERR-2-3" value="8" />
+		<assert terserString="QAK-2" value="NF" />
 		
         	
 	</assertions>

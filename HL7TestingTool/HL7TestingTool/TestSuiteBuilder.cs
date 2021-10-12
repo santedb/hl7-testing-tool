@@ -16,7 +16,7 @@ namespace HL7TestingTool
     /// Property containing this test suites list of test steps.
     /// </summary>
     private List<TestStep> _testSteps = new List<TestStep>();
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -52,7 +52,7 @@ namespace HL7TestingTool
     /// <param name="stepNumber"></param>
     /// <param name="message"></param>
     /// <param name="description"></param>
-    private void AddTestStep(string description, int caseNumber, int stepNumber, string message ) => TestSteps.Add(new TestStep(description, caseNumber, stepNumber, message));
+    private void AddTestStep(string description, int caseNumber, int stepNumber, string message) => TestSteps.Add(new TestStep(description, caseNumber, stepNumber, message));
 
     /// <summary>
     /// 
@@ -90,11 +90,11 @@ namespace HL7TestingTool
       try
       {
         return TestSteps.Where(ts => ts.CaseNumber == caseNumber).ToList();
-      } 
+      }
       catch (Exception ex)
       {
         return new List<TestStep>();
-      } 
+      }
     }
 
     /// <summary>
@@ -132,40 +132,44 @@ namespace HL7TestingTool
         string stepNumber = path.Substring(path.Length - 6, 2); //getting the test step number of the file from its name
         Int32.TryParse(stepNumber, out int testStepNumber);// parsing the test step number to an int
 
-        // Parse this step's message from XML with LINQ
-        XDocument xml = XDocument.Load(path);
+        XDocument xml = XDocument.Load(path); // Current path represents test step to be parsed from XML file
         IEnumerable<XElement> rootDescendants = xml.Root.Descendants();
 
+        // Parse this step's description from XML with LINQ
         IEnumerable<XElement> description = from elements in rootDescendants
                                             where elements.Name == "description"
                                             select elements;
-
+        // Parse this step's message from XML with LINQ
         IEnumerable<XElement> message = from elements in rootDescendants
                                         where elements.Name == "message"
                                         select elements;
-
-        // Parse this step's  assertions from XML with LINQ
+        // Parse this step's assertions from XML with LINQ
         IEnumerable<XElement> assertions = from elements in rootDescendants
                                            where elements.Name == "assert"
                                            select elements;
 
-        // Create an assertions list to add to this step.
-        foreach (XElement a in assertions)
+        foreach (XElement a in assertions)  // Create an assertions list to add to this step.
         {
-          if (a.Attribute("alternate") == null)
-            stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
-          else
+          if (a.Attribute("alternate") != null) // POSSIBLY AN ALTERNATE ASSERTION
           {
-            if (a.Attribute("alternate").Value.ToLower() == "true")
+            if (a.Attribute("alternate").Value.ToLower() == "true") // Value of true (not case-sensitive) for alternate assertion
               stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value, true));
-            else
+            else  // NOT ALTERNATE: MANDATORY ASSERTION
+              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
+          }
+          else  // Check for other possible non-mandatory assertion ('missing' assertion)
+          {
+            if (a.Attribute("missing") != null) // POSSIBLY A MISSING SEGMENT ASSERTION
+            {
+              if (a.Attribute("missing").Value.ToLower() == "true") // Value of true (not case-sensitive) for 'missing' assertion
+                stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, true));
+              else  // NOT MISSING ASSERTION
+                stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, false));
+            }
+            else  // DEFAULT: MANDATORY ASSERTION
               stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
           }
         }
-
-        //NOTE: Find out about pre-conditions and what the assumption is for those
-        //  add this to the test step model as a constructor available to the
-        //  TestSuiteBuilder and overload with another AddTestStep method
 
         //Create test steps from XML configuration data and add it to the test suite based on test step's XML configuration
         // 1. Only description
@@ -187,11 +191,11 @@ namespace HL7TestingTool
         // 5. Full test step (description, message, assertions)
         else if (description.Any() && message.Any() && assertions.Any())
           AddTestStep(description.First().Value, testCaseNumber, testStepNumber, message.First().Value, stepAssertions);
-        
+
         // 6. Any other test steps
         else
           throw new Exception($"ERROR: Test Case #{testCaseNumber} Step #{stepNumber} could not be read from test suite XML configuration data. Either no description");
       }
-    }   
+    }
   }
 }

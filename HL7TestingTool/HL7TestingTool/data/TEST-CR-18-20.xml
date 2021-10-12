@@ -5,7 +5,8 @@ EVN||20141001
 PID|||RJ-460^^^TEST_A||JONES^YANNICK^^^^^L||199004|M|||||||||||NID-000345439^^^NID
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_A" />
 		<assert terserString="MSH-6" value="TEST" />
 		

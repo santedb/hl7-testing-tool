@@ -4,7 +4,9 @@
 QPD|Q22^Find Candidates^HL7|Q1560|@PID.7^1984~@PID.5.1^JONES~@PID.5.2^JASON
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="QAK-2" value="NF" />
 		
         	
 	</assertions>

@@ -4,11 +4,12 @@
 QPD|IHE PIX Query|Q0220|RJ-438^^^&amp;2.16.840.1.113883.3.72.5.9.1&amp;ISO^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
 		<assert terserString="MSH-9-1" value="RSP" />
 		<assert terserString="MSH-9-2" value="K23" />
-		<assert terserString="/.PID-3-4-1" value="TEST" />
-		<assert terserString="/.PID-3-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
-		<assert terserString="/.PID-3-4-3" value="ISO" />
+		<assert terserString="/.PID-3(1)-4-1" value="TEST" />
+		<assert terserString="/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
+		<assert terserString="/.PID-3(1)-4-3" value="ISO" />
     </assertions>
 </testStep>

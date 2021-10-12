@@ -1,0 +1,17 @@
+<testStep>
+	<description>Dummy Test</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20160901073941|TEST_HARNESS+TEST_HARNESS|QBP^Q11|Dummy|P|2.5.1|
+||||||||Z44^CDCPHINVS| MYHEALTHSYSTEM|MYCLINIC
+QPD|Z44^Requestevaluatedhistoryandforecast^HL70471|24781244|87654321^^^SHCPI^CPI|
+Pebble^Stone^^^^^||19580424|M|2000RockQuarryRoad^^Lansing^MI^48933^USA^L|^PRN^
+^^^517^5552000|Y|1|20160901073941-0400|LOCALEMRID|
+RCP|I|1^RD|R</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="/.PID-3-1" value="RJ-439" />
+		<assert terserString="QAK-2" value="OK" />
+		
+        	
+	</assertions>
+</testStep>

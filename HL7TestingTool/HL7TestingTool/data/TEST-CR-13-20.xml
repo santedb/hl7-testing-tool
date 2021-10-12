@@ -4,7 +4,9 @@
 QPD|Q22^Find Candidates^HL7|Q1320|@PID.21.1^RJ-439~@PID.21.4.1^TEST
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" />
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="/.PID-3-1" value="RJ-440" />
 		
         	
 	</assertions>

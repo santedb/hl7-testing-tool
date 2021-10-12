@@ -98,13 +98,16 @@ namespace HL7TestingTool
             Console.WriteLine($"{t}: {t.Description}");
           }
         }
-        catch (Exception e)
+        catch (HL7Exception e) // Can catch an Exception with missing segment 
         {
+          if (e.SegmentName == null) //CAUGHT MISSING SEGMENT CONDITION
+            continue;
           Console.ForegroundColor = ConsoleColor.Red;
           Console.WriteLine($"Exception thrown: {e.Message}\n");
-          Console.WriteLine("____________________________________");
-          Console.WriteLine($"\n\t FAILED: {t}");
-          Console.WriteLine("____________________________________\n");
+          //Console.WriteLine("____________________________________");
+          //Console.WriteLine($"\n\t FAILED: {t}");
+          //Console.WriteLine("____________________________________\n");
+          OutputTestResult(t, true);
         }
       }
       return responses;
@@ -163,11 +166,11 @@ namespace HL7TestingTool
     /// <summary>
     /// Method used to convert a string of hexadecimal values (2 characters each).
     /// This is used in this program to ensure that CRLF line endings appear in all messages being parsed.
-    /// HL7 messages always expect CR to separate segments and having LF line endings will throw an HL7Exception.
+    /// HL7 messages always expect CR to separate segments and having LF line endings will throw an Exception.
     /// </summary>
     /// <param name="hexString"></param>
     /// <returns></returns>
-    private string ConvertHex(string hexString)
+    public string ConvertHex(string hexString)
     {
       try
       {
@@ -203,31 +206,67 @@ namespace HL7TestingTool
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
-      string responseString = sender.SendAndReceive(crlfString);
+      string responseString = sender.SendAndReceive(this, crlfString);
       IMessage response;
-      try 
+      try
       {
         PipeParser parser = new PipeParser();
-        response = parser.Parse(responseString); 
+        response = parser.Parse(responseString);
       }
       catch (Exception e) { throw new Exception(e.Message); }
 
-      Console.WriteLine(responseString);
+      Debug.WriteLine(responseString);
       return response;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="testStep"></param>
+    /// <param name="response"></param>
     private void Assert(TestStep testStep, IMessage response)
     {
       Terser terser = new Terser(response);
+      string found;
       bool testFail = false;
       foreach (Assertion a in testStep.Assertions)
       {
-        string found = terser.Get(a.TerserString);
-        a.Outcome = found == a.Value;
+        try  // Getting a value from a response terser
+        {
+          found = terser.Get(a.TerserString);
+          if (a.Value == null && a.Missing == true) // SHOULD be missing
+            a.Outcome = false;
+          else // SHOULD NOT be missing
+            a.Outcome = found == a.Value;
+        }
+        catch (HL7Exception ex) // and handle case where a missing segment occurs 
+        {
+          found = "No value";
+          if (a.Missing)  // Check for a SegmentName in the HL7Exception
+          {
+            if (ex.SegmentName == null) // Assertion passes
+              a.Outcome = true;
+            else                        // Assertion fails
+            {
+              found = a.TerserString.ToString();
+              a.Outcome = false;
+            }
+          }
+          else            // Assertion is for required value (not missing)
+          {
+            if (ex.SegmentName == null) // Assertion fails
+              a.Outcome = false;
+            else                        // Assertion passes
+            {
+              found = a.TerserString.ToString();
+              a.Outcome = true;
+            }
+          }
+        }
         string status = (bool)a.Outcome ? "PASSED" : "FAILED";
 
         // Check if current assertion is an alternate for some terser string
-        if (a.Alternate)
+        if (a.Alternate)  // Test step fails only if ALL alternate assertions with a matching TerserString fail
         {
           if (!(bool)a.Outcome) // Assertion outcome is false (failed) or null
           {
@@ -238,7 +277,7 @@ namespace HL7TestingTool
               testFail = false;
           }
         }
-        else
+        else  // Test step is either for missing or matching values and fails if any one of them fails in serial.
           testFail = (bool)a.Outcome ? testFail : true;
 
         // Output a positive outcome as green and negative as red
@@ -248,7 +287,7 @@ namespace HL7TestingTool
           Console.ForegroundColor = ConsoleColor.Red;
 
         Console.WriteLine($"------------\n{a}: {status}");
-        Console.WriteLine($"FOUND: '{terser.Get(a.TerserString)}'\n");
+        Console.WriteLine($"FOUND: '{found}'\n");
       }
       OutputTestResult(testStep, testFail);
       Console.ForegroundColor = ConsoleColor.Yellow;

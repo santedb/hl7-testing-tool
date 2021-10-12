@@ -27,21 +27,34 @@ namespace HL7TestingTool
     /// </summary>
     /// <param name="stream"></param>
     /// <returns></returns>
-    private string ReadResponse(NetworkStream stream)
+    private string ReadResponse(TestSuiteBuilderDirector director, NetworkStream stream)
     {
       StringBuilder response = new StringBuilder();
       byte[] buffer = new byte[BUFFER_SIZE];
       while (!buffer.Contains((byte)0x1c)) // Read into 1024 byte buffer until buffer contains FS character
       {
-        int br = stream.Read(buffer, 0, BUFFER_SIZE);
-
-        int ofs = 0;
-        if (buffer[ofs] == '\v')
+        int byteCount = stream.Read(buffer, 0, BUFFER_SIZE);
+        int offset = 0;
+        if (buffer[offset] == '\v')  // Adjust start and count of bytes read when starting with '|' and skip it
         {
-          ofs = 1;
-          br--;
+          offset = 1;
+          byteCount--;
         }
-        response.Append(Encoding.ASCII.GetString(buffer, ofs, br));
+        
+        
+        //char[] characters = Encoding.ASCII.GetChars(buffer);
+        //for (int i = 0; i < characters.Length; i++)
+        //{
+        //  char c = characters[i];
+        //  Console.WriteLine($"Character as UTF-8: {c} Index: {i}");
+        //}
+
+        //string hexConcat = BitConverter.ToString(buffer).Replace("-", "");
+        //string hexToString = director.ConvertHex(hexConcat);
+        //Console.WriteLine($"Hex characters returned as UTF-8: {hexToString}");
+
+        string buffString = Encoding.ASCII.GetString(buffer, offset, byteCount);
+        response.Append(buffString);
       }
       
       // No response when missing message header
@@ -79,7 +92,7 @@ namespace HL7TestingTool
     /// <param name="parser"></param>
     /// <param name="message"></param>
     /// <returns>Response string</returns>
-    public string SendAndReceive(string message)
+    public string SendAndReceive(TestSuiteBuilderDirector director, string message)
     {
       string response;                                                      // Response to be returned
       using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))  // Open a TCP port
@@ -90,7 +103,7 @@ namespace HL7TestingTool
           using (NetworkStream stream = client.GetStream())                 // Get the stream
           {
             WriteToStream(stream, message);                                 // Write to stream
-            response = ReadResponse(stream);                                // Read response
+            response = ReadResponse(director, stream);                                // Read response
           }
         }
         catch (Exception e)
