@@ -6,7 +6,10 @@ RCP|I|10^RD</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-5-1" value="JONES" />
+		<assert terserString="QUERY_RESPONSE/.PID-5-2" value="JENNIFER" />
+		<assert terserString="QUERY_RESPONSE/.QRI-3" value="" />
 		<assert terserString="QAK-2" value="OK" />
-		<assert terserString="QUERY_RESPONSE/QRI-3" missing="false" />
+		
 	</assertions>
 </testStep>

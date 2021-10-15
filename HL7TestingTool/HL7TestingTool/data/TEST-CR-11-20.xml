@@ -6,12 +6,11 @@ RCP|I|10^RD</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
-		<assert terserString="PID(0)-3-1" value="RJ-439" />
-		<assert terserString="PID(0)-3-4" value="TEST" />
-		<assert terserString="PID(0)-3-5" value="JONES" />
-		<assert terserString="PID(0)-3-6" value="19840125" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-439" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4" value="TEST" />
+		<assert terserString="QUERY_RESPONSE/.PID-5-1" value="JONES" />
+		<assert terserString="QUERY_RESPONSE/.PID-5-2" value="JENNIFER" />
+		<assert terserString="QUERY_RESPONSE/.PID-7" value="19840125" />
 		<assert terserString="QAK-2" value="OK" />
-		
-        	
 	</assertions>
 </testStep>

@@ -210,10 +210,21 @@ namespace HL7TestingTool
       IMessage response;
       try
       {
-        PipeParser parser = new PipeParser();
-        response = parser.Parse(responseString);
+        if (responseString.Split('|')[0] == "MSH")
+        {
+          PipeParser parser = new PipeParser();
+          response = parser.Parse(responseString);
+        }
+        else
+        {
+          HL7Exception ex = new HL7Exception("Missing MSH")
+          {
+            SegmentName = null
+          };
+          throw ex;
+        }
       }
-      catch (Exception e) { throw new Exception(e.Message); }
+      catch (HL7Exception e) { throw e; }
 
       Debug.WriteLine(responseString);
       return response;

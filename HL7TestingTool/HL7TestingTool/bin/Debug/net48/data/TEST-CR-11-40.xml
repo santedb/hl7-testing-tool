@@ -8,6 +8,7 @@ RCP|I|10^RD</message>
 		<assert terserString="MSA-1" value="CR" alternate="true" />
 		<assert terserString="MSA-1" value="AE" alternate="true" />
 		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
 		<assert terserString="QAK-2" value="AE" />
 		
         	

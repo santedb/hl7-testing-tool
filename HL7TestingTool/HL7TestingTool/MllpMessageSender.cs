@@ -103,7 +103,7 @@ namespace HL7TestingTool
           using (NetworkStream stream = client.GetStream())                 // Get the stream
           {
             WriteToStream(stream, message);                                 // Write to stream
-            response = ReadResponse(director, stream);                                // Read response
+            response = ReadResponse(director, stream);                      // Read response
           }
         }
         catch (Exception e)

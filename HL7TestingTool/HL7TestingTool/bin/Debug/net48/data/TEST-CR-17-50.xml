@@ -11,7 +11,7 @@ MRG|RJ-292^^^TEST_B</message>
 		<assert terserString="MSA-1" value="CR" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1" value="" />
+		<assert terserString="ERR-3" value="204" />
 		
 		
 		

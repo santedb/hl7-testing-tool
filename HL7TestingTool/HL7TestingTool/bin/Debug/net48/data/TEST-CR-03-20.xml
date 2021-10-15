@@ -11,7 +11,7 @@ PV1||I</message>
 		<assert terserString="MSA-1" value="CR" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1-4-2" value="" />
+		<assert terserString="ERR-1-4-2" value="Error processig assigning authority" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
         <assert terserString="MSH-12" value="2.3.1" />

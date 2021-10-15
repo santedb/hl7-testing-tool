@@ -9,7 +9,7 @@ MRG|RJ-292^^^TEST_A</message>
 		<assert terserString="MSA-1" value="CE" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1" value="" />
+		<assert terserString="ERR-1-4-2" value="SFT does not exist in the group NHapi.Base.Model.GenericMessage+V25" />
 		
         	
 	</assertions>
