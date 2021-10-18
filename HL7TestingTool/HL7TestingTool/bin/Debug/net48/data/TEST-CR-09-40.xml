@@ -10,6 +10,7 @@ RCP|I</message>
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-3" value="ISO" />
+		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true" />
 		<assert terserString="QAK-2" value="OK" />
 		
 		

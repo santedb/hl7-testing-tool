@@ -7,6 +7,7 @@ RCP|I|10^RD</message>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-442" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
 		<assert terserString="QUERY_RESPONSE/.PID-5-1" value="FOSTER" />
 		<assert terserString="QUERY_RESPONSE/.PID-5-2" value="FANNY" />
 		<assert terserString="QUERY_RESPONSE/.PID-5-3" value="FULL" />
