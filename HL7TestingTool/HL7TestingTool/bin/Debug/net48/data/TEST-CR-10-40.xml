@@ -6,6 +6,7 @@ RCP|I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
 		<assert terserString="QAK-2" value="NF" />
 		
         	
