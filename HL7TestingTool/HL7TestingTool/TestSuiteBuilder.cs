@@ -116,7 +116,7 @@ namespace HL7TestingTool
     }
 
     /// <summary>
-    /// 
+    /// Parsing test step file names with convention 'OHIE-CR-##-##' and the contents of each XML file to build a test suite.
     /// </summary>
     /// <param name="testStepPaths"></param>
     public void Build(string[] testStepPaths)
@@ -124,15 +124,10 @@ namespace HL7TestingTool
       foreach (string path in testStepPaths)//Iterating through all the files in the array
       {
         List<Assertion> stepAssertions = new List<Assertion>();
+        Int32.TryParse(path.Split('-')[2], out int testCaseNumber); // parse case number as int
+        Int32.TryParse(path.Split('-')[3], out int testStepNumber); // parse step number as int
 
-        // =========================================================  Parsing filenames based on convention 'TEST-CR-##-##'
-        string caseNumber = path.Substring(path.Length - 9, 2); // getting the test case number of the file from its name
-        Int32.TryParse(caseNumber, out int testCaseNumber); //parsing the test case number to an int
-
-        string stepNumber = path.Substring(path.Length - 6, 2); //getting the test step number of the file from its name
-        Int32.TryParse(stepNumber, out int testStepNumber);// parsing the test step number to an int
-
-        XDocument xml = XDocument.Load(path); // Current path represents test step to be parsed from XML file
+        XDocument xml = XDocument.Load(path); // Load XML file at the path for current case and step
         IEnumerable<XElement> rootDescendants = xml.Root.Descendants();
 
         // Parse this step's description from XML with LINQ

@@ -61,7 +61,7 @@ namespace HL7TestingTool
     public TestStep GetTestStep(int caseNumber, int stepNumber) => _testSuiteBuilder.GetTestStep(caseNumber, stepNumber);
 
     /// <summary>
-    /// Director builds the test suite by calling the implemented ImportTestData() method.
+    /// Director builds the test suite by calling the implemented Import() method to get filepaths as a string array for the Build() method.
     /// </summary>
     public void BuildFromXml()
     {

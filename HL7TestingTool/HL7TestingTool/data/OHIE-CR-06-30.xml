@@ -9,7 +9,5 @@ PV1||I</message>
 		<assert terserString="MSA-1" value="CA" alternate="true" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_A" />
 		<assert terserString="MSH-6" value="TEST" />
-		
-        	
 	</assertions>
 </testStep>
