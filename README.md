@@ -27,3 +27,27 @@ Assertions can be mandatory, missing, not missing, or alternate (multiple possib
 |----------|-------------------------------|
 |missing   |Asserts a missing segment, field, component, sub-component when `missing="true"`. Asserts not missing when `missing="false"`.|
 |alternate |Asserts an alternate value for a specific terser string in case alternate values are expected whenever `alternate="true"` for and `terserString` attributes have the same value for multiple `<assert/>` elements.|
+
+## Sample File: OHIE-CR-03-20.xml
+```markdown
+<testStep>
+	<description>Test harness sends ADT^A01 message having invalid assigning authority name in CX.4.1</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-03-20|P|2.3.1
+EVN||20101020
+PID|||RJ-999-2^^^TEST_BLOCK||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||481-27-4185
+PV1||I</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AE" alternate="true" />
+		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="MSA-1" value="AR" alternate="true" />
+		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSH-5" value="TEST_HARNESS" />
+		<assert terserString="MSH-6" value="TEST" />
+		<assert terserString="ERR-1-4-2" value="Error processig assigning authority" />
+		<assert terserString="MSH-9-1" value="ACK" />
+		<assert terserString="MSH-9-2" value="A01" />
+        <assert terserString="MSH-12" value="2.3.1" />
+        	
+	</assertions>
+</testStep>
+```
