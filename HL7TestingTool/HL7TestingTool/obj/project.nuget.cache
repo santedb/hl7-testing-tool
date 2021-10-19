@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GcAuJBMUlQG7c9R6MmkLC5tyrmYfCOPj+IdPDXlpGalhNJR4a7YXrdAcnKEoa2yVgi4JGyaem7S0BWhQob2NTg==",
+  "dgSpecHash": "rd5LYhDiltS3yyjOENx8VRxoyTVI14UL8Iu4/tHUF0aumgSCIsjVf1+Ovq4zDA7ESddzExeDe1KbWFm13CLlzg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+  "projectFilePath": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Azabelle\\.nuget\\packages\\nhapi.parser.agfa\\1.0.1\\nhapi.parser.agfa.1.0.1.nupkg.sha512"
+    "C:\\Users\\tzieb\\.nuget\\packages\\nhapi.parser.agfa\\1.0.1\\nhapi.parser.agfa.1.0.1.nupkg.sha512"
   ],
   "logs": []
 }

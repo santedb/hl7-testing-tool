@@ -189,7 +189,7 @@ namespace HL7TestingTool
 
         // 6. Any other test steps
         else
-          throw new Exception($"ERROR: Test Case #{testCaseNumber} Step #{stepNumber} could not be read from test suite XML configuration data. Either no description");
+          throw new Exception($"ERROR: Test Case #{testCaseNumber} Step #{testStepNumber} could not be read from test suite XML configuration data. Either no description");
       }
     }
   }

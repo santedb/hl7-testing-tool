@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {}
+    "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {
+    "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+        "projectUniqueName": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
         "projectName": "HL7TestingTool",
-        "projectPath": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
-        "packagesPath": "C:\\Users\\Azabelle\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Azabelle\\Documents\\SanteSuite\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
+        "projectPath": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\HL7TestingTool.csproj",
+        "packagesPath": "C:\\Users\\tzieb\\.nuget\\packages\\",
+        "outputPath": "D:\\MEDIC\\hl7-testing-tool\\HL7TestingTool\\HL7TestingTool\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Azabelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\tzieb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net48"
@@ -45,7 +51,7 @@
               "version": "[1.0.1, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
