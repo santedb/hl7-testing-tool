@@ -1,0 +1,5 @@
+<testStep>
+    <description>Setup the receiver such that OID 2.16.840.1.113883.3.72.5.9.2 has assigning authority of TEST_A which can be assigned from TEST_HARNESS_A</description>
+    
+
+</testStep>

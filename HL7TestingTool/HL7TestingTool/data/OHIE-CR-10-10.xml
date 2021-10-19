@@ -1,0 +1,18 @@
+<testStep>
+    <description>Ensure a patient with the following information is registered in the receiver:
+Name: Betty Boop, ID: RJ-444 in domain TEST, DOB: 1935
+This can be registered by sending the following message to the recipient:
+</description>
+<message>MSH|^~\&amp;|TEST_HARNESS^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-09-30|P|2.3.1
+EVN||20101020
+PID|||RJ-444^^^TEST||BOOP^BETTY^^^^^L||1935|F|||
+PV1||I
+</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		
+	</assertions>
+    
+
+</testStep>

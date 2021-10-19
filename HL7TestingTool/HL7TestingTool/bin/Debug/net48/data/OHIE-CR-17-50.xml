@@ -1,0 +1,20 @@
+<testStep>
+	<description>Test harness (as TEST_HARNESS_B) sends ADT^A40 message attempting to merge a patient identifier which does not exist.</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS_B^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A40^ADT_A40|TEST-CR-17-50|P|2.3.1
+EVN||20101020
+PID|||SJ-204^^^TEST_B||SMITH^SAM^^^^^L||198902|F|||||||||||
+MRG|RJ-292^^^TEST_B</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AE" alternate="true" />
+		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="MSA-1" value="AR" alternate="true" />
+		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
+		<assert terserString="MSH-6" value="TEST" />
+		<assert terserString="ERR-3" value="204" />
+		
+		
+		
+        	
+	</assertions>
+</testStep>

@@ -1,0 +1,16 @@
+<testStep>
+	<description>Test harness sends a PDQ message with an invalid query parameter of @PID.3.4.99</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090226131520-0600|TEST_HARNESS+TEST_HARNESS|QBP^Q22^QBP_Q21|TEST-CR-11-40|P|2.5
+QPD|Q22^Find Candidates^HL7|Q1140|@PID.3.1^RJ-9483~@PID.3.4.99^NOVALUE
+RCP|I|10^RD</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AR" alternate="true" />
+		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSA-1" value="AE" alternate="true" />
+		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
+		<assert terserString="QAK-2" value="AE" />
+		
+        	
+	</assertions>
+</testStep>

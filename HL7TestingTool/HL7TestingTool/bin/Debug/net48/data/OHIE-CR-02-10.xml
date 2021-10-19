@@ -1,0 +1,16 @@
+<testStep>
+	<description>Test harness sends ADT^A01 message where the CX.4.1 of the PID is missing but the message contains CX.4.2 and CX.4.3.</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-02-10|P|2.3.1
+EVN||20101020
+PID|||RJ-438^^^&amp;2.16.840.1.113883.3.72.5.9.1&amp;ISO||JOHNSTON^ROBERT^^^^^L|MURRAY^^^^^^L|19830205|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867
+PV1||I</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSH-9-1" value="ACK" />
+		<assert terserString="MSH-9-2" value="A01" />
+		<assert terserString="MSH-12" value="2.3.1" />
+		<assert terserString="MSH-5" value="TEST_HARNESS" />
+		<assert terserString="MSH-6" value="TEST" />
+    </assertions>
+</testStep>

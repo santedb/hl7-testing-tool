@@ -1,0 +1,14 @@
+<testStep>
+	<description>Test harness sends a query with patient’s name and gender which results in no match.</description>
+	<message>MSH|^~\&amp;|TEST_HARNESS|TEST|CR1|MOH_CAAT|20090226131520-0600|TEST_HARNESS+TEST_HARNESS|QBP^Q22^QBP_Q21|TEST-CR-15-50|P|2.5
+QPD|Q22^Find Candidates^HL7|Q1550|@PID.8^M~@PID.5.1^JONES~@PID.5.2^JENNIFER
+RCP|I|10^RD</message>
+	<assertions>
+		<assert terserString="MSA-1" value="AA" alternate="true" />
+		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
+		<assert terserString="QAK-2" value="NF" />
+		
+        	
+	</assertions>
+</testStep>
