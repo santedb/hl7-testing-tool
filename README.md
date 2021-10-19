@@ -28,7 +28,7 @@ Assertions can be mandatory, missing, not missing, or alternate (multiple possib
 |missing   |Asserts a missing segment, field, component, sub-component when `missing="true"`. Asserts not missing when `missing="false"`.|
 |alternate |Asserts an alternate value for a specific terser string in case alternate values are expected whenever `alternate="true"` for and `terserString` attributes have the same value for multiple `<assert/>` elements.|
 
-## Sample File: OHIE-CR-03-20.xml
+## Example: OHIE-CR-03-20.xml
 ```markdown
 <testStep>
 	<description>Test harness sends ADT^A01 message having invalid assigning authority name in CX.4.1</description>
