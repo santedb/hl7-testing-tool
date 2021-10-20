@@ -126,7 +126,7 @@ namespace HL7TestingTool
         string[] splitPath = path.Split('\\');
         List<Assertion> stepAssertions = new List<Assertion>();
         Int32.TryParse(splitPath[splitPath.Length - 1].Split('-')[2], out int testCaseNumber); // parse case number as int
-        Int32.TryParse(splitPath[splitPath.Length - 1].Split('-')[3], out int testStepNumber); // parse step number as int
+        Int32.TryParse(splitPath[splitPath.Length - 1].Split('-')[3].Split('.')[0], out int testStepNumber); // parse step number as int
 
         XDocument xml = XDocument.Load(path); // Load XML file at the path for current case and step
         IEnumerable<XElement> rootDescendants = xml.Root.Descendants();
