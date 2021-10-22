@@ -6,8 +6,10 @@ RCP|I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-440" />
-		<assert terserString="QUERY_RESPONSE/.PID-3-4-1" value="TEST"/>
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-1" value="RJ-440" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-440" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4-1" value="TEST" alternate="true"/>
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" alternate="true"/>
 		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true"/>
 		
         	

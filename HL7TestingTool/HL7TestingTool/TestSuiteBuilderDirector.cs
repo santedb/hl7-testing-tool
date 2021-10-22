@@ -277,12 +277,12 @@ namespace HL7TestingTool
         string status = (bool)a.Outcome ? "PASSED" : "FAILED";
 
         // Check if current assertion is an alternate for some terser string
-        if (a.Alternate)  // Test step fails only if ALL alternate assertions with a matching TerserString fail
+        if (a.Alternate != null)  // Test step fails only if ALL alternate assertions with a matching TerserString fail
         {
           if (!(bool)a.Outcome) // Assertion outcome is false (failed) or null
           {
             // Check if any other alternates for the same terser string did not pass or have null outcome (not tested yet)
-            if (!testStep.Assertions.Exists(o => o.TerserString == a.TerserString && (o.Outcome == true || o.Outcome == null)))
+            if (!testStep.Assertions.Exists(o => o.Alternate == a.Alternate && (o.Outcome == true || o.Outcome == null)))
               testFail = true;
             else
               testFail = false;

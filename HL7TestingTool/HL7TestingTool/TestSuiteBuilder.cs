@@ -146,13 +146,8 @@ namespace HL7TestingTool
 
         foreach (XElement a in assertions)  // Create an assertions list to add to this step.
         {
-          if (a.Attribute("alternate") != null) // POSSIBLY AN ALTERNATE ASSERTION
-          {
-            if (a.Attribute("alternate").Value.ToLower() == "true") // Value of true (not case-sensitive) for alternate assertion
-              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value, true));
-            else  // NOT ALTERNATE: MANDATORY ASSERTION
-              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value));
-          }
+          if (a.Attribute("alternate") != null) // ALTERNATE ASSERTION
+              stepAssertions.Add(new Assertion(a.Attribute("terserString").Value, a.Attribute("value").Value, a.Attribute("alternate").Value));
           else  // Check for other possible non-mandatory assertion ('missing' assertion)
           {
             if (a.Attribute("missing") != null) // POSSIBLY A MISSING SEGMENT ASSERTION

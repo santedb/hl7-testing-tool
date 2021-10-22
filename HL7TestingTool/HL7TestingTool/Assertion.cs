@@ -27,7 +27,7 @@ namespace HL7TestingTool
     {
       TerserString = terserString;
       Value = value;
-      Alternate = false;
+      Alternate = null;
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace HL7TestingTool
     {
       TerserString = terserString;
       Missing = missing;
-      Alternate = false;
+      Alternate = null;
       Value = null;
     }
 
@@ -49,7 +49,7 @@ namespace HL7TestingTool
     /// <param name="terserString"></param>
     /// <param name="value"></param>
     /// <param name="alternate"></param>
-    public Assertion(string terserString, string value, bool alternate)
+    public Assertion(string terserString, string value, string alternate)
     {
       TerserString = terserString;
       Value = value;
@@ -69,7 +69,7 @@ namespace HL7TestingTool
     /// <summary>
     /// 
     /// </summary>
-    public bool Alternate { get; set; }
+    public string Alternate { get; set; }
 
     /// <summary>
     /// 
@@ -85,7 +85,7 @@ namespace HL7TestingTool
     /// 
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => Alternate ? $"Assert alternate value '{Value}' at '{TerserString}' has outcome of '{Outcome}'" 
+    public override string ToString() => Alternate != null ? $"Assert alternate value '{Value}' at '{TerserString}' has outcome of '{Outcome}'" 
       : Missing ? $"Assert missing value at '{TerserString}' has outcome of '{Outcome}'" 
       : $"Assert mandatory value '{Value}' at '{TerserString}' has outcome of '{Outcome}'";
   }

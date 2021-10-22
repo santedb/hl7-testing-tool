@@ -60,3 +60,4 @@ D:\MEDIC\hl7-testing-tool\HL7TestingTool\HL7TestingTool\obj\Debug\net48\HL7Testi
 D:\MEDIC\hl7-testing-tool\HL7TestingTool\HL7TestingTool\obj\Debug\net48\HL7TestingTool.csproj.CopyComplete
 D:\MEDIC\hl7-testing-tool\HL7TestingTool\HL7TestingTool\obj\Debug\net48\HL7TestingTool.exe
 D:\MEDIC\hl7-testing-tool\HL7TestingTool\HL7TestingTool\obj\Debug\net48\HL7TestingTool.pdb
+D:\MEDIC\hl7-testing-tool\HL7TestingTool\HL7TestingTool\obj\Debug\net48\HL7TestingTool.csproj.AssemblyReference.cache

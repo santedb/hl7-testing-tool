@@ -6,10 +6,14 @@ RCP|I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA" alternate="true" />
 		<assert terserString="MSA-1" value="CA" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1-1" value="RJ-443" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-3" value="ISO" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-1-1" value="RJ-443" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1-1" value="RJ-443" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4-1" value="TEST" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4-2" value="2.16.840.1.113883.3.72.5.9.1" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4-3" value="ISO" alternate="true" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-3" value="ISO" alternate="true" />
 		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true" />
 		<assert terserString="QAK-2" value="OK" />
 		
