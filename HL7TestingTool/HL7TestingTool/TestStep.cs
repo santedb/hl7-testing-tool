@@ -107,6 +107,6 @@ namespace HL7TestingTool
     /// 
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => $"TEST-CR-{CaseNumber}-{StepNumber}";
+    public override string ToString() => $"OHIE-CR-{CaseNumber}-{StepNumber}";
   }
 }

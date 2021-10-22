@@ -206,7 +206,7 @@ namespace HL7TestingTool
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
-      string responseString = sender.SendAndReceive(this, crlfString);
+      string responseString = sender.SendAndReceive(crlfString);
       IMessage response;
       try
       {

@@ -27,7 +27,7 @@ namespace HL7TestingTool
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
-    public string[] Import(string filePath) { return Directory.GetFiles(filePath); }
+    public List<string> Import(string filePath) { return Directory.EnumerateFiles(filePath).OrderBy(Path.GetFileName).ToList(); }
 
     /// <summary>
     /// 
@@ -119,7 +119,7 @@ namespace HL7TestingTool
     /// Parsing test step file names with convention 'OHIE-CR-##-##' and the contents of each XML file to build a test suite.
     /// </summary>
     /// <param name="testStepPaths"></param>
-    public void Build(string[] testStepPaths)
+    public void Build(List<string> testStepPaths)
     {
       foreach (string path in testStepPaths)//Iterating through all the files in the array
       {

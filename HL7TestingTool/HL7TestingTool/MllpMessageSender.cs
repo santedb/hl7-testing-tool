@@ -27,7 +27,7 @@ namespace HL7TestingTool
     /// </summary>
     /// <param name="stream"></param>
     /// <returns></returns>
-    private string ReadResponse(TestSuiteBuilderDirector director, NetworkStream stream)
+    private string ReadResponse(NetworkStream stream)
     {
       StringBuilder response = new StringBuilder();
       byte[] buffer = new byte[BUFFER_SIZE];
@@ -92,7 +92,7 @@ namespace HL7TestingTool
     /// <param name="parser"></param>
     /// <param name="message"></param>
     /// <returns>Response string</returns>
-    public string SendAndReceive(TestSuiteBuilderDirector director, string message)
+    public string SendAndReceive(string message)
     {
       string response;                                                      // Response to be returned
       using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))  // Open a TCP port
@@ -103,7 +103,7 @@ namespace HL7TestingTool
           using (NetworkStream stream = client.GetStream())                 // Get the stream
           {
             WriteToStream(stream, message);                                 // Write to stream
-            response = ReadResponse(director, stream);                      // Read response
+            response = ReadResponse(stream);                                // Read response
           }
         }
         catch (Exception e)

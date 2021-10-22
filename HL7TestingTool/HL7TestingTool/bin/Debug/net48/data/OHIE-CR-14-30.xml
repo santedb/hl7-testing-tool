@@ -11,6 +11,6 @@ RCP|I|10^RD</message>
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" alternate="domain" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4-1" value="TEST" alternate="domain" />
 		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true" />
-		
+		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true" />
 	</assertions>
 </testStep>
