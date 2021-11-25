@@ -4,12 +4,12 @@
 QPD|IHE PIX Query|RB-469^^^NID^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(0)-1" value="RJ-449" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-449" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4" value="TEST_A" alternate="true" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4" value="TEST_A" alternate="true" />
+		<assert terserString="MSA-1" value="AA" alternate="acknowledgement" />
+		<assert terserString="MSA-1" value="CA" alternate="acknowledgement" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-1" value="RJ-449" alternate="id" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-449" alternate="id" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(0)-4" value="TEST_A" alternate="namespaceId" />
+		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4" value="TEST_A" alternate="namespaceId" />
 		<assert terserString="QUERY_RESPONSE(1)/.PID-3-1" missing="true" />
 		
 		

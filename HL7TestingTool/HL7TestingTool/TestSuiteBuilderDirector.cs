@@ -203,6 +203,7 @@ namespace HL7TestingTool
       Console.WriteLine(crlfString);
       Console.WriteLine($"\nSending and receiving {t} as MLLP message at {URI} ...");
       Console.WriteLine("\nResponse:");
+       
 
       // Use MllPMessageSender class to get back the response after sending a message
       MllpMessageSender sender = new MllpMessageSender(new Uri(URI));
@@ -226,7 +227,7 @@ namespace HL7TestingTool
       }
       catch (HL7Exception e) { throw e; }
 
-      Debug.WriteLine(responseString);
+      Console.WriteLine(responseString);
       return response;
     }
 

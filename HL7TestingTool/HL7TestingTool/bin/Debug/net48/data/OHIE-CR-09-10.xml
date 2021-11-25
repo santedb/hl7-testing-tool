@@ -4,8 +4,8 @@
 QPD|IHE PIX Query|Q0910|RJ-443^^^TEST^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE" alternate="true" />
-		<assert terserString="MSA-1" value="CE" alternate="true" />
+		<assert terserString="MSA-1" value="AE" alternate="acknowledgement" />
+		<assert terserString="MSA-1" value="CE" alternate="acknowledgement" />
 		<assert terserString="ERR-2-1" value="QPD"  />
 		<assert terserString="ERR-2-2" value="1" />
 		<assert terserString="ERR-2-3" value="3" />

@@ -60,7 +60,7 @@ namespace HL7TestingTool
       // No response when missing message header
       if(response.ToString().Split('|')[0] != "MSH")
         throw new Exception($"No message header returned from {m_endpoint} ... (MLLP response body could be missing)");
-
+           
       return response.ToString();
     }
 
@@ -113,7 +113,9 @@ namespace HL7TestingTool
           response = e.Message;
         }
       }
+           
       return response;
+
     }
   }
 }

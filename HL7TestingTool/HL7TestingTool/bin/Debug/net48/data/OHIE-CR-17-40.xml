@@ -5,13 +5,13 @@ EVN||20101020
 PID|||SJ-204^^^TEST_B||SMITH^SAM^^^^^L||198902|F|||||||||||
 MRG|RJ-292^^^TEST_A</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE" alternate="true" />
-		<assert terserString="MSA-1" value="CE" alternate="true" />
-		<assert terserString="MSA-1" value="AR" alternate="true" />
-		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSA-1" value="AE" alternate="acknowledgement" />
+		<assert terserString="MSA-1" value="CE" alternate="acknowledgement" />
+		<assert terserString="MSA-1" value="AR" alternate="acknowledgement" />
+		<assert terserString="MSA-1" value="CR" alternate="acknowledgement" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1-4-2" value="SFT does not exist in the group NHapi.Base.Model.GenericMessage+V25" />
+		<assert terserString="ERR-1-4-2" value="Error authenticating application" />
 		
         	
 	</assertions>
