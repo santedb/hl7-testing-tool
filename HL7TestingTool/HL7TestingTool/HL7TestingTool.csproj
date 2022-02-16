@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NHapi.Parser.Agfa" Version="1.0.1" />
+    <PackageReference Include="nhapi" Version="3.1.0" />
   </ItemGroup>
 
 </Project>
