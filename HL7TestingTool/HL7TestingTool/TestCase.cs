@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace HL7TestingTool
+﻿namespace HL7TestingTool
 {
-  /// <summary>
-  /// 
-  /// </summary>
-  public abstract class TestCase
-  {
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
-    public TestCase() { }
-
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="caseNumber"></param>
-    public TestCase(int caseNumber)
+    public abstract class TestCase
     {
-      CaseNumber = caseNumber;
-    }
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public TestCase()
+        {
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public int CaseNumber { get; private set; }
-  }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        public TestCase(int caseNumber)
+        {
+            this.CaseNumber = caseNumber;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CaseNumber { get; }
+    }
 }

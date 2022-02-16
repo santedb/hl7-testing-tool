@@ -1,112 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HL7TestingTool
 {
-  /// <summary>
-  /// Represents a step for a test case that has a list of ExpectedResults.
-  /// </summary>
-  public class TestStep : TestCase
-  {
     /// <summary>
-    /// Default constructor.
+    /// Represents a step for a test case that has a list of ExpectedResults.
     /// </summary>
-    public TestStep() { }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <param name="description"></param>
-    public TestStep(string description, int caseNumber, int stepNumber) :base(caseNumber)
+    public class TestStep : TestCase
     {
-      StepNumber = stepNumber;
-      Description= description;
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public TestStep()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        /// <param name="stepNumber"></param>
+        /// <param name="description"></param>
+        public TestStep(string description, int caseNumber, int stepNumber) : base(caseNumber)
+        {
+            this.StepNumber = stepNumber;
+            this.Description = description;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        /// <param name="stepNumber"></param>
+        /// <param name="message"></param>
+        public TestStep(int caseNumber, int stepNumber, string message) : base(caseNumber)
+        {
+            this.StepNumber = stepNumber;
+            this.Message = message;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        /// <param name="stepNumber"></param>
+        /// <param name="message"></param>
+        /// <param name="description"></param>
+        public TestStep(string description, int caseNumber, int stepNumber, string message) : base(caseNumber)
+        {
+            this.StepNumber = stepNumber;
+            this.Message = message;
+            this.Description = description;
+        }
+
+        /// <summary>
+        /// Test step with all properties
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        /// <param name="stepNumber"></param>
+        /// <param name="message"></param>
+        /// <param name="assertions"></param>
+        public TestStep(int caseNumber, int stepNumber, string message, List<Assertion> assertions) : base(caseNumber)
+        {
+            this.StepNumber = stepNumber;
+            this.Message = message;
+            this.Assertions = assertions;
+        }
+
+        /// <summary>
+        /// Test step with all properties
+        /// </summary>
+        /// <param name="caseNumber"></param>
+        /// <param name="stepNumber"></param>
+        /// <param name="message"></param>
+        /// <param name="description"></param>
+        /// <param name="assertions"></param>
+        public TestStep(string description, int caseNumber, int stepNumber, string message, List<Assertion> assertions) : base(caseNumber)
+        {
+            this.StepNumber = stepNumber;
+            this.Assertions = assertions;
+            this.Message = message;
+            this.Description = description;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Assertion> Assertions { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? StepNumber { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"OHIE-CR-{this.CaseNumber}-{this.StepNumber}";
+        }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <param name="message"></param>
-    public TestStep(int caseNumber, int stepNumber, string message) : base(caseNumber)
-    {
-      StepNumber = stepNumber;
-      Message = message;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <param name="message"></param>
-    /// <param name="description"></param>
-    public TestStep(string description, int caseNumber, int stepNumber, string message) : base(caseNumber) 
-    {
-      StepNumber = stepNumber;
-      Message = message;
-      Description = description;
-    }
-
-    /// <summary>
-    /// Test step with all properties
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <param name="message"></param>
-    /// <param name="assertions"></param>
-    public TestStep(int caseNumber, int stepNumber, string message, List<Assertion> assertions) : base(caseNumber)
-    {
-      StepNumber = stepNumber;
-      Message = message;
-      Assertions = assertions;
-    }
-
-    /// <summary>
-    /// Test step with all properties
-    /// </summary>
-    /// <param name="caseNumber"></param>
-    /// <param name="stepNumber"></param>
-    /// <param name="message"></param>
-    /// <param name="description"></param>
-    /// <param name="assertions"></param>
-    public TestStep(string description, int caseNumber, int stepNumber, string message, List<Assertion> assertions) : base(caseNumber)
-    {
-      StepNumber = stepNumber;
-      Assertions = assertions;
-      Message = message;
-      Description = description;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int? StepNumber { get; private set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Message { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Description { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public List<Assertion> Assertions { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public override string ToString() => $"OHIE-CR-{CaseNumber}-{StepNumber}";
-  }
 }
