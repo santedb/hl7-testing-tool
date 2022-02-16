@@ -1,4 +1,4 @@
-[![Build](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml)
+[![Build](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml) [![CodeQL](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml)
 
 # HL7v2 Testing Tool 
 This project is a C# console application leveraging the nHapi.Parser.Agfa package to build test suites for HL7v2 messaging. This console application has been created to configure and execute a test suite for HL7v2 messages being sent and received with the MLLP protocol.
