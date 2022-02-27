@@ -190,7 +190,7 @@ namespace HL7TestingTool
             {
                 return this.TestSteps.Where(ts => ts.CaseNumber == caseNumber).ToList();
             }
-            catch (Exception ex)
+            catch
             {
                 return new List<TestStep>();
             }
@@ -208,7 +208,7 @@ namespace HL7TestingTool
             {
                 return this.TestSteps.Find(ts => ts.CaseNumber == caseNumber && ts.StepNumber == stepNumber);
             }
-            catch (Exception ex)
+            catch
             {
                 return new TestStep();
             }
