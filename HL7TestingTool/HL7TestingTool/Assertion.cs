@@ -1,78 +1,41 @@
-﻿namespace HL7TestingTool
+﻿using System.Xml.Serialization;
+
+namespace HL7TestingTool
 {
     /// <summary>
     /// 
     /// </summary>
+
     public class Assertion
     {
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public Assertion()
-        {
-        }
-
-        /// <summary>
         /// 
         /// </summary>
-        /// <param name="terserString"></param>
-        /// <param name="value"></param>
-        public Assertion(string terserString, string value)
-        {
-            this.TerserString = terserString;
-            this.Value = value;
-            this.Alternate = null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="terserString"></param>
-        /// <param name="missing"></param>
-        public Assertion(string terserString, bool missing)
-        {
-            this.TerserString = terserString;
-            this.Missing = missing;
-            this.Alternate = null;
-            this.Value = null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="terserString"></param>
-        /// <param name="value"></param>
-        /// <param name="alternate"></param>
-        public Assertion(string terserString, string value, string alternate)
-        {
-            this.TerserString = terserString;
-            this.Value = value;
-            this.Alternate = alternate;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        [XmlAttribute("alternate")]
         public string Alternate { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+        [XmlAttribute("missing")]
         public bool Missing { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+        [XmlIgnore]
         public bool? Outcome { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+        [XmlAttribute("terserString")]
         public string TerserString { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
+        [XmlAttribute("value")]
         public string Value { get; set; }
 
         /// <summary>

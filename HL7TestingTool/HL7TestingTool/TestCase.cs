@@ -1,4 +1,6 @@
-﻿namespace HL7TestingTool
+﻿using System.Xml.Serialization;
+
+namespace HL7TestingTool
 {
     /// <summary>
     /// 
@@ -6,24 +8,9 @@
     public abstract class TestCase
     {
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public TestCase()
-        {
-        }
-
-        /// <summary>
         /// 
         /// </summary>
-        /// <param name="caseNumber"></param>
-        public TestCase(int caseNumber)
-        {
-            this.CaseNumber = caseNumber;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CaseNumber { get; }
+        [XmlIgnore]
+        public int CaseNumber { get; set; }
     }
 }

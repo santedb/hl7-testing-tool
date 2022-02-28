@@ -186,7 +186,7 @@ namespace HL7TestingTool
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\t(1) Execute all test steps in the test suite");
             Console.WriteLine("\t(2) Execute all test steps of a specific test case");
-            Console.WriteLine("\t(3) Execute a specific test step");
+            Console.WriteLine("\t(3) Execute a specific test step"); //get rid of this
             Console.WriteLine("\t(4) Exit");
             try
             {

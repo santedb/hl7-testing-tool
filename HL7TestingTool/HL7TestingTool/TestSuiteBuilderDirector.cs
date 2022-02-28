@@ -122,8 +122,8 @@ namespace HL7TestingTool
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
 
-                Console.WriteLine($"------------\n{a}: {status}");
-                Console.WriteLine($"FOUND: '{found}'\n");
+                Console.WriteLine($"{a}: {status}");
+                //Console.WriteLine($"FOUND: '{found}'\n");
             }
 
             this.OutputTestResult(testStep, testFail);
@@ -227,6 +227,8 @@ namespace HL7TestingTool
         /// <returns></returns>
         public List<IMessage> ExecuteTestSteps(List<TestStep> testSteps)
         {
+            Console.WriteLine("Executing Test(s)");
+            Console.WriteLine("Remote Address: " + URI);
             var responses = new List<IMessage>();
             foreach (var t in testSteps)
             {
@@ -244,13 +246,13 @@ namespace HL7TestingTool
                             this.Assert(t, response); // Process assertions for a step 
                         }
                     }
-                    else
-                    {
-                        //NOTE: Find out about pre-conditions and what the assumption is for those
-                        //  add this to the test step model as a constructor available to the
-                        //  TestSuiteBuilder and overload with another AddTestStep method
-                        Console.WriteLine($"{t}: {t.Description}");
-                    }
+                    //else
+                    //{
+                    //    //NOTE: Find out about pre-conditions and what the assumption is for those
+                    //    //  add this to the test step model as a constructor available to the
+                    //    //  TestSuiteBuilder and overload with another AddTestStep method
+                    //    Console.WriteLine($"{t}: {t.Description}");
+                    //}
                 }
                 catch (HL7Exception e) // Can catch an Exception with missing segment 
                 {
@@ -332,10 +334,11 @@ namespace HL7TestingTool
         {
             var crlfString = this.ConvertLineEndings(t.Message); // Converting LF line endings to CRLF line endings
 
-            Console.WriteLine($"{t}: {t.Description}\n");
-            Console.WriteLine(crlfString);
-            Console.WriteLine($"\nSending and receiving {t} as MLLP message at {URI} ...");
-            Console.WriteLine("\nResponse:");
+            Console.WriteLine($"Test# {t}");
+            //Console.WriteLine($"{t}: {t.Description}\n");
+            //Console.WriteLine(crlfString);
+            //Console.WriteLine($"\nSending and receiving {t} as MLLP message at {URI} ...");
+            //Console.WriteLine("\nResponse:");
 
 
             // Use MllPMessageSender class to get back the response after sending a message
@@ -363,7 +366,7 @@ namespace HL7TestingTool
                 throw e;
             }
 
-            Console.WriteLine(responseString);
+            //Console.WriteLine(responseString);
             return response;
         }
     }
