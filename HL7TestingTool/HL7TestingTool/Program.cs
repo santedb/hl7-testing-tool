@@ -30,87 +30,87 @@ namespace HL7TestingTool
         /// <param name="args"></param>
         private static async Task Main(string[] args)
         {
-            //var dataPath = Path.GetFullPath($"{DATA}");
-            //var director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-            //director.BuildFromXml();
+            var dataPath = Path.GetFullPath($"{DATA}");
+            var director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
+            director.BuildFromXml();
 
-            //var option = 0;
-            //while (option != 4) // Show main menu and exit if option 4 is entered
+            var option = 0;
+            while (option != 4) // Show main menu and exit if option 4 is entered
+            {
+                option = MainMenu(director);
+                if (option < 0 || option > 4)
+                {
+                    Console.WriteLine($"\n {option} is not an option! Try again...");
+                }
+                else if (option != 4)
+                {
+                    Console.WriteLine("Press any key to return to main menu...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            }
+
+            //Console.ResetColor();
+
+            //var entryAssembly = Assembly.GetEntryAssembly() ?? typeof(Program).Assembly;
+
+            //workingDirectory = Path.GetDirectoryName(entryAssembly.Location);
+            //Directory.SetCurrentDirectory(workingDirectory);
+
+            //if (string.IsNullOrEmpty(workingDirectory))
             //{
-            //    option = MainMenu(director);
-            //    if (option < 0 || option > 4)
-            //    {
-            //        Console.WriteLine($"\n {option} is not an option! Try again...");
-            //    }
-            //    else if (option != 4)
-            //    {
-            //        Console.WriteLine("Press any key to return to main menu...");
-            //        Console.ReadKey();
-            //        Console.Clear();
-            //    }
+            //    throw new ArgumentNullException(nameof(workingDirectory), "Value cannot be null");
             //}
 
-            Console.ResetColor();
+            //var builder = CreateHostBuilder(args);
+            //var host = builder.Build();
 
-            var entryAssembly = Assembly.GetEntryAssembly() ?? typeof(Program).Assembly;
+            //var logger = host.Services.GetService<ILogger<Program>>();
 
-            workingDirectory = Path.GetDirectoryName(entryAssembly.Location);
-            Directory.SetCurrentDirectory(workingDirectory);
+            //if (logger == null)
+            //{
+            //    Console.ForegroundColor = ConsoleColor.Red;
+            //    Console.WriteLine("Critical Error, NO LOGGER HAS BEEN CONFIGURED");
+            //    throw new Exception();
+            //}
 
-            if (string.IsNullOrEmpty(workingDirectory))
-            {
-                throw new ArgumentNullException(nameof(workingDirectory), "Value cannot be null");
-            }
+            //try
+            //{
+            //    logger.LogInformation($"HL7 Testing Tool: v{entryAssembly.GetName().Version}");
+            //    logger.LogInformation($"HL7 Testing Tool Working Directory : {Path.GetDirectoryName(entryAssembly.Location)}");
+            //    logger.LogInformation($"HL7 Testing Tool Running Environment : {host.Services.GetService<IHostEnvironment>().EnvironmentName}");
+            //    logger.LogInformation($"Operating System: {Environment.OSVersion.Platform} {Environment.OSVersion.VersionString}");
+            //    logger.LogInformation($"CLI Version: {Environment.Version}");
 
-            var builder = CreateHostBuilder(args);
-            var host = builder.Build();
+            //    var applicationLifetime = host.Services.GetService<IHostApplicationLifetime>();
 
-            var logger = host.Services.GetService<ILogger<Program>>();
+            //    if (applicationLifetime == null)
+            //    {
+            //        throw new InvalidOperationException($"Unable to locate instance for {typeof(IHostApplicationLifetime).AssemblyQualifiedName}");
+            //    }
 
-            if (logger == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Critical Error, NO LOGGER HAS BEEN CONFIGURED");
-                throw new Exception();
-            }
+            //    applicationLifetime.ApplicationStarted.Register(() =>
+            //    {
+            //        logger.LogInformation("Application started");
+            //    });
 
-            try
-            {
-                logger.LogInformation($"HL7 Testing Tool: v{entryAssembly.GetName().Version}");
-                logger.LogInformation($"HL7 Testing Tool Working Directory : {Path.GetDirectoryName(entryAssembly.Location)}");
-                logger.LogInformation($"HL7 Testing Tool Running Environment : {host.Services.GetService<IHostEnvironment>().EnvironmentName}");
-                logger.LogInformation($"Operating System: {Environment.OSVersion.Platform} {Environment.OSVersion.VersionString}");
-                logger.LogInformation($"CLI Version: {Environment.Version}");
+            //    applicationLifetime.ApplicationStopping.Register(() =>
+            //    {
+            //        logger.LogInformation("Application stopping");
+            //    });
 
-                var applicationLifetime = host.Services.GetService<IHostApplicationLifetime>();
+            //    applicationLifetime.ApplicationStopped.Register(() =>
+            //    {
+            //        logger.LogInformation("Application stopped");
+            //    });
 
-                if (applicationLifetime == null)
-                {
-                    throw new InvalidOperationException($"Unable to locate instance for {typeof(IHostApplicationLifetime).AssemblyQualifiedName}");
-                }
-
-                applicationLifetime.ApplicationStarted.Register(() =>
-                {
-                    logger.LogInformation("Application started");
-                });
-
-                applicationLifetime.ApplicationStopping.Register(() =>
-                {
-                    logger.LogInformation("Application stopping");
-                });
-
-                applicationLifetime.ApplicationStopped.Register(() =>
-                {
-                    logger.LogInformation("Application stopped");
-                });
-
-                await host.RunAsync();
-            }
-            catch (Exception e)
-            {
-                logger.LogCritical($"Unable to start application: {e}");
-                throw;
-            }
+            //    await host.RunAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    logger.LogCritical($"Unable to start application: {e}");
+            //    throw;
+            //}
         }
 
         /// <summary>
