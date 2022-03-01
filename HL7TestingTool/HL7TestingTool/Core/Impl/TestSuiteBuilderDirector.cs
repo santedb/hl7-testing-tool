@@ -8,6 +8,7 @@ using NHapi.Base.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Serilog;
 
 namespace HL7TestingTool.Core.Impl
 {
@@ -36,16 +37,19 @@ namespace HL7TestingTool.Core.Impl
         /// </summary>
         private readonly ILogger<TestSuiteBuilderDirector> logger;
 
+        private readonly IMllpMessageSender messageSender;
+
         /// <summary>
         /// Director that can access a TestSuiteBuilder's interface methods and overridden abstract methods used to build a test suite.
         /// </summary>
         /// <param name="testSuiteBuilder"></param>
         /// <param name="filePath"></param>
-        public TestSuiteBuilderDirector(IConfiguration configuration, ILogger<TestSuiteBuilderDirector> logger)
+        public TestSuiteBuilderDirector(IConfiguration configuration, ILogger<TestSuiteBuilderDirector> logger, IMllpMessageSender messageSender)
         {
             this.testSuiteBuilder = new TestSuiteBuilder();
             this.configuration = configuration;
             this.logger = logger;
+            this.messageSender = messageSender;
             this.FilePath = this.configuration.GetValue<string>("TestDirectory");
             this.BuildFromXml();
         }
@@ -131,22 +135,23 @@ namespace HL7TestingTool.Core.Impl
                     testFail = (bool) a.Outcome ? testFail : true;
                 }
 
-                // Output a positive outcome as green and negative as red
-                if ((bool) a.Outcome)
+                if (!testFail)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    this.logger.LogInformation($"{a}: {status}");
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    this.logger.LogDebug($"{a}: {status}");
                 }
-
-                Console.WriteLine($"{a}: {status}");
-                //Console.WriteLine($"FOUND: '{found}'\n");
+               
+                this.logger.LogDebug($"{a}: {status}, found: '{found}'");
             }
 
-            this.OutputTestResult(testStep, testFail);
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            if (testFail)
+            {
+                this.logger.LogDebug(new PipeParser().Encode(response));
+            }
+
         }
 
         /// <summary>
@@ -184,7 +189,7 @@ namespace HL7TestingTool.Core.Impl
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                this.logger.LogError(ex.Message);
                 return ex.Message;
             }
         }
@@ -247,13 +252,14 @@ namespace HL7TestingTool.Core.Impl
         public IEnumerable<IMessage> ExecuteTestSteps()
         {
             var testSteps = this.testSuiteBuilder.GetTestSuite();
+            //var config = this.configuration.GetValue<List<string>>("TestOptions:Execution");
 
-            Console.WriteLine("Executing Test(s)");
-            Console.WriteLine("Remote Address: " + URI);
+
+            this.logger.LogInformation("Executing Test(s)");
+            this.logger.LogInformation("Remote Address: " + URI);
             var responses = new List<IMessage>();
             foreach (var t in testSteps)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 try
                 {
                     IMessage response = null;
@@ -282,12 +288,7 @@ namespace HL7TestingTool.Core.Impl
                         continue;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Exception thrown: {e.Message}\n");
-                    //Console.WriteLine("____________________________________");
-                    //Console.WriteLine($"\n\t FAILED: {t}");
-                    //Console.WriteLine("____________________________________\n");
-                    this.OutputTestResult(t, true);
+                    this.logger.LogError($"Exception thrown: {e.Message}\n");
                 }
             }
 
@@ -327,44 +328,16 @@ namespace HL7TestingTool.Core.Impl
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="testStep"></param>
-        /// <param name="testFail"></param>
-        private void OutputTestResult(TestStep testStep, bool testFail)
-        {
-            var resultString = testFail ? "FAILED" : "PASSED";
-            if (testFail)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-
-            Console.WriteLine("____________________________________");
-            Console.WriteLine($"\n\t{resultString} {testStep}");
-            Console.WriteLine("____________________________________\n");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
         private IMessage SendHL7Message(TestStep t)
         {
             var crlfString = this.ConvertLineEndings(t.Message); // Converting LF line endings to CRLF line endings
-
-            Console.WriteLine($"Test# {t}");
-            //Console.WriteLine($"{t}: {t.Description}\n");
-            //Console.WriteLine(crlfString);
-            //Console.WriteLine($"\nSending and receiving {t} as MLLP message at {URI} ...");
-            //Console.WriteLine("\nResponse:");
-
+            this.logger.LogInformation(Environment.NewLine);
+            this.logger.LogInformation($"Test# {t}");
 
             // Use MllPMessageSender class to get back the response after sending a message
-            var sender = new MllpMessageSender(new Uri(this.configuration.GetValue<string>("Endpoint")));
-            var responseString = sender.SendAndReceive(crlfString);
+            var responseString = this.messageSender.SendAndReceive(crlfString);
             IMessage response;
             try
             {
@@ -387,7 +360,6 @@ namespace HL7TestingTool.Core.Impl
                 throw e;
             }
 
-            //Console.WriteLine(responseString);
             return response;
         }
     }
