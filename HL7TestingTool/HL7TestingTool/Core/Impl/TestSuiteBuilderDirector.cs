@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HL7TestingTool.Interop;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using NHapi.Base;
 using NHapi.Base.Model;
 using NHapi.Base.Parser;
 using NHapi.Base.Util;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace HL7TestingTool
+namespace HL7TestingTool.Core.Impl
 {
-    public class TestSuiteBuilderDirector
+    /// <summary>
+    /// Represents a test suite director.
+    /// </summary>
+    public class TestSuiteBuilderDirector : ITestExecutor
     {
         /// <summary>
         /// 
@@ -18,17 +24,30 @@ namespace HL7TestingTool
         /// <summary>
         /// Builder that imoports test data from files and results in a list of test steps organizaed by test case number and test step number.
         /// </summary>
-        private readonly TestSuiteBuilder _testSuiteBuilder;
+        private readonly TestSuiteBuilder testSuiteBuilder;
+
+        /// <summary>
+        /// The configuration.
+        /// </summary>
+        private readonly IConfiguration configuration;
+
+        /// <summary>
+        /// The logger.
+        /// </summary>
+        private readonly ILogger<TestSuiteBuilderDirector> logger;
 
         /// <summary>
         /// Director that can access a TestSuiteBuilder's interface methods and overridden abstract methods used to build a test suite.
         /// </summary>
         /// <param name="testSuiteBuilder"></param>
         /// <param name="filePath"></param>
-        public TestSuiteBuilderDirector(TestSuiteBuilder testSuiteBuilder, string filePath)
+        public TestSuiteBuilderDirector(IConfiguration configuration, ILogger<TestSuiteBuilderDirector> logger)
         {
-            this._testSuiteBuilder = testSuiteBuilder;
-            this.FilePath = filePath;
+            this.testSuiteBuilder = new TestSuiteBuilder();
+            this.configuration = configuration;
+            this.logger = logger;
+            this.FilePath = this.configuration.GetValue<string>("TestDirectory");
+            this.BuildFromXml();
         }
 
         /// <summary>
@@ -135,7 +154,7 @@ namespace HL7TestingTool
         /// </summary>
         public void BuildFromXml()
         {
-            this._testSuiteBuilder.Build(this._testSuiteBuilder.Import(this.FilePath));
+            this.testSuiteBuilder.Build(this.testSuiteBuilder.Import(this.FilePath));
         }
 
         /// <summary>
@@ -225,8 +244,10 @@ namespace HL7TestingTool
         /// </summary>
         /// <param name="testSteps"></param>
         /// <returns></returns>
-        public List<IMessage> ExecuteTestSteps(List<TestStep> testSteps)
+        public IEnumerable<IMessage> ExecuteTestSteps()
         {
+            var testSteps = this.testSuiteBuilder.GetTestSuite();
+
             Console.WriteLine("Executing Test(s)");
             Console.WriteLine("Remote Address: " + URI);
             var responses = new List<IMessage>();
@@ -280,7 +301,7 @@ namespace HL7TestingTool
         /// <returns></returns>
         public List<TestStep> GetTestCase(int caseNumber)
         {
-            return this._testSuiteBuilder.GetTestCase(caseNumber);
+            return this.testSuiteBuilder.GetTestCase(caseNumber);
         }
 
         /// <summary>
@@ -291,7 +312,7 @@ namespace HL7TestingTool
         /// <returns></returns>
         public TestStep GetTestStep(int caseNumber, int stepNumber)
         {
-            return this._testSuiteBuilder.GetTestStep(caseNumber, stepNumber);
+            return this.testSuiteBuilder.GetTestStep(caseNumber, stepNumber);
         }
 
         /// <summary>
@@ -300,7 +321,7 @@ namespace HL7TestingTool
         /// <returns></returns>
         public List<TestStep> GetTestSuite()
         {
-            return this._testSuiteBuilder.GetTestSuite();
+            return this.testSuiteBuilder.GetTestSuite();
         }
 
         /// <summary>
@@ -342,7 +363,7 @@ namespace HL7TestingTool
 
 
             // Use MllPMessageSender class to get back the response after sending a message
-            var sender = new MllpMessageSender(new Uri(URI));
+            var sender = new MllpMessageSender(new Uri(this.configuration.GetValue<string>("Endpoint")));
             var responseString = sender.SendAndReceive(crlfString);
             IMessage response;
             try

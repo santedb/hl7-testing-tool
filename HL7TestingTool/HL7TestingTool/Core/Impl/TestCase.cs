@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace HL7TestingTool
+namespace HL7TestingTool.Core.Impl
 {
     /// <summary>
     /// 

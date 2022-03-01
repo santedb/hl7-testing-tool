@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
-namespace HL7TestingTool
+namespace HL7TestingTool.Interop
 {
     /// <summary>
     /// MLLP Message Sender
