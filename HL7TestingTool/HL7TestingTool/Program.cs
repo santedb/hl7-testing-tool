@@ -11,6 +11,7 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using HL7TestingTool.Interop;
 
 namespace HL7TestingTool
 {
@@ -32,27 +33,6 @@ namespace HL7TestingTool
         /// <param name="args"></param>
         private static async Task Main(string[] args)
         {
-            //var dataPath = Path.GetFullPath($"{DATA}");
-            //var director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-            //director.BuildFromXml();
-
-            //var option = 0;
-            //while (option != 4) // Show main menu and exit if option 4 is entered
-            //{
-            //    option = MainMenu(director);
-            //    if (option < 0 || option > 4)
-            //    {
-            //        Console.WriteLine($"\n {option} is not an option! Try again...");
-            //    }
-            //    else if (option != 4)
-            //    {
-            //        Console.WriteLine("Press any key to return to main menu...");
-            //        Console.ReadKey();
-            //        Console.Clear();
-            //    }
-            //}
-
-            Console.ResetColor();
 
             var entryAssembly = Assembly.GetEntryAssembly() ?? typeof(Program).Assembly;
 
@@ -68,13 +48,6 @@ namespace HL7TestingTool
             var host = builder.Build();
 
             var logger = host.Services.GetService<ILogger<Program>>();
-
-            if (logger == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Critical Error, NO LOGGER HAS BEEN CONFIGURED");
-                throw new Exception();
-            }
 
             try
             {
@@ -98,13 +71,6 @@ namespace HL7TestingTool
                     var testExecutor = host.Services.GetService<ITestExecutor>();
 
                     testExecutor.ExecuteTestSteps();
-
-                    //testExecutor.ExecuteTestSteps()
-                    //var dataPath = Path.GetFullPath("data");
-                    //var director = new TestSuiteBuilderDirector(new TestSuiteBuilder(), dataPath);
-                    //director.BuildFromXml();
-
-                    //director.ExecuteTestSteps(director.GetTestSuite());
                 });
 
                 applicationLifetime.ApplicationStopping.Register(() =>
@@ -161,6 +127,7 @@ namespace HL7TestingTool
             builder.ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddSingleton<ITestExecutor, TestSuiteBuilderDirector>();
+                serviceCollection.AddSingleton<IMllpMessageSender, MllpMessageSender>();
                 serviceCollection.AddLogging();
             });
 
@@ -182,109 +149,5 @@ namespace HL7TestingTool
 
             return builder;
         }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <returns>Option selected by user in main menu</returns>
-        //private static int MainMenu(TestSuiteBuilderDirector director)
-        //{
-        //    var option = 0;
-        //    Console.ForegroundColor = ConsoleColor.Cyan;
-        //    Console.WriteLine("======================================");
-        //    Console.WriteLine("| Welcome to the HL7v2 Testing Tool! |");
-        //    Console.WriteLine("======================================\n");
-
-        //    Console.ForegroundColor = ConsoleColor.White;
-        //    Console.WriteLine("Please enter an integer option: ");
-        //    Console.ForegroundColor = ConsoleColor.Blue;
-        //    Console.WriteLine("\t(1) Execute all test steps in the test suite");
-        //    Console.WriteLine("\t(2) Execute all test steps of a specific test case");
-        //    Console.WriteLine("\t(3) Execute a specific test step"); //get rid of this
-        //    Console.WriteLine("\t(4) Exit");
-        //    try
-        //    {
-        //        Console.ForegroundColor = ConsoleColor.Yellow;
-        //        option = int.Parse(Console.ReadLine());
-        //        Console.Clear();
-        //        switch (option)
-        //        {
-        //            case 1:
-        //                //Call on helper to execute all test steps in test suite
-        //                director.ExecuteTestSteps(director.GetTestSuite());
-        //                break;
-        //            case 2:
-        //                Console.Write("Enter Case #:\t");
-        //                int.TryParse(Console.ReadLine(), out var caseNumber);
-        //                //Call on helper to execute all test steps only from a specific case 
-        //                try
-        //                {
-        //                    ValidateCaseNumber(director, caseNumber);
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    Console.WriteLine(ex.Message);
-        //                    break;
-        //                }
-
-        //                director.ExecuteTestSteps(director.GetTestCase(caseNumber));
-        //                break;
-        //            case 3:
-        //                Console.Write("Enter Case #:\t");
-        //                int.TryParse(Console.ReadLine(), out caseNumber);
-        //                try
-        //                {
-        //                    ValidateCaseNumber(director, caseNumber);
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    Console.WriteLine(ex.Message);
-        //                    break;
-        //                }
-
-        //                Console.Write("Enter Step #:\t");
-        //                int.TryParse(Console.ReadLine(), out var stepNumber);
-        //                try
-        //                {
-        //                    ValidateStepNumber(director, caseNumber, stepNumber);
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    Console.WriteLine(ex.Message);
-        //                    break;
-        //                }
-
-        //                //Call on helper to execute a specific test step(note that this must be a list, but the director's method only returns a TestStep)
-        //                var testSteps = new List<TestStep> {director.GetTestStep(caseNumber, stepNumber)};
-        //                director.ExecuteTestSteps(testSteps);
-        //                break;
-        //            case 4:
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-
-        //    Console.ForegroundColor = ConsoleColor.White;
-        //    return option;
-        //}
-
-        //private static void ValidateCaseNumber(TestSuiteBuilderDirector director, int caseNumber)
-        //{
-        //    if (director.GetTestCase(caseNumber).Count == 0)
-        //    {
-        //        throw new Exception("No test case with that number found.");
-        //    }
-        //}
-
-        //private static void ValidateStepNumber(TestSuiteBuilderDirector director, int caseNumber, int stepNumber)
-        //{
-        //    if (director.GetTestStep(caseNumber, stepNumber) == null)
-        //    {
-        //        throw new Exception("No test steps with that number found.");
-        //    }
-        //}
     }
 }
