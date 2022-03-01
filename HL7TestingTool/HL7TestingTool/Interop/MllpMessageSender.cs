@@ -2,24 +2,31 @@
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace HL7TestingTool.Interop
 {
     /// <summary>
     /// MLLP Message Sender
     /// </summary>
-    public class MllpMessageSender
+    public class MllpMessageSender : IMllpMessageSender
     {
         private const int BUFFER_SIZE = 1024;
         private readonly Uri m_endpoint; // Message endpoint for constructor
+        private readonly ILogger<MllpMessageSender> logger;
+        private readonly IConfiguration configuration;
 
         /// <summary>
         /// Creates a new message sender
         /// </summary>
         /// <param name="endpoint">The endpoint in the form llp://ipaddress:port</param>
-        public MllpMessageSender(Uri endpoint)
+        public MllpMessageSender(ILogger<MllpMessageSender> logger, IConfiguration configuration)
         {
-            this.m_endpoint = endpoint;
+            this.m_endpoint = configuration.GetValue<Uri>("Endpoint");
+            this.logger = logger;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -40,18 +47,6 @@ namespace HL7TestingTool.Interop
                     offset = 1;
                     byteCount--;
                 }
-
-
-                //char[] characters = Encoding.ASCII.GetChars(buffer);
-                //for (int i = 0; i < characters.Length; i++)
-                //{
-                //  char c = characters[i];
-                //  Console.WriteLine($"Character as UTF-8: {c} Index: {i}");
-                //}
-
-                //string hexConcat = BitConverter.ToString(buffer).Replace("-", "");
-                //string hexToString = director.ConvertHex(hexConcat);
-                //Console.WriteLine($"Hex characters returned as UTF-8: {hexToString}");
 
                 var buffString = Encoding.ASCII.GetString(buffer, offset, byteCount);
                 response.Append(buffString);
@@ -88,8 +83,7 @@ namespace HL7TestingTool.Interop
                 }
                 catch (Exception e)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(e.Message);
+                    this.logger.LogError(e.Message);
                     response = e.Message;
                 }
             }
