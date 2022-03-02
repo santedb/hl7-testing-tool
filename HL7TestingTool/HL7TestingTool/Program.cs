@@ -18,11 +18,6 @@ namespace HL7TestingTool
     internal class Program
     {
         /// <summary>
-        /// 
-        /// </summary>
-        private const string DATA = "data";
-
-        /// <summary>
         /// The working directory.
         /// </summary>
         private static string workingDirectory;
