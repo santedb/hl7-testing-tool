@@ -70,87 +70,67 @@ namespace HL7TestingTool.Core.Impl
             var terser = new Terser(response);
             string found;
             var testFail = false;
-            foreach (var a in testStep.Assertions)
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("***Remove this: Assertion Count:" + testStep.Assertions.Count + "***");
+            foreach (var assertion in testStep.Assertions)
             {
                 try // Getting a value from a response terser
                 {
-                    found = terser.Get(a.TerserString);
-                    if (a.Value == null && a.Missing) // SHOULD be missing
+                    found = terser.Get(assertion.TerserString);
+                    if (assertion.Value == null && assertion.Missing) // SHOULD be missing
                     {
-                        a.Outcome = false;
+                        assertion.Outcome = found == null;
                     }
                     else // SHOULD NOT be missing
                     {
-                        a.Outcome = found == a.Value;
+                        assertion.Outcome = found == assertion.Value;
                     }
                 }
                 catch (HL7Exception ex) // and handle case where a missing segment occurs 
                 {
-                    found = "No value";
-                    if (a.Missing) // Check for a SegmentName in the HL7Exception
+                    found = "null";
+                    if (assertion.Missing) // Check for a SegmentName in the HL7Exception
                     {
                         if (ex.SegmentName == null) // Assertion passes
                         {
-                            a.Outcome = true;
+                            assertion.Outcome = true;
                         }
                         else // Assertion fails
                         {
-                            found = a.TerserString;
-                            a.Outcome = false;
+                            found = assertion.TerserString;
+                            assertion.Outcome = false;
                         }
                     }
                     else // Assertion is for required value (not missing)
                     {
                         if (ex.SegmentName == null) // Assertion fails
                         {
-                            a.Outcome = false;
+                            assertion.Outcome = false;
                         }
                         else // Assertion passes
                         {
-                            found = a.TerserString;
-                            a.Outcome = true;
+                            found = assertion.TerserString;
+                            assertion.Outcome = true;
                         }
                     }
                 }
 
-                var status = (bool) a.Outcome ? "PASSED" : "FAILED";
+                
+                if (!(bool)assertion.Outcome)
+                {
+                    assertion.Outcome = assertion.Alternates.Any(a => a.Value == found);
+                } 
+                var status = (bool) assertion.Outcome ? "PASSED" : "FAILED";
 
-                // Check if current assertion is an alternate for some terser string
-                if (a.Alternate != null) // Test step fails only if ALL alternate assertions with a matching TerserString fail
-                {
-                    if (!(bool) a.Outcome) // Assertion outcome is false (failed) or null
-                    {
-                        // Check if any other alternates for the same terser string did not pass or have null outcome (not tested yet)
-                        if (!testStep.Assertions.Exists(o => o.Alternate == a.Alternate && (o.Outcome == true || o.Outcome == null)))
-                        {
-                            testFail = true;
-                        }
-                        else
-                        {
-                            testFail = false;
-                        }
-                    }
-                }
-                else // Test step is either for missing or matching values and fails if any one of them fails in serial.
-                {
-                    testFail = (bool) a.Outcome ? testFail : true;
-                }
-
-                if (!testFail)
-                {
-                    this.logger.LogInformation($"{a}: {status}");
-                }
-                else
-                {
-                    this.logger.LogDebug($"{a}: {status}");
-                }
-               
-                this.logger.LogDebug($"{a}: {status}, found: '{found}'");
+                this.logger.LogInformation($"{assertion}: {status}, Actual: '{found}'");
             }
 
+            testFail = testStep.Assertions.Any(c => c.Outcome.HasValue && !c.Outcome.Value);
             if (testFail)
             {
-                this.logger.LogDebug(new PipeParser().Encode(response));
+                var pipeParserResponse = new PipeParser().Encode(response);
+                this.logger.LogInformation(pipeParserResponse);
             }
 
         }
@@ -256,24 +236,15 @@ namespace HL7TestingTool.Core.Impl
             var config = this.configuration.GetSection("TestOptions").GetSection("Execution")
                 .Get<string[]>();
 
-            if (!config.Any())
+            if (config == null || config?.Any(c => c == "*") == true )
             {
-                this.logger.LogError("No test execution parameter supplied");
-                throw new ArgumentNullException("No test execution parameter supplied");
-            }
+                this.logger.LogWarning("No test execution configuration or * detected, therefore all tests will be executed");
 
-            if (config.Any(c => c == "*"))
-            {
-                if (config.Length > 1)
-                {
-                    this.logger.LogError("Invalid test execution parameter(s).");
-                    this.logger.LogDebug("* cannot be combined with other tests as execution parameter");
-                    throw new InvalidOperationException("Invalid test execution parameter(s).");
-                }
-            }
+            } 
             else
             {
-                testSteps = testSteps.Where(t => config.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0"+ t.CaseNumber : t.CaseNumber)}-{t.StepNumber}")).ToList();
+                // HACK: left pad 0 when test case/test step numbers are less than 10 for comparisons
+                testSteps = testSteps.Where(t => config.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0"+ t.CaseNumber : t.CaseNumber)}-{(t.StepNumber <10 ? "0"+t.StepNumber : t.StepNumber)}")).ToList();
                 if (!testSteps.Any())
                 {
                     this.logger.LogError("Invalid test execution parameter(s)");

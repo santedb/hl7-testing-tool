@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace HL7TestingTool.Core.Impl
 {
@@ -11,8 +13,10 @@ namespace HL7TestingTool.Core.Impl
         /// <summary>
         /// 
         /// </summary>
-        [XmlAttribute("alternate")]
-        public string Alternate { get; set; }
+        [XmlElement("alternate")]
+        //[XmlArray("alternates")]
+        //[XmlArrayItem("alternate", typeof(Assertion))]
+        public List<Alternate> Alternates { get; set; }
 
         /// <summary>
         /// 
@@ -44,9 +48,9 @@ namespace HL7TestingTool.Core.Impl
         /// <returns></returns>
         public override string ToString()
         {
-            return this.Alternate != null ? $"Assert alternate value '{this.Value}' at '{this.TerserString}' has outcome of '{this.Outcome}'"
-                : this.Missing ? $"Assert missing value at '{this.TerserString}' has outcome of '{this.Outcome}'"
-                : $"Assert mandatory value '{this.Value}' at '{this.TerserString}' has outcome of '{this.Outcome}'";
+            return this.Alternates.Any() ? $"Expected: '{this.Value}, {string.Join(", ",this.Alternates.Select(c=> c.Value))}' at '{this.TerserString}'"
+                : this.Missing ? $"Assert missing value at '{this.TerserString}'"
+                : $"Expected: '{this.Value}' at '{this.TerserString}'";
         }
     }
 }
