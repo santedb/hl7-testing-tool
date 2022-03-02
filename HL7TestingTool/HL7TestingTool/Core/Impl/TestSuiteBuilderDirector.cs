@@ -125,10 +125,12 @@ namespace HL7TestingTool.Core.Impl
             }
 
             testFail = testStep.Assertions.Any(c => c.Outcome.HasValue && !c.Outcome.Value);
+
             if (testFail)
             {
-                var pipeParserResponse = new PipeParser().Encode(response);
-                this.logger.LogInformation(pipeParserResponse);
+                var encodedResponse = new PipeParser().Encode(response).Replace("\r", Environment.NewLine);
+
+                this.logger.LogInformation(encodedResponse);
             }
 
         }
