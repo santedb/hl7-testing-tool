@@ -7,6 +7,7 @@ using NHapi.Base.Parser;
 using NHapi.Base.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Serilog;
 
@@ -252,8 +253,35 @@ namespace HL7TestingTool.Core.Impl
         public IEnumerable<IMessage> ExecuteTestSteps()
         {
             var testSteps = this.testSuiteBuilder.GetTestSuite();
-            //var config = this.configuration.GetValue<List<string>>("TestOptions:Execution");
+            var config = this.configuration.GetSection("TestOptions").GetSection("Execution")
+                .Get<string[]>();
 
+            if (!config.Any())
+            {
+                this.logger.LogError("No test execution parameter supplied");
+                throw new ArgumentNullException("No test execution parameter supplied");
+            }
+
+            if (config.Any(c => c == "*"))
+            {
+                if (config.Length > 1)
+                {
+                    this.logger.LogError("Invalid test execution parameter(s).");
+                    this.logger.LogDebug("* cannot be combined with other tests as execution parameter");
+                    throw new InvalidOperationException("Invalid test execution parameter(s).");
+                }
+            }
+            else
+            {
+                testSteps = testSteps.Where(t => config.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0"+ t.CaseNumber : t.CaseNumber)}-{t.StepNumber}")).ToList();
+                if (!testSteps.Any())
+                {
+                    this.logger.LogError("Invalid test execution parameter(s)");
+                    this.logger.LogDebug("Unable to find matching test(s) specified in configuration");
+                    throw new InvalidOperationException("Invalid test execution parameter(s)");
+                }
+            }
+            
 
             this.logger.LogInformation("Executing Test(s)");
             this.logger.LogInformation("Remote Address: " + URI);
@@ -334,7 +362,7 @@ namespace HL7TestingTool.Core.Impl
         {
             var crlfString = this.ConvertLineEndings(t.Message); // Converting LF line endings to CRLF line endings
             this.logger.LogInformation(Environment.NewLine);
-            this.logger.LogInformation($"Test# {t}");
+            this.logger.LogInformation( $"Test# {t}");
 
             // Use MllPMessageSender class to get back the response after sending a message
             var responseString = this.messageSender.SendAndReceive(crlfString);
