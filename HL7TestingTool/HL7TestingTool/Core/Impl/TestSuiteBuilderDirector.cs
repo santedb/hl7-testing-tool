@@ -70,9 +70,7 @@ namespace HL7TestingTool.Core.Impl
             var terser = new Terser(response);
             string found;
             var testFail = false;
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("***Remove this: Assertion Count:" + testStep.Assertions.Count + "***");
+
             foreach (var assertion in testStep.Assertions)
             {
                 try // Getting a value from a response terser
@@ -336,7 +334,7 @@ namespace HL7TestingTool.Core.Impl
             this.logger.LogInformation( $"Test# {t}");
 
             // Use MllPMessageSender class to get back the response after sending a message
-            var responseString = this.messageSender.SendAndReceive(crlfString);
+            var responseString = this.messageSender.SendAndReceive(t.Message);
             IMessage response;
             try
             {
