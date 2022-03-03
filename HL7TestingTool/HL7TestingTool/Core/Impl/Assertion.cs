@@ -48,7 +48,7 @@ namespace HL7TestingTool.Core.Impl
         /// <returns></returns>
         public override string ToString()
         {
-            return this.Alternates.Any() ? $"Expected: '{this.Value}, {string.Join(", ",this.Alternates.Select(c=> c.Value))}' at '{this.TerserString}'"
+            return this.Alternates.Any() ? $"Expected: ['{this.Value}, {string.Join(", ",this.Alternates.Select(c=> c.Value))}'] at '{this.TerserString}'"
                 : this.Missing ? $"Assert missing value at '{this.TerserString}'"
                 : $"Expected: '{this.Value}' at '{this.TerserString}'";
         }
