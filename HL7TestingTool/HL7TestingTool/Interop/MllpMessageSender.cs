@@ -55,7 +55,7 @@ namespace HL7TestingTool.Interop
             // No response when missing message header
             if (response.ToString().Split('|')[0] != "MSH")
             {
-                throw new Exception($"No message header returned from {this.m_endpoint} ... (MLLP response body could be missing)");
+                throw new Exception($"No message header returned from {this.configuration.GetValue<Uri>("Endpoint")} ... (MLLP response body could be missing)");
             }
 
             return response.ToString();
