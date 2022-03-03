@@ -121,7 +121,7 @@ namespace HL7TestingTool
 
             builder.ConfigureServices(serviceCollection =>
             {
-                serviceCollection.AddSingleton<ITestExecutor, TestSuiteBuilderDirector>();
+                serviceCollection.AddSingleton<ITestExecutor, TestExecutor>();
                 serviceCollection.AddSingleton<IMllpMessageSender, MllpMessageSender>();
                 serviceCollection.AddLogging();
             });
