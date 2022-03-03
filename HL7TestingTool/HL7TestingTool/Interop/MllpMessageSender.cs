@@ -63,64 +63,53 @@ namespace HL7TestingTool.Interop
             }
 
             // No response when missing message header
-            if (response.ToString().Split('|')[0] != "MSH")
-            {
-                throw new Exception($"No message header returned from {this.configuration.GetValue<Uri>("Endpoint")} ... (MLLP response body could be missing)");
-            }
+            //if (response.ToString().Split('|')[0] != "MSH")
+            //{
+            //    throw new Exception($"No message header returned from {this.configuration.GetValue<Uri>("Endpoint")} ... (MLLP response body could be missing)");
+            //}
 
             return response.ToString();
         }
 
         /// <summary>
-        /// Use a TcpClient to write to a stream, then read the response as a string.
+        /// Sends and receives a message.
         /// </summary>
-        /// <param name="parser"></param>
-        /// <param name="message"></param>
-        /// <returns>Response string</returns>
+        /// <param name="message">The message.</param>
+        /// <returns>Returns the response message.</returns>
         public string SendAndReceive(string message)
         {
-            string response; // Response to be returned
-            using (var client = new TcpClient(AddressFamily.InterNetwork)) // Open a TCP port
+            string response = null;
+            using var client = new TcpClient(AddressFamily.InterNetwork);
+            try
             {
-                try
-                {
-                    client.Connect(this.m_endpoint.Host, this.m_endpoint.Port); // Connect on the socket
-                    using (var stream = client.GetStream()) // Get the stream
-                    {
-                        this.WriteToStream(stream, message); // Write to stream
-                        response = this.ReadResponse(stream); // Read response
-                    }
-                }
-                catch (Exception e)
-                {
-                    this.logger.LogError(e.Message);
-                    response = e.Message;
-                }
+                var endpoint = this.configuration.GetValue<Uri>("Endpoint");
+
+                client.Connect(endpoint.Host, endpoint.Port);
+
+                using var memoryStream = new MemoryStream();
+                using var streamWriter = new StreamWriter(memoryStream);
+
+                // VT
+                memoryStream.Write(new byte[] { 0x0b }, 0, 1);
+
+                streamWriter.Write(message);
+                streamWriter.Flush();
+
+                // FS CR
+                memoryStream.Write(new byte[] { 0x1c, 0x0d }, 0, 2);
+
+                using var networkStream = client.GetStream();
+                networkStream.Write(memoryStream.ToArray(), 0, (int)memoryStream.Position);
+                networkStream.Flush();
+
+                response = this.ReadResponse(networkStream);
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.Message);
             }
 
             return response;
-        }
-
-        /// <summary>
-        /// Write a message to a NetworkStream with beginning and ending characters according to MLLP protocol
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        private NetworkStream WriteToStream(NetworkStream stream, string message)
-        {
-            // Start message
-            stream.Write(new byte[] {0x0b}, 0, 1); // 0x0b = VT (vertical tab character)
-
-            // Message body
-            var buffer = Encoding.ASCII.GetBytes(message);
-            stream.Write(buffer, 0, buffer.Length);
-
-            // End message
-            // 0x0d = CR (carriage return) and 0x1c = FS (information separator)
-            stream.Write(new byte[] {0x1c, 0x0d}, 0, 2);
-            stream.Flush(); // Ensure all bytes get sent down the wire
-            return stream;
         }
     }
 }
