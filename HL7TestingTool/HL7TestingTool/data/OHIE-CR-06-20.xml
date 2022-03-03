@@ -6,8 +6,9 @@ PID|||NID-000345435^^^NID^NNXXX||SMITH^JOHN^^^^^L||1980|M|||||||||||
 PV1||I
 </message>
 <assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
 		
 </assertions>
 

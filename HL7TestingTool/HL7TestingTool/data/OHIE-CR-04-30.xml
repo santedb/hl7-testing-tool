@@ -5,10 +5,11 @@ EVN||20101020
 PID|||NFD-3049542-23^^^TEST_A||JONES^JENNIFER^^^^^L|SMITH^^^^^^L|19840125|F|||123 Main Street West ^^NEWARK^NJ^30293||^PRN^PH^^^409^30495||||||
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE" alternate="true" />
-		<assert terserString="MSA-1" value="CE" alternate="true" />
-		<assert terserString="MSA-1" value="AR" alternate="true" />
-		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSA-1" value="AE" >
+			<alternate value="CE" />
+			<alternate value="AR" />
+			<alternate value="CR" />
+		</assert>
 		<assert terserString="ERR-1-4-2" value="Error authenticating application" />
 		<assert terserString="MSH-5" value="TEST_HARNESS_B" />
 		<assert terserString="MSH-6" value="TEST" />

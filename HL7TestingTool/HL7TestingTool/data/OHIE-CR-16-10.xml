@@ -6,8 +6,9 @@ PID|||RJ-439^^^TEST||JONES^JENNIFER^^^^^L|SMITH^^^^^^L|19840125|F|||123 Main Str
 PV1||I
 </message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
 		
 	</assertions>
 

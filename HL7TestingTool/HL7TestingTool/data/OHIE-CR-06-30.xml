@@ -5,8 +5,9 @@ EVN||20141001
 PID|||RJ-449^^^TEST_A^PI~NID-000345435^^^NID^PI||SMITH^JON^^^^^L||198005|M|||||||||||||
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA"/>
+		</assert>
 		<assert terserString="MSH-5" value="TEST_HARNESS_A" />
 		<assert terserString="MSH-6" value="TEST" />
 		

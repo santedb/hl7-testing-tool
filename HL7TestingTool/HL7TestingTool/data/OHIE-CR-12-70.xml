@@ -4,8 +4,9 @@
 QPD|Q22^Find Candidates^HL7|Q1270|@PID.5.1^JONES~@PID.5.2^JENN|||||
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
 		<assert terserString="QUERY_RESPONSE/.PID-5-1" value="JONES" />
 		<assert terserString="QUERY_RESPONSE/.PID-5-2" value="JENNIFER" />
 		<assert terserString="QUERY_RESPONSE/.QRI-3" value="" />

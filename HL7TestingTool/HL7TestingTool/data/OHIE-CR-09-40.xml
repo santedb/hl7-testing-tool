@@ -4,8 +4,9 @@
 QPD|IHE PIX Query|Q0940|RJ-443^^^TEST^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1-1" value="RJ-443" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
 		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />

@@ -5,8 +5,9 @@ EVN||20141001
 PID|||RJ-441^^^TEST||||20141001|M|||||||||||||
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" alternate="true" />
-		<assert terserString="MSA-1" value="CA" alternate="true" />
+		<assert terserString="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
 		<assert terserString="MSH-6" value="TEST" />
 		<assert terserString="MSH-9-1" value="ACK" />
