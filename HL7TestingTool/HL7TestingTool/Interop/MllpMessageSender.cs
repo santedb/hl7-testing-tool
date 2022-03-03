@@ -1,30 +1,40 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace HL7TestingTool.Interop
 {
     /// <summary>
-    /// MLLP Message Sender
+    /// Represents an MLLP message sender.
     /// </summary>
     public class MllpMessageSender : IMllpMessageSender
     {
-        private const int BUFFER_SIZE = 1024;
-        private readonly Uri m_endpoint; // Message endpoint for constructor
+        /// <summary>
+        /// The default buffer size.
+        /// </summary>
+        private const int BufferSize = 1024;
+
+        /// <summary>
+        /// The logger.
+        /// </summary>
         private readonly ILogger<MllpMessageSender> logger;
+
+        /// <summary>
+        /// The configuration.
+        /// </summary>
         private readonly IConfiguration configuration;
 
         /// <summary>
-        /// Creates a new message sender
+        /// Initializes a new instance of the <see cref="MllpMessageSender"/> class.
         /// </summary>
-        /// <param name="endpoint">The endpoint in the form llp://ipaddress:port</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="logger">The logger.</param>
         public MllpMessageSender(ILogger<MllpMessageSender> logger, IConfiguration configuration)
         {
-            this.m_endpoint = configuration.GetValue<Uri>("Endpoint");
             this.logger = logger;
             this.configuration = configuration;
         }
@@ -37,10 +47,10 @@ namespace HL7TestingTool.Interop
         private string ReadResponse(NetworkStream stream)
         {
             var response = new StringBuilder();
-            var buffer = new byte[BUFFER_SIZE];
+            var buffer = new byte[BufferSize];
             while (!buffer.Contains((byte) 0x1c)) // Read into 1024 byte buffer until buffer contains FS character
             {
-                var byteCount = stream.Read(buffer, 0, BUFFER_SIZE);
+                var byteCount = stream.Read(buffer, 0, BufferSize);
                 var offset = 0;
                 if (buffer[offset] == '\v') // Adjust start and count of bytes read when starting with '|' and skip it
                 {
