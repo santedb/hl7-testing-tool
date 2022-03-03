@@ -106,7 +106,7 @@ namespace HL7TestingTool.Interop
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.Message);
+                this.logger.LogError($"Error processing HL7 response: {e}");
             }
 
             return response;

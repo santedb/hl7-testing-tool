@@ -1,20 +1,23 @@
 using HL7TestingTool.Core;
 using HL7TestingTool.Core.Impl;
+using HL7TestingTool.Interop;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using HL7TestingTool.Interop;
 
 namespace HL7TestingTool
 {
+    /// <summary>
+    /// Represents the main program.
+    /// </summary>
     internal class Program
     {
         /// <summary>
@@ -23,12 +26,11 @@ namespace HL7TestingTool
         private static string workingDirectory;
 
         /// <summary>
-        /// 
+        /// Defines the entry point of the application.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">The arguments.</param>
         private static async Task Main(string[] args)
         {
-
             var entryAssembly = Assembly.GetEntryAssembly() ?? typeof(Program).Assembly;
 
             workingDirectory = Path.GetDirectoryName(entryAssembly.Location);
@@ -63,9 +65,17 @@ namespace HL7TestingTool
                 {
                     logger.LogInformation("Application started");
 
+                    var stopwatch = new Stopwatch();
+
                     var testExecutor = host.Services.GetService<ITestExecutor>();
 
+                    stopwatch.Start();
+
                     testExecutor.ExecuteTestSteps();
+
+                    stopwatch.Stop();
+
+                    logger.LogInformation($"All tests have completed execution in {stopwatch.Elapsed.TotalMilliseconds} ms");
                 });
 
                 applicationLifetime.ApplicationStopping.Register(() =>
@@ -96,8 +106,6 @@ namespace HL7TestingTool
         {
             var builder = Host.CreateDefaultBuilder(args);
 
-            string environment = null;
-
             builder.ConfigureHostConfiguration(configurationHost =>
             {
                 configurationHost.Properties.Clear();
@@ -109,13 +117,25 @@ namespace HL7TestingTool
 
             builder.ConfigureAppConfiguration((hostingContext, configurationHost) =>
             {
-                environment = hostingContext.Configuration.GetValue<string>("Environment");
+                var environment = hostingContext.Configuration.GetValue<string>("Environment");
 
                 var endpoint = hostingContext.Configuration.GetValue<string>("Endpoint");
 
                 if (!Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
                 {
                     throw new ConfigurationErrorsException($"Endpoint: {endpoint} is not a well formed URI");
+                }
+
+                switch (environment)
+                {
+                    case "Development":
+#if !DEBUG
+                        throw new ArgumentException($"Invalid environment: {environment} with a release build");
+#endif
+                    case "Staging":
+                    case "Production":
+                        builder.UseEnvironment(environment);
+                        break;
                 }
             });
 
@@ -127,18 +147,6 @@ namespace HL7TestingTool
             });
 
             builder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
-
-            switch (environment)
-            {
-                case "Development":
-#if !DEBUG
-                        throw new ArgumentException($"Invalid environment: {environment} with a release build");
-#endif
-                case "Staging":
-                case "Production":
-                    builder.UseEnvironment(environment);
-                    break;
-            }
 
             builder.UseConsoleLifetime();
 
