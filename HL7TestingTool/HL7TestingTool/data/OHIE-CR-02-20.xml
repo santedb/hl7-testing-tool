@@ -6,7 +6,6 @@ RCP|I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AA">
 			<alternate value="CA" />
-			<alternate value="AR" />
 		</assert>
 		<assert terserString="MSH-9-1" value="RSP" />
 		<assert terserString="MSH-9-2" value="K23" />
