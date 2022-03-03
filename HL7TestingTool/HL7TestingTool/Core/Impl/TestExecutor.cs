@@ -71,7 +71,6 @@ namespace HL7TestingTool.Core.Impl
         {
             var terser = new Terser(response);
             string found;
-            var testFail = false;
 
             foreach (var assertion in testStep.Assertions)
             {
@@ -127,7 +126,7 @@ namespace HL7TestingTool.Core.Impl
                 this.logger.LogInformation($"{status} {assertion}: Actual: '{found}'");
             }
 
-            testFail = testStep.Assertions.Any(c => c.Outcome.HasValue && !c.Outcome.Value);
+            var testFail = testStep.Assertions.Any(c => c.Outcome.HasValue && !c.Outcome.Value);
 
             if (testFail)
             {
