@@ -4,15 +4,15 @@
 QPD|IHE PIX Query|Q0910|RJ-443^^^TEST^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" >
+		<assert terser="MSA-1" value="AA" >
 			<alternate value="CE" />
 		</assert>
-		<assert terserString="ERR-2-1" value="QPD"  />
-		<assert terserString="ERR-2-2" value="1" />
-		<assert terserString="ERR-2-3" value="3" />
-		<assert terserString="ERR-2-4" value="1"  />
-		<assert terserString="ERR-2-5" value="1"  />
-		<assert terserString="QAK-2" value="AE"  />
+		<assert terser="ERR-2-1" value="QPD"  />
+		<assert terser="ERR-2-2" value="1" />
+		<assert terser="ERR-2-3" value="3" />
+		<assert terser="ERR-2-4" value="1"  />
+		<assert terser="ERR-2-5" value="1"  />
+		<assert terser="QAK-2" value="AE"  />
 		
 		
         	

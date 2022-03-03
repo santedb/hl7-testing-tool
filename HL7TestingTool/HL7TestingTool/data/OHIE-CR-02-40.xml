@@ -4,13 +4,13 @@
 QPD|IHE PIX Query|Q0220|RJ-439^^^TEST^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" >
+		<assert terser="MSA-1" value="AA" >
 			<alternate value="CA" />
 		</assert>	
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-4-3" value="ISO" />
-		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true" />
+		<assert terser="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
+		<assert terser="QUERY_RESPONSE/.PID-3(1)-4-2" value="2.16.840.1.113883.3.72.5.9.1" />
+		<assert terser="QUERY_RESPONSE/.PID-3(1)-4-3" value="ISO" />
+		<assert terser="QUERY_RESPONSE(1)/.PID" missing="true" />
 		
 	</assertions>
 </testStep>

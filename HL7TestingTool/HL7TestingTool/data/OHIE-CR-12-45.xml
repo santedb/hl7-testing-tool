@@ -4,14 +4,14 @@
 QPD|Q22^Find Candidates^HL7|Q1245|@PID.5.1^JONES~@PID.5.2^JENNIFER|||||^^^RANDOM|
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE" >
+		<assert terser="MSA-1" value="AE" >
 			<alternate value="CE" />
 		</assert>
-		<assert terserString="ERR-2-1" value="QPD" />
-		<assert terserString="ERR-2-2" value="1" />
-		<assert terserString="ERR-2-3" value="8" />
-		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
-		<assert terserString="QAK-2" value="AE" />
+		<assert terser="ERR-2-1" value="QPD" />
+		<assert terser="ERR-2-2" value="1" />
+		<assert terser="ERR-2-3" value="8" />
+		<assert terser="QUERY_RESPONSE/.PID" missing="true" />
+		<assert terser="QAK-2" value="AE" />
 		
         	
 	</assertions>

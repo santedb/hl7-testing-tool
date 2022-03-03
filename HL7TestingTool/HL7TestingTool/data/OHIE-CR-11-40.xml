@@ -4,13 +4,13 @@
 QPD|Q22^Find Candidates^HL7|Q1140|@PID.3.1^RJ-9483~@PID.3.4.99^NOVALUE
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AR" >
+		<assert terser="MSA-1" value="AR" >
 			<alternate value="CR" />
 			<alternate value="AE" />
 			<alternate value="CE" />
 		</assert>
-		<assert terserString="QUERY_RESPONSE/.PID" missing="true" />
-		<assert terserString="QAK-2" value="AE" />
+		<assert terser="QUERY_RESPONSE/.PID" missing="true" />
+		<assert terser="QAK-2" value="AE" />
 		
         	
 	</assertions>

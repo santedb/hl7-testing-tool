@@ -4,11 +4,11 @@
 QPD|IHE PIX Query|Q0530|RJ-441^^^TEST^PI
 RCP|I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" >
+		<assert terser="MSA-1" value="AA" >
 			<alternate value="CA" />
 		</assert>
-		<assert terserString="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-441"/>
-		<assert terserString="QUERY_RESPONSE(1)/.PID" missing="true"/>
+		<assert terser="QUERY_RESPONSE/.PID-3(1)-1" value="RJ-441"/>
+		<assert terser="QUERY_RESPONSE(1)/.PID" missing="true"/>
 		
         	
 	</assertions>

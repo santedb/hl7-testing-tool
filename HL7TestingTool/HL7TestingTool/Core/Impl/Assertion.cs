@@ -39,7 +39,7 @@ namespace HL7TestingTool.Core.Impl
         /// <summary>
         /// Gets or sets the terser string.
         /// </summary>
-        [XmlAttribute("terserString")]
+        [XmlAttribute("terser")]
         public string TerserString { get; set; }
 
         /// <summary>

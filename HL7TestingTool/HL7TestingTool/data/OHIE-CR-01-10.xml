@@ -5,11 +5,11 @@ EVN||20101020
 PID|||RJ-438^^^&amp;&amp;||JOHNSTON^ROBERT^^^^^L|MURRAY^^^^^^L|19830205|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||481-27-4185
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AR" >
+		<assert terser="MSA-1" value="AR" >
 			<alternate value="AE" />
 		</assert>
-		<assert terserString="MSH-9-1" value="ACK" />
-		<assert terserString="MSH-9-2" value="A01" />
-        <assert terserString="MSH-12" value="2.3.1" />
+		<assert terser="MSH-9-1" value="ACK" />
+		<assert terser="MSH-9-2" value="A01" />
+        <assert terser="MSH-12" value="2.3.1" />
     </assertions>
 </testStep>

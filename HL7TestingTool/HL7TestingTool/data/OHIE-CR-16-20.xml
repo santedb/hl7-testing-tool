@@ -4,11 +4,11 @@
 QPD|Q22^Find Candidates^HL7|Q1620|@PID.5.1^JONES|||||^^^TEST
 RCP|I|10^RD</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" >
+		<assert terser="MSA-1" value="AA" >
 			<alternate value="CA" />
 		</assert>
-		<assert terserString="QUERY_RESPONSE(0)/.PID-3-1" value="RJ-439" />
-		<assert terserString="QUERY_RESPONSE(1)/.PID-3(1)-1" value="RJ-999"/>
-		<assert terserString="QAK-2" value="OK" />
+		<assert terser="QUERY_RESPONSE(0)/.PID-3-1" value="RJ-439" />
+		<assert terser="QUERY_RESPONSE(1)/.PID-3(1)-1" value="RJ-999"/>
+		<assert terser="QAK-2" value="OK" />
 	</assertions>
 </testStep>

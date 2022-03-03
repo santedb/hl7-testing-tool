@@ -5,14 +5,14 @@ EVN||20101020
 PID|||RJ-439^^^TEST_A||JONES^JENNIFER^^^^^L|SMITH^^^^^^L|19840125|F|||123 Main Street West ^^NEWARK^NJ^30293||^PRN^PH^^^409^30495||||||
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AA" >
+		<assert terser="MSA-1" value="AA" >
 			<alternate value="CA" />
 		</assert>
-		<assert terserString="MSH-5" value="TEST_HARNESS_A" />
-		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="MSH-9-1" value="ACK" />
-		<assert terserString="MSH-9-2" value="A01" />
-        <assert terserString="MSH-12" value="2.3.1" />
+		<assert terser="MSH-5" value="TEST_HARNESS_A" />
+		<assert terser="MSH-6" value="TEST" />
+		<assert terser="MSH-9-1" value="ACK" />
+		<assert terser="MSH-9-2" value="A01" />
+        <assert terser="MSH-12" value="2.3.1" />
         	
 	</assertions>
 </testStep>
