@@ -8,7 +8,6 @@ PV1||I</message>
 		<assert terserString="MSA-1" value="AA" >
 			<alternate value="CA"/>
 		</assert>	
-		<assert terserString="MSA-1" value="CA" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
 		<assert terserString="MSH-12" value="2.3.1" />
