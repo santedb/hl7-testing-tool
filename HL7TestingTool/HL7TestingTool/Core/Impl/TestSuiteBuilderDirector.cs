@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Serilog;
 
 namespace HL7TestingTool.Core.Impl
 {
@@ -19,9 +18,9 @@ namespace HL7TestingTool.Core.Impl
     public class TestSuiteBuilderDirector : ITestExecutor
     {
         /// <summary>
-        /// 
+        /// The pipe parser.
         /// </summary>
-        private const string URI = "llp://127.0.0.1:2100";
+        private static readonly PipeParser parser = new PipeParser();
 
         /// <summary>
         /// Builder that imoports test data from files and results in a list of test steps organizaed by test case number and test step number.
@@ -38,6 +37,9 @@ namespace HL7TestingTool.Core.Impl
         /// </summary>
         private readonly ILogger<TestSuiteBuilderDirector> logger;
 
+        /// <summary>
+        /// The message sender.
+        /// </summary>
         private readonly IMllpMessageSender messageSender;
 
         /// <summary>
@@ -119,6 +121,7 @@ namespace HL7TestingTool.Core.Impl
                 {
                     assertion.Outcome = assertion.Alternates.Any(a => a.Value == found);
                 } 
+
                 var status = (bool) assertion.Outcome ? "PASSED" : "FAILED";
 
                 this.logger.LogInformation($"{assertion}: {status}, Actual: '{found}'");
@@ -184,9 +187,8 @@ namespace HL7TestingTool.Core.Impl
         {
             var bytes = Encoding.ASCII.GetBytes(message);
             var hex = BitConverter.ToString(bytes).Replace("-", "");
-
-
             var ASCIIHexString = new StringBuilder();
+
             for (var i = 1; i < hex.Length; i += 2)
             {
                 //Check for a LF (line feed)
@@ -233,30 +235,30 @@ namespace HL7TestingTool.Core.Impl
         public IEnumerable<IMessage> ExecuteTestSteps()
         {
             var testSteps = this.testSuiteBuilder.GetTestSuite();
-            var config = this.configuration.GetSection("TestOptions").GetSection("Execution")
-                .Get<string[]>();
+            var config = this.configuration.GetSection("TestOptions").GetSection("Execution").Get<string[]>();
 
             if (config == null || config?.Any(c => c == "*") == true )
             {
-                this.logger.LogWarning("No test execution configuration or * detected, therefore all tests will be executed");
-
-            } 
+                this.logger.LogWarning("No test execution configuration or '*' detected, therefore all tests will be executed");
+            }
             else
             {
                 // HACK: left pad 0 when test case/test step numbers are less than 10 for comparisons
                 testSteps = testSteps.Where(t => config.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0"+ t.CaseNumber : t.CaseNumber)}-{(t.StepNumber <10 ? "0"+t.StepNumber : t.StepNumber)}")).ToList();
+
                 if (!testSteps.Any())
                 {
-                    this.logger.LogError("Invalid test execution parameter(s)");
-                    this.logger.LogDebug("Unable to find matching test(s) specified in configuration");
+                    this.logger.LogError("Unable to find matching test(s) specified in configuration");
                     throw new InvalidOperationException("Invalid test execution parameter(s)");
                 }
             }
             
 
             this.logger.LogInformation("Executing Test(s)");
-            this.logger.LogInformation("Remote Address: " + URI);
+            this.logger.LogInformation($"Remote Address: {this.configuration.GetValue<string>("Endpoint")}");
+
             var responses = new List<IMessage>();
+
             foreach (var t in testSteps)
             {
                 try
@@ -265,7 +267,7 @@ namespace HL7TestingTool.Core.Impl
                     // Check for messages before sending and asserting
                     if (t.Message != null)
                     {
-                        response = this.SendHL7Message(t); // Send encoded message with MllpMessageSender
+                        response = this.SendHl7Message(t); // Send encoded message with MllpMessageSender
                         responses.Add(response); // Add response to list to be returned
                         if (t.Assertions.Count > 0) // Check for assertions before asserting values
                         {
@@ -287,7 +289,7 @@ namespace HL7TestingTool.Core.Impl
                         continue;
                     }
 
-                    this.logger.LogError($"Exception thrown: {e.Message}\n");
+                    this.logger.LogError($"Exception thrown: {e.Message}{Environment.NewLine}");
                 }
             }
 
@@ -295,49 +297,21 @@ namespace HL7TestingTool.Core.Impl
         }
 
         /// <summary>
-        /// Access to abstract base method for retrieving a list of test steps for a specific test case.
-        /// </summary>
-        /// <param name="caseNumber"></param>
-        /// <returns></returns>
-        public List<TestStep> GetTestCase(int caseNumber)
-        {
-            return this.testSuiteBuilder.GetTestCase(caseNumber);
-        }
-
-        /// <summary>
-        /// Access to abstract base method for retrieving a specific test step that belongs to a specific test case.
-        /// </summary>
-        /// <param name="caseNumber"></param>
-        /// <param name="stepNumber"></param>
-        /// <returns></returns>
-        public TestStep GetTestStep(int caseNumber, int stepNumber)
-        {
-            return this.testSuiteBuilder.GetTestStep(caseNumber, stepNumber);
-        }
-
-        /// <summary>
-        /// Access to abstract base method for retrieving all test steps.
-        /// </summary>
-        /// <returns></returns>
-        public List<TestStep> GetTestSuite()
-        {
-            return this.testSuiteBuilder.GetTestSuite();
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        private IMessage SendHL7Message(TestStep t)
+        private IMessage SendHl7Message(TestStep t)
         {
             var crlfString = this.ConvertLineEndings(t.Message); // Converting LF line endings to CRLF line endings
+
             this.logger.LogInformation(Environment.NewLine);
             this.logger.LogInformation( $"Test# {t}");
 
             // Use MllPMessageSender class to get back the response after sending a message
-            var responseString = this.messageSender.SendAndReceive(t.Message);
+            var responseString = this.messageSender.SendAndReceive(crlfString);
             IMessage response;
+
             try
             {
                 if (responseString.Split('|')[0] == "MSH")
