@@ -31,6 +31,12 @@ namespace HL7TestingTool
         /// <param name="args">The arguments.</param>
         private static async Task Main(string[] args)
         {
+            if (args.Length > 0 && args[0].ToLowerInvariant().StartsWith("--h"))
+            {
+                PrintHelp();
+                Environment.Exit(0);
+            }
+
             var entryAssembly = Assembly.GetEntryAssembly() ?? typeof(Program).Assembly;
 
             workingDirectory = Path.GetDirectoryName(entryAssembly.Location);
@@ -151,6 +157,17 @@ namespace HL7TestingTool
             builder.UseConsoleLifetime();
 
             return builder;
+        }
+
+        private static void PrintHelp()
+        {
+            Console.WriteLine("HL7 Testing Tool Help" + Environment.NewLine);
+            Console.WriteLine("The appsettings.json contains the configuration settings for the tool.");
+            Console.WriteLine("The following properties in configuration file are required to operate the tool:");
+            Console.WriteLine("\"MinimumLevel\" - This property changes the log level, and supports the following values Debug, Information, Warning, Error, Fatal.");
+            Console.WriteLine("\"Endpoint\" - This is target server to which the tool will attempt to connect.");
+            Console.WriteLine("\"TestDirectory\" - The directory where the test files are located.");
+            Console.WriteLine("\"Execution\" - This controls the execution of the tests. Setting this to '*' will execute all the tests. Optionally this can be set to a list of tests to be executed (e.g. [ \"OHIE-01-10\", \"OHIE-02-05\", \"OHIE-03-10\" ]).");
         }
     }
 }
