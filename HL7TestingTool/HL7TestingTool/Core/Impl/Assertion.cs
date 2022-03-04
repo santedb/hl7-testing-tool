@@ -40,7 +40,7 @@ namespace HL7TestingTool.Core.Impl
         /// Gets or sets the terser string.
         /// </summary>
         [XmlAttribute("terser")]
-        public string TerserString { get; set; }
+        public string Terser { get; set; }
 
         /// <summary>
         /// Gets or sets the value to assert against.
@@ -54,9 +54,9 @@ namespace HL7TestingTool.Core.Impl
         /// <returns>Returns this instance as a string representation.</returns>
         public override string ToString()
         {
-            return this.Alternates.Any() ? $"Expected: ['{this.Value}, {string.Join(", ",this.Alternates.Select(c=> c.Value))}'] at '{this.TerserString}'"
-                : this.Missing ? $"Assert missing value at '{this.TerserString}'"
-                : $"Expected: '{this.Value}' at '{this.TerserString}'";
+            return this.Alternates.Any() ? $"Expected: ['{this.Value}, {string.Join(", ",this.Alternates.Select(c=> c.Value))}'] at '{this.Terser}'"
+                : this.Missing ? $"Assert missing value at '{this.Terser}'"
+                : $"Expected: '{this.Value}' at '{this.Terser}'";
         }
     }
 }

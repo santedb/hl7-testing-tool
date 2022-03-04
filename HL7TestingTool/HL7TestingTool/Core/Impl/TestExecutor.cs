@@ -76,7 +76,7 @@ namespace HL7TestingTool.Core.Impl
             {
                 try // Getting a value from a response terser
                 {
-                    found = terser.Get(assertion.TerserString);
+                    found = terser.Get(assertion.Terser);
                     if (assertion.Value == null && assertion.Missing) // SHOULD be missing
                     {
                         assertion.Outcome = found == null;
@@ -97,7 +97,7 @@ namespace HL7TestingTool.Core.Impl
                         }
                         else // Assertion fails
                         {
-                            found = assertion.TerserString;
+                            found = assertion.Terser;
                             assertion.Outcome = false;
                         }
                     }
@@ -109,7 +109,7 @@ namespace HL7TestingTool.Core.Impl
                         }
                         else // Assertion passes
                         {
-                            found = assertion.TerserString;
+                            found = assertion.Terser;
                             assertion.Outcome = true;
                         }
                     }
