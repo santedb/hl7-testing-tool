@@ -207,6 +207,8 @@ namespace HL7TestingTool.Core.Impl
                 }
             }
 
+            this.logger.LogInformation($"Total Tests: {testSteps.Count}. Passed: {testSteps.SelectMany(c => c.Assertions).Count(c => c.Outcome.HasValue && c.Outcome.Value)}. Failed: {testSteps.SelectMany(c => c.Assertions).Count(c => c.Outcome.HasValue && !c.Outcome.Value)}.");
+
             return responses;
         }
 
