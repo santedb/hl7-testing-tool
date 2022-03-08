@@ -193,6 +193,8 @@ namespace HL7TestingTool.Core.Impl
                     {
                         this.Assert(testStep, response); // Process assertions for a step 
                     }
+
+                    this.logger.LogInformation($"Total Assertions: {testStep.Assertions.Count}. Passed: {testStep.Assertions.Count(c => c.Outcome.HasValue && c.Outcome.Value)}. Failed {testStep.Assertions.Count(c => c.Outcome.HasValue && !c.Outcome.Value)}. Not Run: {testStep.Assertions.Count(c => !c.Outcome.HasValue)}");
                 }
                 catch (HL7Exception e) // Can catch an Exception with missing segment 
                 {
