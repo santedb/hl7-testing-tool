@@ -166,10 +166,9 @@ namespace HL7TestingTool.Core.Impl
                 if (!testSteps.Any())
                 {
                     this.logger.LogError("Unable to find matching test(s) specified in configuration");
-                    throw new InvalidOperationException("Invalid test execution parameter(s)");
+                    throw new InvalidOperationException("Unable to find matching test(s) specified in configuration");
                 }
             }
-            
 
             this.logger.LogInformation("Executing Test(s)");
             this.logger.LogInformation($"Remote Address: {this.configuration.GetValue<string>("Endpoint")}");
@@ -213,14 +212,12 @@ namespace HL7TestingTool.Core.Impl
         }
 
         /// <summary>
-        /// 
+        /// Sends an HL7 message,
         /// </summary>
-        /// <param name="testStep"></param>
-        /// <returns></returns>
+        /// <param name="testStep">The test step.</param>
+        /// <returns>Returns the response message.</returns>
         private IMessage SendHl7Message(TestStep testStep)
         {
-            //var crlfString = this.ConvertLineEndings(testStep.Message); // Converting LF line endings to CRLF line endings
-
             this.logger.LogInformation(Environment.NewLine);
             this.logger.LogInformation( $"Test# {testStep}");
 
