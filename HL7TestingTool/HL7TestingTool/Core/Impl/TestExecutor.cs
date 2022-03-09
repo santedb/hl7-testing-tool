@@ -63,10 +63,10 @@ namespace HL7TestingTool.Core.Impl
         }
 
         /// <summary>
-        /// 
+        /// Checks the test step assertions against response to evaluate outcome.
         /// </summary>
-        /// <param name="testStep"></param>
-        /// <param name="response"></param>
+        /// <param name="testStep">The test step.</param>
+        /// <param name="response">The response.</param>
         private void Assert(TestStep testStep, IMessage response)
         {
             var terser = new Terser(response);

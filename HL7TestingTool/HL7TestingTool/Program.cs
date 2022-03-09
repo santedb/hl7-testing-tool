@@ -159,6 +159,9 @@ namespace HL7TestingTool
             return builder;
         }
 
+        /// <summary>
+        /// Prints help text.
+        /// </summary>
         private static void PrintHelp()
         {
             Console.WriteLine("HL7 Testing Tool Help" + Environment.NewLine);

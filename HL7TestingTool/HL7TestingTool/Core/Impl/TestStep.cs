@@ -11,34 +11,34 @@ namespace HL7TestingTool.Core.Impl
     {
      
         /// <summary>
-        /// 
+        /// Gets or sets the list of assertions.
         /// </summary>
         [XmlArray("assertions")]
         [XmlArrayItem("assert", typeof(Assertion))]
         public List<Assertion> Assertions { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the description.
         /// </summary>
         [XmlElement("description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the message.
         /// </summary>
         [XmlElement("message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the test step number.
         /// </summary>
         [XmlIgnore]
         public int? StepNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns this instance as a string representation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this instance as a string representation.</returns>
         public override string ToString()
         {
             return $"OHIE-CR-{this.CaseNumber}-{this.StepNumber}";

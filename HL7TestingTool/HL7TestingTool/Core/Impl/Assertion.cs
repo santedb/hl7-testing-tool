@@ -7,7 +7,6 @@ namespace HL7TestingTool.Core.Impl
     /// <summary>
     /// Represents an assertion.
     /// </summary>
-
     public class Assertion
     {
         /// <summary>
@@ -25,7 +24,7 @@ namespace HL7TestingTool.Core.Impl
         public List<Alternate> Alternates { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the value of missing.
         /// </summary>
         [XmlAttribute("missing")]
         public bool Missing { get; set; }
