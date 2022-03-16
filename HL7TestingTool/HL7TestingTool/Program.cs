@@ -10,6 +10,7 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace HL7TestingTool
         /// <param name="args">The arguments.</param>
         private static async Task Main(string[] args)
         {
-            if (args.Length > 0 && args[0].ToLowerInvariant().StartsWith("--h"))
+            if (args?.Any() == true && args[0]?.ToLowerInvariant().StartsWith("--h") == true)
             {
                 PrintHelp();
                 Environment.Exit(0);
