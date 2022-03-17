@@ -1,7 +1,7 @@
 [![Build](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build.yml) [![CodeQL](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml)
 
 # HL7v2 Testing Tool 
-This project is a C# console application leveraging the nHapi.Parser.Agfa package to build test suites for HL7v2 messaging. This console application has been created to configure and execute a test suite for HL7v2 messages being sent and received with the MLLP protocol.
+This project is a C# console application leveraging the nhapi package to build test suites for HL7v2 messaging. This console application has been created to configure and execute a test suite for HL7v2 messages being sent and received with the MLLP protocol.
 
 # XML Configuration Files
 
@@ -39,10 +39,11 @@ EVN||20101020
 PID|||RJ-999-2^^^TEST_BLOCK||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||481-27-4185
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE" alternate="true" />
-		<assert terserString="MSA-1" value="CE" alternate="true" />
-		<assert terserString="MSA-1" value="AR" alternate="true" />
-		<assert terserString="MSA-1" value="CR" alternate="true" />
+		<assert terserString="MSA-1" value="AE">
+			<alternate value="CE" />
+			<alternate value="AR" />
+			<alternate value="CR" />
+		</assert>
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
 		<assert terserString="MSH-6" value="TEST" />
 		<assert terserString="ERR-1-4-2" value="Error processig assigning authority" />
