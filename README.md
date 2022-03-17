@@ -40,8 +40,8 @@ PID|||RJ-999-2^^^TEST_BLOCK||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm
 PV1||I</message>
 	<assertions>
 		<assert terserString="MSA-1" value="AE">
-			<alternate value="CE" />
 			<alternate value="AR" />
+			<alternate value="CE" />
 			<alternate value="CR" />
 		</assert>
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
