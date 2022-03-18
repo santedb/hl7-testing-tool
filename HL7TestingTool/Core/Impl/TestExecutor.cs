@@ -136,13 +136,13 @@ namespace HL7TestingTool.Core.Impl
                     }
                 }
 
-                
+
                 if (!(bool)assertion.Outcome)
                 {
                     assertion.Outcome = assertion.Alternates.Any(a => a.Value == found);
-                } 
+                }
 
-                var status = (bool) assertion.Outcome ? "PASSED" : "FAILED";
+                var status = (bool)assertion.Outcome ? "PASSED" : "FAILED";
 
                 this.logger.LogInformation($"{status} {assertion}: Actual: '{found}'");
             }
@@ -175,14 +175,14 @@ namespace HL7TestingTool.Core.Impl
             var testSteps = this.testSuiteBuilder.GetTestSuite();
             var testConfiguration = this.configuration.GetSection("TestOptions:Execution").Get<string[]>();
 
-            if (testConfiguration == null || testConfiguration?.Any(c => c == "*") == true )
+            if (testConfiguration == null || testConfiguration?.Any(c => c == "*") == true)
             {
                 this.logger.LogWarning("No test execution configuration or '*' detected, therefore all tests will be executed");
             }
             else
             {
                 // HACK: left pad 0 when test case/test step numbers are less than 10 for comparisons
-                testSteps = testSteps.Where(t => testConfiguration.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0"+ t.CaseNumber : t.CaseNumber)}-{(t.StepNumber <10 ? "0"+t.StepNumber : t.StepNumber)}")).ToList();
+                testSteps = testSteps.Where(t => testConfiguration.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0" + t.CaseNumber : t.CaseNumber)}-{(t.StepNumber < 10 ? "0" + t.StepNumber : t.StepNumber)}")).ToList();
 
                 if (!testSteps.Any())
                 {
@@ -241,7 +241,7 @@ namespace HL7TestingTool.Core.Impl
         private IMessage SendHl7Message(TestStep testStep)
         {
             this.logger.LogInformation(Environment.NewLine);
-            this.logger.LogInformation( $"Test# {testStep}");
+            this.logger.LogInformation($"Test# {testStep}");
 
             // replace all instances of CRLF and LF with CR
             var responseData = this.messageSender.SendAndReceive(testStep.Message.Replace("\n", "\r").Replace("\r\n", "\r"));
