@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Shihab Khan, Nityan Khanna
+ * User: Tommy Zieba, Azabelle Tale, Shihab Khan, Nityan Khanna
  * Date: 2022-03-16
  */
 
@@ -28,6 +28,14 @@ namespace HL7TestingTool.Core.Impl
     /// </summary>
     public class Alternate
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Alternate"/> class.
+        /// </summary>
+        public Alternate()
+        {
+            
+        }
+
         /// <summary>
         /// Gets or sets the value.
         /// </summary>

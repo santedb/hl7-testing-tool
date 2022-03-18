@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Shihab Khan, Nityan Khanna
+ * User: Shihab Khan, Nityan Khanna, Tommy Zieba, Azabelle Tale
  * Date: 2022-03-16
  */
 
@@ -32,16 +32,17 @@ namespace HL7TestingTool.Core.Impl
     public class TestSuiteBuilder
     {
         /// <summary>
+        /// The test steps.
+        /// </summary>
+        private readonly List<TestStep> testSteps;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TestSuiteBuilder"/> class.
         /// </summary>
         public TestSuiteBuilder()
         {
-            this.TestSteps = new List<TestStep>();
+            this.testSteps = new List<TestStep>();
         }
-        /// <summary>
-        /// The test steps.
-        /// </summary>
-        protected List<TestStep> TestSteps { get; set; }
 
         /// <summary>
         /// Deserializes test steps from xml files into  <see cref="TestStep"/> test steps.<c>-hr</c>
@@ -64,45 +65,9 @@ namespace HL7TestingTool.Core.Impl
                     testStep.CaseNumber = testCaseNumber;
                     testStep.StepNumber = testStepNumber;
 
-                };
+                }
 
-                this.TestSteps.Add(testStep);
-            }
-        }
-
-
-        /// <summary>
-        /// Gets the test step(s) by case number.
-        /// </summary>
-        /// <param name="caseNumber">The case number.</param>
-        /// <returns>the matching test step(s).</returns>
-        public List<TestStep> GetTestCase(int caseNumber)
-        {
-            try
-            {
-                return this.TestSteps.Where(ts => ts.CaseNumber == caseNumber).ToList();
-            }
-            catch
-            {
-                return new List<TestStep>();
-            }
-        }
-
-        /// <summary>
-        /// Gets the test step by case number and step number.
-        /// </summary>
-        /// <param name="caseNumber">The case number.</param>
-        /// <param name="stepNumber">The step number.</param>
-        /// <returns>the matching test step</returns>
-        public TestStep GetTestStep(int caseNumber, int stepNumber)
-        {
-            try
-            {
-                return this.TestSteps.Find(ts => ts.CaseNumber == caseNumber && ts.StepNumber == stepNumber);
-            }
-            catch
-            {
-                return new TestStep();
+                this.testSteps.Add(testStep);
             }
         }
 
@@ -112,7 +77,7 @@ namespace HL7TestingTool.Core.Impl
         /// <returns></returns>
         public List<TestStep> GetTestSuite()
         {
-            return this.TestSteps;
+            return this.testSteps;
         }
 
         /// <summary>
