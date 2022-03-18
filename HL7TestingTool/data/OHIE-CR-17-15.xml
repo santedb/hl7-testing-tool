@@ -1,0 +1,15 @@
+<testStep>
+    <description>Ensure that the following patient is registered in the receiver (can be done with the ADT message provided). Name: Sam Smith, id: RJ-203^^^TEST_A, gender: F, dob: 1989-02-25</description>
+    <message>MSH|^~\&amp;|TEST_HARNESS_A^^|TEST^^|CR1^^|MOH_CAAT^^|20141104174451|TEST_HARNESS+TEST_HARNESS|ADT^A01^ADT_A01|TEST-CR-17-15|P|2.3.1
+EVN||20101020
+PID|||RJ-203^^^TEST_A||SMITH^SAM^^^^^L||19890225|F|||||||||||
+PV1||I
+</message>
+	<assertions>
+		<assert terser="MSA-1" value="AA" >
+			<alternate value="CA" />
+		</assert>
+		
+	</assertions>
+
+</testStep>

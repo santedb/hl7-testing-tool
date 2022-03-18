@@ -1,6 +1,0 @@
-<testStep>
-    <description>Ensure that the following patient is registered in the receiver (can be done with the ADT message provided).
-RJ-440^^^TEST, gender: M, DOB: 2014-10-01</description>
-    
-
-</testStep>
