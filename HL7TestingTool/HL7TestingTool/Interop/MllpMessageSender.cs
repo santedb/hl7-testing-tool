@@ -156,7 +156,7 @@ namespace HL7TestingTool.Interop
 
                         var clientCertificates = store.Certificates.Find(X509FindType.FindByThumbprint, clientCertificate, true);
 
-                        if (clientCertificates.Count is < 1 or > 1)
+                        if (clientCertificates.Count > 1 || clientCertificates.Count < 1)
                         {
                             throw new ArgumentNullException();
                         }
