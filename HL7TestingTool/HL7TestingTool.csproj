@@ -111,7 +111,6 @@
     <None Remove="data\OHIE-CR-18-20.xml" />
     <None Remove="data\OHIE-CR-18-30.xml" />
     <None Remove="data\OHIE-CR-18-40.xml" />
-    <None Remove="data\OHIE-CR-19-10.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -425,9 +424,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="data\OHIE-CR-18-40.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="data\OHIE-CR-19-10.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
