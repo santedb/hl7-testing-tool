@@ -25,12 +25,20 @@ using System.Xml.Serialization;
 namespace HL7TestingTool.Core.Impl
 {
     /// <summary>
-    /// Represents a step for a test case that has a list of ExpectedResults.
+    /// Represents a step for a test case.
     /// </summary>
     [XmlRoot("testStep")]
     public class TestStep : TestCase
     {
-     
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestStep"/> class.
+        /// </summary>
+        public TestStep()
+        {
+            this.Assertions = new List<Assertion>();
+        }
+
         /// <summary>
         /// Gets or sets the list of assertions.
         /// </summary>
@@ -60,9 +68,6 @@ namespace HL7TestingTool.Core.Impl
         /// Returns this instance as a string representation.
         /// </summary>
         /// <returns>Returns this instance as a string representation.</returns>
-        public override string ToString()
-        {
-            return $"OHIE-CR-{this.CaseNumber}-{this.StepNumber}";
-        }
+        public override string ToString() => $"OHIE-CR-{this.CaseNumber}-{this.StepNumber}";
     }
 }

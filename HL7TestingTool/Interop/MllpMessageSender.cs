@@ -63,10 +63,10 @@ namespace HL7TestingTool.Interop
         }
 
         /// <summary>
-        /// 
+        /// Reads a response.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
+        /// <param name="stream">The stream.</param>
+        /// <returns>Returns the response as a <see cref="string"/> representation.</returns>
         private static string ReadResponse(Stream stream)
         {
             var response = new StringBuilder();
@@ -91,7 +91,7 @@ namespace HL7TestingTool.Interop
         }
 
         /// <summary>
-        /// Validation for certificates
+        /// Validates a remote certificate chain.
         /// </summary>
         private bool RemoteCertificateValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {

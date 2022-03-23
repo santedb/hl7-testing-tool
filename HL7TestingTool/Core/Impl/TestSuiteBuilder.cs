@@ -74,7 +74,7 @@ namespace HL7TestingTool.Core.Impl
         /// <summary>
         /// Gets the test steps.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the list of test steps.</returns>
         public List<TestStep> GetTestSuite()
         {
             return this.testSteps;
@@ -85,7 +85,7 @@ namespace HL7TestingTool.Core.Impl
         /// </summary>
         /// <param name="filePath">The file path.</param>
         /// <returns>the full names of files (including paths)</returns>
-        public List<string> Import(string filePath)
+        public static List<string> Import(string filePath)
         {
             return Directory.EnumerateFiles(filePath).OrderBy(Path.GetFileName).ToList();
         }
