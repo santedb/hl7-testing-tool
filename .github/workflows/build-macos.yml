@@ -1,6 +1,6 @@
 name: Build macOS
 
-on: [push]
+on: [ push, pull_request ]
 
 jobs:
   build:
@@ -13,7 +13,5 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.417
-    - name: Restore dependencies
-      run: dotnet restore HL7TestingTool.sln
     - name: Build
       run: dotnet build HL7TestingTool.sln
