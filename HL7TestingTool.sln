@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7TestingTool", "HL7TestingTool\HL7TestingTool.csproj", "{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7TestingTool", "HL7TestingTool\HL7TestingTool.csproj", "{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7TestingTool.Test", "HL7TestingTool.Test\HL7TestingTool.Test.csproj", "{99C4CCEB-31FB-4B0B-A2BA-DB057FC2818F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F80A8FAD-00EE-428B-AD26-80A8A54A6B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99C4CCEB-31FB-4B0B-A2BA-DB057FC2818F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C4CCEB-31FB-4B0B-A2BA-DB057FC2818F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C4CCEB-31FB-4B0B-A2BA-DB057FC2818F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C4CCEB-31FB-4B0B-A2BA-DB057FC2818F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
