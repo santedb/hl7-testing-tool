@@ -16,4 +16,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore HL7TestingTool.sln
     - name: Build
-      run: dotnet build --no-restore HL7TestingTool.sln
+      run: dotnet build HL7TestingTool.sln
