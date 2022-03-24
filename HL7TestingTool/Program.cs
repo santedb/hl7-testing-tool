@@ -32,6 +32,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -99,11 +100,23 @@ namespace HL7TestingTool
 
                     stopwatch.Start();
 
-                    testExecutor.ExecuteTestSteps();
+                    try
+                    {
+                        testExecutor.ExecuteTestSteps();
+                        logger.LogInformation($"All tests have completed execution in {stopwatch.Elapsed.TotalMilliseconds} ms");
+                    }
+                    catch (SocketException e)
+                    {
+                        logger.LogError($"Error during test execution: {e}");
 
-                    stopwatch.Stop();
-
-                    logger.LogInformation($"All tests have completed execution in {stopwatch.Elapsed.TotalMilliseconds} ms");
+#if !DEBUG
+                        applicationLifetime.StopApplication();
+#endif
+                    }
+                    finally
+                    {
+                        stopwatch.Stop();
+                    }
                 });
 
                 applicationLifetime.ApplicationStopping.Register(() =>
