@@ -172,9 +172,10 @@ namespace HL7TestingTool.Interop
                         this.logger.LogError("Endpoint protocol not supported.");
                         throw new InvalidOperationException($"Protocol not supported: {endpoint.Scheme}");
                 }
-                
-
-                
+            }
+            catch (SocketException)
+            {
+                throw;
             }
             catch (Exception e)
             {
