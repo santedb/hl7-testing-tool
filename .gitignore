@@ -294,3 +294,4 @@ Help/
 /SanteDB/santedb.config.user.*.xml
 **/Version.cs
 HL7TestingTool/deploy/
+deploy/
