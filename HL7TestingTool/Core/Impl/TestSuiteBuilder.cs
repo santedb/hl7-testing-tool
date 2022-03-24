@@ -54,7 +54,7 @@ namespace HL7TestingTool.Core.Impl
 
             foreach (var path in testStepPaths)
             {
-                var splitPath = path.Split('\\');
+                var splitPath = path.Split(Path.DirectorySeparatorChar);
                 int.TryParse(splitPath[^1].Split('-')[2], out var testCaseNumber); // parse case number as int
                 int.TryParse(splitPath[^1].Split('-')[3].Split('.')[0], out var testStepNumber); // parse step number as int
 
