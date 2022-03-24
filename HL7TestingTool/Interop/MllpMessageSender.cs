@@ -22,6 +22,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Security;
@@ -34,6 +35,7 @@ namespace HL7TestingTool.Interop
     /// <summary>
     /// Represents an MLLP message sender.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class MllpMessageSender : IMllpMessageSender
     {
         /// <summary>

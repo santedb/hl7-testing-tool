@@ -30,6 +30,7 @@ using Serilog;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -41,6 +42,7 @@ namespace HL7TestingTool
     /// <summary>
     /// Represents the main program.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     internal class Program
     {
         /// <summary>

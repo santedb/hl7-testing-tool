@@ -19,6 +19,7 @@
  * Date: 2022-03-16
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,14 +46,19 @@ namespace HL7TestingTool.Core.Impl
         }
 
         /// <summary>
-        /// Deserializes test steps from xml files into  <see cref="TestStep"/> test steps.<c>-hr</c>
+        /// Deserializes test steps from xml files into  <see cref="TestStep"/> test steps.
         /// </summary>
-        /// <param name="testStepPaths">Paths to test step files.</param>
-        public void Build(List<string> testStepPaths)
+        /// <param name="filePath">The file path.</param>
+        public void Build(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentNullException(nameof(filePath), "Value cannot be null");
+            }
+
             var serializer = new XmlSerializer(typeof(TestStep));
 
-            foreach (var path in testStepPaths)
+            foreach (var path in Directory.EnumerateFiles(filePath).OrderBy(Path.GetFileName))
             {
                 var splitPath = path.Split(Path.DirectorySeparatorChar);
                 int.TryParse(splitPath[^1].Split('-')[2], out var testCaseNumber); // parse case number as int
@@ -78,16 +84,6 @@ namespace HL7TestingTool.Core.Impl
         public List<TestStep> GetTestSuite()
         {
             return this.testSteps;
-        }
-
-        /// <summary>
-        /// Gets the list of full names of files from the path where all the tests are located
-        /// </summary>
-        /// <param name="filePath">The file path.</param>
-        /// <returns>the full names of files (including paths)</returns>
-        public static List<string> Import(string filePath)
-        {
-            return Directory.EnumerateFiles(filePath).OrderBy(Path.GetFileName).ToList();
         }
     }
 }

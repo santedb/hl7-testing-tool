@@ -6,7 +6,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>HL7TestingTool.Test</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="data\OHIE-CR-01-10.xml" />
     <None Remove="data\OHIE-CR-02-05.xml" />

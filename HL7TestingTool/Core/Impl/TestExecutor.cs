@@ -163,7 +163,7 @@ namespace HL7TestingTool.Core.Impl
         /// </summary>
         private void Initialize()
         {
-            this.testSuiteBuilder.Build(TestSuiteBuilder.Import(this.filePath));
+            this.testSuiteBuilder.Build(this.filePath);
         }
 
         /// <summary>
