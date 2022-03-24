@@ -5,7 +5,7 @@ This project is a C# console application leveraging the nhapi package to build t
 
 # XML Configuration Files
 
-There are naming conventions being used for elements and attributes of an XML file representing a test step or precondition to a test case. A test suite is represented by a directory within the project containing all test steps. These conventions are explained next 
+There are naming conventions being used for elements and attributes of an XML file representing a test step or precondition to a test case. A test suite is represented by a directory within the project containing all test steps.
 
 ## Directory/File Naming
 
@@ -46,7 +46,7 @@ PV1||I</message>
 		</assert>
 		<assert terserString="MSH-5" value="TEST_HARNESS" />
 		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1-4-2" value="Error processig assigning authority" />
+		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
         <assert terserString="MSH-12" value="2.3.1" />
