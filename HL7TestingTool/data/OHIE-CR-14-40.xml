@@ -11,7 +11,5 @@ RCP|I|10^RD</message>
 		<assert terser="QUERY_RESPONSE/.PID-3(1)-4-1" value="TEST" />
 		<assert terser="QUERY_RESPONSE(1)/.PID" missing="true" />
 		<assert terser="QAK-2" value="OK" />
-		
-        	
 	</assertions>
 </testStep>
