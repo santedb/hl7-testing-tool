@@ -1,4 +1,4 @@
-[![Build Windows](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-windows.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-windows.yml) [![Build Ubuntu](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-ubuntu.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-ubuntu.yml) [![Build macOS](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-macos.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-macos.yml) [![CodeQL](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml)
+[![Build Windows](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-windows.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-windows.yml) [![Build Ubuntu](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-ubuntu.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-ubuntu.yml) [![Build macOS](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-macos.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/build-macos.yml) [![CodeQL](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/codeql-analysis.yml) [![Tests](https://github.com/santedb/hl7-testing-tool/actions/workflows/tests.yml/badge.svg)](https://github.com/santedb/hl7-testing-tool/actions/workflows/tests.yml)
 
 # HL7v2 Testing Tool 
 This project is a C# console application leveraging the nhapi package to build test suites for HL7v2 messaging. This console application has been created to configure and execute a test suite for HL7v2 messages being sent and received with the MLLP protocol.
@@ -49,7 +49,7 @@ PV1||I</message>
 		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" />
 		<assert terserString="MSH-9-1" value="ACK" />
 		<assert terserString="MSH-9-2" value="A01" />
-        <assert terserString="MSH-12" value="2.3.1" />
+        	<assert terserString="MSH-12" value="2.3.1" />
         	
 	</assertions>
 </testStep>
