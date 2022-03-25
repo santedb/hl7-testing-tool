@@ -32,7 +32,7 @@ namespace HL7TestingTool.Test
     /// Represents a base test class.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public abstract class TestBase
+    internal abstract class TestBase
     {
         /// <summary>
         /// The configuration.

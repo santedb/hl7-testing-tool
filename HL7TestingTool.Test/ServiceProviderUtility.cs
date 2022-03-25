@@ -33,7 +33,7 @@ namespace HL7TestingTool.Test
     /// Represents a service provider utility.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    internal class ServiceProviderUtility
+    internal static class ServiceProviderUtility
     {
         /// <summary>
         /// Builds a service provider.

@@ -36,7 +36,7 @@ namespace HL7TestingTool.Interop
     /// Represents an MLLP message sender.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class MllpMessageSender : IMllpMessageSender
+    internal class MllpMessageSender : IMllpMessageSender
     {
         /// <summary>
         /// The default buffer size.

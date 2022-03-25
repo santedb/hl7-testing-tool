@@ -30,7 +30,7 @@ namespace HL7TestingTool.Core.Impl
     /// <summary>
     /// Represents a test suite builder.
     /// </summary>
-    public class TestSuiteBuilder
+    internal class TestSuiteBuilder
     {
         /// <summary>
         /// The test steps.

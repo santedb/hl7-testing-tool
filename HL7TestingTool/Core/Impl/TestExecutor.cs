@@ -35,7 +35,7 @@ namespace HL7TestingTool.Core.Impl
     /// <summary>
     /// Represents a test executor.
     /// </summary>
-    public class TestExecutor : ITestExecutor
+    internal class TestExecutor : ITestExecutor
     {
         /// <summary>
         /// The pipe parser.
@@ -109,6 +109,7 @@ namespace HL7TestingTool.Core.Impl
                 }
                 catch (HL7Exception ex) // and handle case where a missing segment occurs 
                 {
+                    // TODO: cleanup this...
                     found = "null";
                     if (assertion.Missing) // Check for a SegmentName in the HL7Exception
                     {
@@ -135,7 +136,6 @@ namespace HL7TestingTool.Core.Impl
                         }
                     }
                 }
-
 
                 if (!(bool)assertion.Outcome)
                 {
@@ -173,16 +173,16 @@ namespace HL7TestingTool.Core.Impl
         public IEnumerable<IMessage> ExecuteTestSteps()
         {
             var testSteps = this.testSuiteBuilder.GetTestSuite();
-            var testConfiguration = this.configuration.GetSection("TestOptions:Execution").Get<string[]>();
+            var testsToExecute = this.configuration.GetSection("TestOptions:Execution").Get<string[]>();
 
-            if (testConfiguration == null || testConfiguration?.Any(c => c == "*") == true)
+            if (testsToExecute?.Any(c => c == "*") == true)
             {
                 this.logger.LogWarning("No test execution configuration or '*' detected, therefore all tests will be executed");
             }
             else
             {
                 // HACK: left pad 0 when test case/test step numbers are less than 10 for comparisons
-                testSteps = testSteps.Where(t => testConfiguration.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0" + t.CaseNumber : t.CaseNumber)}-{(t.StepNumber < 10 ? "0" + t.StepNumber : t.StepNumber)}")).ToList();
+                testSteps = testSteps.Where(t => testsToExecute.Contains($"OHIE-CR-{(t.CaseNumber < 10 ? "0" + t.CaseNumber : t.CaseNumber)}-{(t.StepNumber < 10 ? "0" + t.StepNumber : t.StepNumber)}")).ToList();
 
                 if (!testSteps.Any())
                 {

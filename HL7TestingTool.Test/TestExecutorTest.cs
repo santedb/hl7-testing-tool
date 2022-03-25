@@ -19,12 +19,13 @@
  * Date: 2022-03-24
  */
 
-using System.Diagnostics.CodeAnalysis;
 using HL7TestingTool.Core;
 using HL7TestingTool.Core.Impl;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace HL7TestingTool.Test
 {
@@ -65,12 +66,15 @@ namespace HL7TestingTool.Test
             this.testExecutor = this.serviceProvider.GetService<ITestExecutor>();
         }
 
+        /// <summary>
+        /// Tests the send message operation connecting to a dummy endpoint.
+        /// </summary>
         [Test]
         public void TestSend()
         {
-            var _= this.testExecutor.ExecuteTestSteps();
+            var actual = this.testExecutor.ExecuteTestSteps();
 
-            //Assert.Pass();
+            Assert.AreEqual(2, actual.Count());
         }
     }
 }
