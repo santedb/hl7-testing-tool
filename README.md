@@ -9,7 +9,7 @@ There are naming conventions being used for elements and attributes of an XML fi
 
 ## Directory/File Naming
 
-The directory containing a test suite is named '**data**'and should not have its name altered to ensure test steps are read by this application to build a test suite. Test steps represented by an XML file are named using the convention '**OHIE-CR-#-#**', where the first number (#) represents a case number and the second number represents the test number for that specific case. Case numbers and step numbers are parsed from these file names to build the test suite accordingly.
+The directory containing a test suite is named '**data**', however, this is configurable via `appsettings.json`. Test steps represented by an XML file are named using the convention '**OHIE-CR-#-#**', where the first number (#) represents a case number and the second number represents the test number for that specific case. Case numbers and step numbers are parsed from these file names to build the test suite accordingly.
 
 ## Elements
 Recognized XML elements are used to create each test step.
