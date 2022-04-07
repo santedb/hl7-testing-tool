@@ -17,9 +17,9 @@ Recognized XML elements are used to create each test step.
 |Element              |Description               |Example                         |
 |------------|------------------------------------------------|-----------------------------|
 |testStep    |Root element representing a *TestStep* object.  |`<testStep>...</testStep>`   |
-|description |Description of the step as a string.            |`<description>...</description>`|
-|message     |HL7v2 message sent to illicit an HL7v2 response.|`<message>...</message>`|
-|assertions  |List of assertions for an HL7v2 response.       |`<assertions>...</assertions>`|
+|description |The description of the step.            |`<description>...</description>`|
+|message     |The HL7v2 message to send.|`<message>...</message>`|
+|assertions  |The list of assertions for the HL7v2 response.       |`<assertions>...</assertions>`|
 |assert      |Uses a terser string to parse HL7v2 response segments, fields, components, or sub-components to assert a value.                              |`<assert terserString="MSH-12" value="2.3.1" />`|
 
 ## Attributes
