@@ -66,7 +66,7 @@ namespace HL7TestingTool.Test
         }
 
         /// <summary>
-        /// Tests the import method.
+        /// Tests the build method.
         /// </summary>
         [Test]
         public void TestBuildEmpty()
@@ -75,7 +75,7 @@ namespace HL7TestingTool.Test
         }
 
         /// <summary>
-        /// Tests the import method.
+        /// Tests the build method.
         /// </summary>
         [Test]
         public void TestBuildNull()
