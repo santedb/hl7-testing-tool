@@ -20,7 +20,8 @@ Recognized XML elements are used to create each test step.
 |description |Description of the step as a string.            |`<description>...</description>`|
 |message     |HL7v2 message sent to illicit an HL7v2 response.|`<message>...</message>`|
 |assertions  |List of assertions for an HL7v2 response.       |`<assertions>...</assertions>`|
-|assert      |Uses a terser string to parse HL7v2 response segments, fields, components, or sub-components to assert a value.                              |`<assert terserString="MSH-12" value="2.3.1" />`|
+|assert      |Uses a terser string to parse HL7v2 response segments, fields, components, or sub-components to assert a value.                              |`<assert terser="MSH-12" value="2.3.1" />`|
+|alternate   |Asserts an alternate value for a specific terser string in case alternate values are expected.       		  |`<alternate value="CE"/>`|
 
 ## Attributes
 Assertions can be mandatory, missing, not missing, or alternate (multiple possible assertions for a single terser). Additional attributes are used with the `<assert/>` element for the various assertions. 
@@ -28,7 +29,7 @@ Assertions can be mandatory, missing, not missing, or alternate (multiple possib
 |Attribute |Description                    |
 |----------|-------------------------------|
 |missing   |Asserts a missing segment, field, component, sub-component when `missing="true"`. Asserts not missing when `missing="false"`.|
-|alternate |Asserts an alternate value for a specific terser string in case alternate values are expected whenever `alternate="true"` for and `terserString` attributes have the same value for multiple `<assert/>` elements.|
+
 
 ## Example: OHIE-CR-03-20.xml
 ```markdown
@@ -39,17 +40,17 @@ EVN||20101020
 PID|||RJ-999-2^^^TEST_BLOCK||THAMES^ROBERT^^^^^L| |1983|M|||1220 Centennial Farm Road^^ELLIOTT^IA^51532||^PRN^PH^^^712^7670867||||||481-27-4185
 PV1||I</message>
 	<assertions>
-		<assert terserString="MSA-1" value="AE">
-			<alternate value="AR" />
-			<alternate value="CE" />
-			<alternate value="CR" />
-		</assert>
-		<assert terserString="MSH-5" value="TEST_HARNESS" />
-		<assert terserString="MSH-6" value="TEST" />
-		<assert terserString="ERR-1-4-2" value="Error processing assigning authority" />
-		<assert terserString="MSH-9-1" value="ACK" />
-		<assert terserString="MSH-9-2" value="A01" />
-        	<assert terserString="MSH-12" value="2.3.1" />
+		<assert terser="MSA-1" value="AE" >
+			<alternate value="CE"/>
+			<alternate value="AR"/>
+			<alternate value="CR"/>
+		</assert>	
+		<assert terser="MSH-5" value="TEST_HARNESS" />
+		<assert terser="MSH-6" value="TEST" />
+		<assert terser="ERR-1-4-2" value="Error processing assigning authority" />
+		<assert terser="MSH-9-1" value="ACK" />
+		<assert terser="MSH-9-2" value="A01" />
+        <assert terser="MSH-12" value="2.3.1" />
         	
 	</assertions>
 </testStep>
