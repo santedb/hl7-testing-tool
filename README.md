@@ -50,7 +50,7 @@ PV1||I</message>
 		<assert terser="ERR-1-4-2" value="Error processing assigning authority" />
 		<assert terser="MSH-9-1" value="ACK" />
 		<assert terser="MSH-9-2" value="A01" />
-        <assert terser="MSH-12" value="2.3.1" />
+            <assert terser="MSH-12" value="2.3.1" />
         	
 	</assertions>
 </testStep>
